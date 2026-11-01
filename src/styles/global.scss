@@ -1,0 +1,70 @@
+// The only global stylesheet (ADR 0005): tokens, base element styles and RSCSS helpers.
+@use 'tokens';
+
+:root {
+  @include tokens.static;
+  @include tokens.light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include tokens.dark;
+  }
+}
+
+// Explicit themes also work on any element, so the component showcase can show both side by side.
+[data-theme='dark'] {
+  @include tokens.dark;
+}
+
+[data-theme='light'] {
+  @include tokens.light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  color: var(--color-fg);
+  background-color: var(--color-bg);
+  background-image:
+    var(--grain),
+    radial-gradient(circle at 92% -6%, transparent 0 520px, var(--color-arc) 521px 522px, transparent 523px),
+    radial-gradient(circle at 18% 112%, transparent 0 640px, var(--color-arc) 641px 642px, transparent 643px);
+  font: 15px/1.5 var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+// RSCSS helpers: underscore prefix, global only.
+._visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

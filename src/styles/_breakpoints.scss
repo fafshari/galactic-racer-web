@@ -1,0 +1,15 @@
+// Shared breakpoints; import with `@use '~/styles/breakpoints' as bp;`.
+$phone: 520px;
+$narrow: 900px;
+
+@mixin phone {
+  @media (max-width: $phone) {
+    @content;
+  }
+}
+
+@mixin narrow {
+  @media (max-width: $narrow) {
+    @content;
+  }
+}

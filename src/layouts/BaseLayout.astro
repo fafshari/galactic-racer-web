@@ -1,0 +1,56 @@
+---
+import { Font } from 'astro:assets';
+import SiteHeader from '~/components/SiteHeader/SiteHeader.astro';
+import SiteFooter from '~/components/SiteFooter/SiteFooter.astro';
+import '~/styles/global.scss';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Short line above the page title, e.g. the game mode. */
+  eyebrow?: string;
+  /** Keep the page out of search results (the dev-only showcase). */
+  noindex?: boolean;
+}
+
+const { title, description, eyebrow, noindex = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <title>{title}</title>
+    <Font cssVariable="--font-unbounded" preload />
+    <Font cssVariable="--font-barlow" />
+    <Font cssVariable="--font-barlow-semi" />
+    <Font cssVariable="--font-plex-mono" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <SiteHeader title={title} {...(eyebrow === undefined ? {} : { eyebrow })} />
+      <main class="content">
+        <slot />
+      </main>
+      <SiteFooter />
+    </div>
+  </body>
+</html>
+
+<style lang="scss">
+  .page-shell {
+    display: grid;
+    gap: var(--space-5);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-block: var(--space-5) 64px;
+    padding-inline: max(var(--space-4), env(safe-area-inset-left, 0px)) max(var(--space-4), env(safe-area-inset-right, 0px));
+  }
+
+  .page-shell > .content {
+    min-width: 0;
+  }
+</style>

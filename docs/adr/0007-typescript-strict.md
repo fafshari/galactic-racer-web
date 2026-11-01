@@ -44,4 +44,5 @@ The user wants type safety enforced and typing best practice followed.
 ## Consequences
 
 - The engine port is the first test of the types. Ambiguous shapes in `planner.json` get fixed at the source (the datamine build) rather than worked around.
+- **TypeScript pinned to 6.0** (2026-11-01). TypeScript 7 is released, but the type checkers and linters this ADR relies on (`@astrojs/check`, `svelte-check`, `@astrojs/svelte`, `typescript-eslint`) declare support only up to 6.0. Move to 7 once they do.
 - Slightly more ceremony when adding fields to the data. That's intended, since the data contract is shared between two projects (ADR 0002).
