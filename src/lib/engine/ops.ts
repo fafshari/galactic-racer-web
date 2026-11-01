@@ -65,7 +65,7 @@ export type Cell = string;
 /** A vector or array value. (The only array shape a config value has, so the guard is sound.) */
 export const isNumberList = (v: ConfigValue | undefined): v is readonly number[] => Array.isArray(v);
 
-const isFloatCurve = (v: ConfigValue | undefined): v is FloatCurve =>
+export const isFloatCurve = (v: ConfigValue | undefined): v is FloatCurve =>
   typeof v === 'object' && !Array.isArray(v) && Array.isArray((v as { curve?: unknown }).curve);
 
 /** The data's raw vector curves aren't decoded yet, so vector-curve keys have no base (same as the legacy engine). */

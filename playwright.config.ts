@@ -1,22 +1,25 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// In-browser checks against the production build (ADR 0013). The preview runs on its own port, away from the dev
-// server's 4321, so a running `npm run dev` (which serves dev-only pages) is never mistaken for the build.
-const PORT = 4322;
+// In-browser checks (ADR 0013). The site's specs run against the production build on its own port, so a running
+// `npm run dev` (which also serves dev-only pages) is never mistaken for it. The component showcase only exists under
+// `astro dev`, and Astro allows one dev server per project, so its spec uses the dev server, reusing one already running.
+const PREVIEW = 4322;
+const SHOWCASE = 4321;
 
 export default defineConfig({
   testDir: 'tests/e2e',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI ? 'github' : 'list',
-  use: { baseURL: `http://localhost:${PORT}`, trace: 'on-first-retry' },
+  use: { trace: 'on-first-retry' },
   projects: [
-    { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
-    { name: 'phone', use: { ...devices['Pixel 7'] } },
+    { name: 'desktop', testIgnore: /showcase/, use: { ...devices['Desktop Chrome'], baseURL: `http://localhost:${PREVIEW}` } },
+    { name: 'phone', testIgnore: /showcase/, use: { ...devices['Pixel 7'], baseURL: `http://localhost:${PREVIEW}` } },
+    { name: 'showcase', testMatch: /showcase/, use: { ...devices['Desktop Chrome'], baseURL: `http://localhost:${SHOWCASE}` } },
+    { name: 'showcase-phone', testMatch: /showcase/, use: { ...devices['Pixel 7'], baseURL: `http://localhost:${SHOWCASE}` } },
   ],
-  webServer: {
-    command: `npm run preview -- --port ${PORT}`,
-    url: `http://localhost:${PORT}`,
-    reuseExistingServer: false,
-  },
+  webServer: [
+    { command: `npm run preview -- --port ${PREVIEW}`, url: `http://localhost:${PREVIEW}`, reuseExistingServer: false },
+    { command: `npm run dev -- --port ${SHOWCASE}`, url: `http://localhost:${SHOWCASE}/components`, reuseExistingServer: !process.env.CI, timeout: 120_000 },
+  ],
 });

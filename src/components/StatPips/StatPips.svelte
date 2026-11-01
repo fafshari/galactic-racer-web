@@ -56,9 +56,9 @@
     all: unset;
     box-sizing: border-box;
     display: grid;
-    flex: none;
+    flex: 0 1 15px; // shrinks on narrow rows, down to the width of a block
     place-items: center;
-    width: 15px;
+    min-width: 11px;
     height: 22px;
 
     &::after {

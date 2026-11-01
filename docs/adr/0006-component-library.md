@@ -31,6 +31,18 @@ Storybook was considered:
 - **Props:** each component exports a typed props interface (ADR 0007). Variants are union-typed props, mapped to RSCSS variant classes.
 - **No Storybook for now.** Revisit it if the library outgrows a single page, or if visual regression testing becomes worth paying for.
 
+## Implementation (2026-11-01)
+
+- **First set of components:** 19 in `src/components/`, grouped as Basics, Overview, Pickers and Readout. The list is in CLAUDE.md.
+- **Showcase:** a single Svelte island, `src/dev/Showcase.svelte`, with a light/dark switch. It's fed with a real build: the shared `gr2-m106475806` link plus parts.
+- **Display logic in `src/lib/format/`:** labels, units, the km/h conversion, curve tables and keyword runs. It returns data, not HTML, and is unit-tested. Components only render it.
+- **Native platform features:**
+  - `Drawer` is a modal `<dialog>`, which provides focus trapping, Escape, inertness and focus return.
+  - `InfoTip` is a native popover, placed next to its button, so it isn't clipped inside a scrolling drawer.
+- **Tests:**
+  - Vitest component tests cover the interactive pieces jsdom can run.
+  - `tests/e2e/showcase.spec.ts` covers the dialog, popover, themes and layout in a real browser, on desktop and phone sizes, against the dev server.
+
 ## Consequences
 
 - No extra tooling or cost.
