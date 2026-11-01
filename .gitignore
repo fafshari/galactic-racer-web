@@ -1,0 +1,28 @@
+# dependencies and build output
+node_modules/
+dist/
+.astro/
+.vercel/
+
+# test output
+coverage/
+test-results/
+playwright-report/
+
+# local env and editor files
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+*.log
+
+# Game files never belong in this repo: only the exported planner data is committed (see ADR 0002)
+*.pak
+*.utoc
+*.ucas
+*.usmap
+
+# local preview config (machine-specific)
+.claude/launch.json
+.claude/settings.local.json
