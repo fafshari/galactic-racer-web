@@ -1,6 +1,6 @@
 # 0010. Build codes are a public contract
 
-- Status: Accepted (stable ordering is Open)
+- Status: Accepted
 - Date: 2026-11-01
 
 ## Context
@@ -20,9 +20,20 @@ Users share builds as links like `https://…/#gr2-m106475806.….….…`. Thos
 ## Consequences
 
 - The data export has an ordering constraint (ADR 0002) that the Python build must respect.
-- Index stability across game patches isn't guaranteed today. The current export sorts parts and abilities alphabetically by asset name, so a part added in a patch shifts the index of every part after it, and old links would load different parts. Making the order stable is a follow-up in the datamine, and it has to land before the first post-patch data import.
 - Build-code tests must include links in their real, shared form, including ones with dots stripped.
 
-## Open questions
+## Stable ordering (resolved 2026-11-01)
 
-- Stable ordering: do we store a persistent id-to-index map in the datamine, or switch codes to short hashes of game ids in `gr3`? Recommended: a persistent map, which keeps the format unchanged.
+The export sorts parts and abilities alphabetically by asset name, so a part added in a patch would shift every later index and old links would load different parts. Positions therefore don't come from the export order. They come from **`src/data/build-order.json`**, which lives in this repo so it's version controlled:
+- It holds the permanent position of every vehicle, upgrade slot, style, part, ability and favour id ever exported.
+- `npm run import-data` extends it and never reorders it (`mergeOrder` in `src/lib/data/order.ts`):
+  - **existing ids** keep their position
+  - **new ids** are appended
+  - **ids the game drops** stay as retired entries, so later positions don't move
+- The import refuses to run if:
+  - a list would exceed what a `gr2` code can address (10 vehicles; 1,296 styles, parts, abilities or favours)
+  - the six upgrade slots change
+- It was created from the export order on the first import, and a check confirmed it matches the live legacy site exactly. So every link shared before the migration decodes the same.
+- The build-code encoder and decoder (engine port, ADR 0008) must index through this file, never through the data arrays.
+
+This keeps the `gr2` format unchanged; switching to hashed ids in a `gr3` format wasn't needed.

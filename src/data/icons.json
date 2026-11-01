@@ -1,0 +1,3266 @@
+{
+  "T_UI_AFX_Ability_FasterCooldown_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ability_FasterCooldown_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ability_FasterCooldown_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ability_FasterCooldown_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ability_FasterCooldown_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ability_FasterCooldown_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ability_GainShielded_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ability_GainShielded_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Ability_IncreaseAfterburnerRegen_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ability_IncreaseAfterburnerRegen_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Ability_MoreTotalEnergyUntilCrash_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ability_MoreTotalEnergyUntilCrash_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ability_RechargeAfterburner_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ability_RechargeAfterburner_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Afterburner_BetterWhileAirborne_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_BetterWhileAirborne_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_BetterWhileAirborne_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_BetterWhileAirborne_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_BetterWhileAirborne_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_BetterWhileAirborne_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_CooledAfterFullUse_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_CooledAfterFullUse_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_CooledSavesFuel_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_CooledSavesFuel_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Afterburner_FasterRechargeLostOnCrash_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Afterburner_FasterRecharge_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_FullFuelIncreasesPower_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_FullFuelIncreasesPower_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Afterburner_FullFuelIncreasesPower_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_FullFuelIncreasesPower_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Afterburner_FullFuelIncreasesPower_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_FullFuelIncreasesPower_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Afterburner_FullFuelIncreasesPower_v4_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_FullFuelIncreasesPower_v4_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Afterburner_FullyRechargeWhenRamjetReady_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_FullyRechargeWhenRamjetReady_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_IncreasedTopSpeed_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_IncreasedTopSpeed_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_IncreasedTopSpeed_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_IncreasedTopSpeed_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_IncreasedTopSpeed_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_IncreasedTopSpeed_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_IncreasedTopSpeed_v4_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_IncreasedTopSpeed_v4_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_MoreDuration_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_MoreDuration_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_MoreDuration_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_MoreDuration_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_MoreDuration_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_MoreDuration_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_MorePowerPerTakedown_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_MorePowerPerTakedown_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Afterburner_OverchargedRechargeRate_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_OverchargedRechargeRate_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Afterburner_OverheatIncreasesPowerUntilCrash_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_OverheatIncreasesPowerUntilCrash_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Afterburner_OverheatingIncreasesPowerOnce_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_OverheatingIncreasesPowerOnce_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Afterburner_OverheatingStacksFuel_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_OverheatingStacksFuel_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Afterburner_RamjetCharge_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_RamjetCharge_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Afterburner_RefillOnImpact_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_RefillOnImpact_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Afterburner_RefillOnLanding_V1_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Afterburner_RefillOnLanding_V2_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Afterburner_ShieldedAfterFullUse_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_ShieldedAfterFullUse_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Afterburner_SurgingFillsFuel_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_SurgingFillsFuel_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Afterburner_gainCooledWhile_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_gainCooledWhile_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Afterburner_gainShieldWhile_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Afterburner_gainShieldWhile_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Burning_GainOvercharged_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Burning_GainOvercharged_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Burning_PowerfulAfterburner_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Burning_PowerfulAfterburner_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Burning_PowerfulRamjet_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Burning_PowerfulRamjet_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Choke_NoInteruptCurrentRamjet_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Choke_NoInteruptCurrentRamjet_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Concussed_gainSurge_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Concussed_gainSurge_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Concussion_ClearQuicklyAndGainSpeed_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Concussion_ClearQuicklyAndGainSpeed_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Condition_Surging_IncreasedPotency_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Condition_Surging_IncreasedPotency_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Conditions_BurningProtection_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_BurningProtection_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Conditions_CooledLastsLonger_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_CooledLastsLonger_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 9
+  },
+  "T_UI_AFX_Conditions_CooledLastsLonger_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_CooledLastsLonger_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 9
+  },
+  "T_UI_AFX_Conditions_CooledLastsLonger_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_CooledLastsLonger_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 9
+  },
+  "T_UI_AFX_Conditions_Cooled_IncreasedPotency_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_Cooled_IncreasedPotency_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Conditions_Cooled_IncreasedPotency_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_Cooled_IncreasedPotency_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Conditions_Cooled_IncreasedPotency_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_Cooled_IncreasedPotency_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Conditions_Cooled_IncreasedPotency_v4_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_Cooled_IncreasedPotency_v4_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Conditions_CorrodeResistance_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_CorrodeResistance_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Conditions_CorrodeShedding_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_CorrodeShedding_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Conditions_DecreaseBurningPotency_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_DecreaseBurningPotency_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Conditions_DecreaseBurningPotency_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_DecreaseBurningPotency_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Conditions_DecreaseBurningPotency_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_DecreaseBurningPotency_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Conditions_DisruptedProtection_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_DisruptedProtection_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Conditions_FreezeProtection_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_FreezeProtection_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Conditions_FreezeResistance_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_FreezeResistance_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Conditions_FreezeResistance_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_FreezeResistance_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Conditions_FreezeShedding_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Conditions_FreezeShedding_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Cooled_CoolRamjetWhileSlipstream_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Cooled_CoolRamjetWhileSlipstream_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Cooled_CooledToOvercharged_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Cooled_CooledToOvercharged_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Cooled_CorrodeProtection_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Cooled_CorrodeProtection_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Cooled_FastAbilityCooldown_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Cooled_FastAbilityCooldown_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Cooled_GainOnLanding_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Cooled_GainOnLanding_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Cooled_GainOnLanding_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Cooled_GainOnLanding_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Cooled_GainOnLanding_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Cooled_GainOnLanding_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Cooled_GainOnLanding_v4_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Cooled_GainOnLanding_v4_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Cooled_GainWhileAirborne_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Cooled_GainWhileAirborne_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Cooled_GainWhileSlipstream_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Cooled_GainWhileSlipstream_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Cooled_PowerfulRamjet_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Cooled_PowerfulRamjet_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Corrode_NoLongerChokes_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Corrode_NoLongerChokes_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 3
+  },
+  "T_UI_AFX_Crash_ReturnWithCooled_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Crash_ReturnWithCooled_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 9
+  },
+  "T_UI_AFX_Crash_ReturnWithShield_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Crash_ReturnWithShield_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Crash_ReturnWithSurge_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Crash_ReturnWithSurge_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 9
+  },
+  "T_UI_AFX_Crashes_CooledSurgingShieldedWhenOneCrashRemains_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Crashes_CooledSurgingShieldedWhenOneCrashRemains_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 3
+  },
+  "T_UI_AFX_Crashes_CooledWhenOneCrashRemains_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Crashes_CooledWhenOneCrashRemains_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Crashes_IncreaseTopSpeed_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Crashes_IncreaseTopSpeed_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Crashes_RestoredOnTakedowns_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Crashes_RestoredOnTakedowns_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Crashes_ShieldWhenOneCrashRemains_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Crashes_ShieldWhenOneCrashRemains_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Crashes_SurgingWhenOneCrashRemains_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Crashes_SurgingWhenOneCrashRemains_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_CritMalf_EasierCheck_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_CritMalf_EasierCheck_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_CritMalf_PerfectIncreasesSpeed_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_CritMalf_PerfectIncreasesSpeed_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_CritMalf_PerfectRecoversCrash_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Energy_AddOnTakedown_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Energy_AddOnTakedown_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Energy_CorrodeRechargesOverTime_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Energy_CorrodeRechargesOverTime_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Energy_FasterAfterburnerRecharge_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Energy_FasterAfterburnerRecharge_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Energy_GainCooled_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Energy_GainCooled_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 10
+  },
+  "T_UI_AFX_Energy_GainOnTakedown_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Energy_GainOnTakedown_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Energy_GainOnTakedown_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Energy_GainOnTakedown_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Energy_GainOnTakedown_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Energy_GainOnTakedown_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Energy_GainSurging_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Energy_GainSurging_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_Ability_GainCorroded_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Ability_GainCorroded_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_Ability_LongerCooldown_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Ability_LongerCooldown_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 3
+  },
+  "T_UI_AFX_Faulty_Ability_OneLessTotalEnergy_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Ability_OneLessTotalEnergy_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Faulty_AfterburnMustBeFull_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_AfterburnMustBeFull_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Faulty_Afterburner_DecayWhileAirborne_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Afterburner_DecayWhileAirborne_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_Afterburner_GainBurning_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Afterburner_GainBurning_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_Afterburner_becomeFrozen_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Afterburner_becomeFrozen_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Faulty_Afterburner_onEmptyBecomeBurning_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Afterburner_onEmptyBecomeBurning_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_Afterburner_onEmptyBecomeFrozen_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Afterburner_onEmptyBecomeFrozen_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_Afterburner_onEmptyCorrode_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Afterburner_onEmptyCorrode_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Faulty_Afterburner_onEmptySysMalf_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Afterburner_onEmptySysMalf_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Faulty_BlockOvercharged_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_BlockOvercharged_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_BlockSurge_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_BlockSurge_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_Burning_AbilityTriggersBurning_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Burning_AbilityTriggersBurning_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Faulty_Burning_GainBurningWhenTakedown_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Burning_GainBurningWhenTakedown_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Faulty_Burning_GainChoked_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Burning_GainChoked_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Faulty_Burning_GainWhileSpeeding_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Burning_GainWhileSpeeding_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Faulty_Burning_NoDecay_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Burning_NoDecay_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_Concussed_OnImpact_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Concussed_OnImpact_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Faulty_Condition_FrozenWhenAirborne_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Condition_FrozenWhenAirborne_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_Conditions_CorrodeVulnerability_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Conditions_CorrodeVulnerability_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_Conditions_ExplosiveBurning_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Conditions_ExplosiveBurning_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Faulty_Crash_ReturnDisrupted_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Crash_ReturnDisrupted_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Faulty_CritMalf_HardCheck_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_CritMalf_HardCheck_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Faulty_CritMalf_MoreLikely_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_CritMalf_MoreLikely_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_DisruptedDecaysAfterburner_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_DisruptedDecaysAfterburner_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_FreezeVulnerability_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_FreezeVulnerability_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 10
+  },
+  "T_UI_AFX_Faulty_Frozen_IncreasedSteeringPenalty_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Frozen_IncreasedSteeringPenalty_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Faulty_Frozen_LastsLonger_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Frozen_LastsLonger_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_GainDisrupted_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_GainDisrupted_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_GainSysMalf_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_GainSysMalf_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_Landing_BecomeConcussed_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Landing_BecomeConcussed_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_NoSlipstreaming_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_NoSlipstreaming_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_Overcharged_GainBurning_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Overcharged_GainBurning_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Faulty_Overheating_AppliesBurn_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Overheating_AppliesBurn_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_Overheating_AppliesCorrode_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Overheating_AppliesCorrode_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_Overheating_AppliesFrozen_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Overheating_AppliesFrozen_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_PerfectStartDifficulty_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_PerfectStartDifficulty_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Faulty_PerfectStart_Crash_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_PerfectStart_Crash_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Faulty_Ramjet_HeatIncrease_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Ramjet_HeatIncrease_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Faulty_Ramjet_LessPower_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Ramjet_LessPower_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Faulty_Ramjet_ReducedAlarm_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Ramjet_ReducedAlarm_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Faulty_Slipstreaming_BecomeFrozen_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Slipstreaming_BecomeFrozen_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Faulty_Slipstreaming_GainHeated_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_Slipstreaming_GainHeated_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_StartWithWeakAfterburner_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_StartWithWeakAfterburner_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_StuckSteering_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_StuckSteering_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Faulty_SysMalf_BecomeCorroded_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_SysMalf_BecomeCorroded_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_SysMalf_GainFrozen_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_SysMalf_GainFrozen_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Faulty_SysMalf_LessPowerfulAfterburner_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_SysMalf_LessPowerfulAfterburner_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Faulty_SysMalf_TripleDuration_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_SysMalf_TripleDuration_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Faulty_gainFrozen_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Faulty_gainFrozen_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_FirstPlace_GainShielded_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_FirstPlace_GainShielded_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Frozen_IncreaseSpeed_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Frozen_IncreaseSpeed_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Frozen_MoreCooling_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Frozen_MoreCooling_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Frozen_PowerfulRamjet_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Frozen_PowerfulRamjet_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Frozen_ReducedSteeringPenalty_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Frozen_ReducedSteeringPenalty_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ignition_PerfectStartPower_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ignition_PerfectStartPower_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 3
+  },
+  "T_UI_AFX_Ignition_PerfectStartPower_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ignition_PerfectStartPower_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 3
+  },
+  "T_UI_AFX_Landing_IncreaseSpeedStat_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Landing_IncreaseSpeedStat_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Landing_PerfectBoost_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Landing_PerfectBoost_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Landing_PerfectBoost_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Landing_PerfectBoost_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_MYST_FractureTools_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_MYST_FracturedTools_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_MYST_Ramjet_MorePowerPerTakedown_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_MYST_Ramjet_MorePowerPerTakedown_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_MYST_Ramjet_MorePowerPerTakedown_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_MYST_Ramjet_MorePowerPerTakedown_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_MYST_Ramjet_MorePowerPerTakedown_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_MYST_Ramjet_MorePowerPerTakedown_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Overcharge_WhenAirborne_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Overcharge_WhenAirborne_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Overcharged_GainSurge_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Overcharged_GainSurge_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Overcharged_GainUponLanding_V1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Overcharged_GainUponLanding_V1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Overcharged_GainUponLanding_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Overcharged_GainUponLanding_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Overcharged_GainWhileSpeeding_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Overcharged_GainWhileSpeeding_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Overcharged_RamjetActivatesOvercharged_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Overcharged_RamjetActivatesOvercharged_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Overcharged_RemoveSysMalf_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Overcharged_RemoveSysMalf_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_PerfectStart_GainOvercharged_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_PerfectStart_GainOvercharged_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_PerfectStart_GainShield_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_PerfectStart_GainShield_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_PerfectStart_GainShield_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_PerfectStart_GainShield_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_PerfectStart_ImprovedSlipstreaming_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_PerfectStart_ImprovedSlipstreaming_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_PerfectStart_ImprovedSlipstreaming_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_PerfectStart_ImprovedSlipstreaming_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ramjet_AlarmBoost_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_AlarmBoost_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Ramjet_CooledWhenCritical_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_CooledWhenCritical_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Ramjet_CooledWhenCritical_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_CooledWhenCritical_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Ramjet_CooledWhenCritical_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_CooledWhenCritical_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Ramjet_CoolsFaster_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_CoolsFaster_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Ramjet_CoolsFaster_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_CoolsFaster_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Ramjet_CriticalResetChance_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_CriticalResetChance_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ramjet_CriticalResetChance_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_CriticalResetChance_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ramjet_CriticalResetChance_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_CriticalResetChance_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ramjet_ExtendedAlarm_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_ExtendedAlarm_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Ramjet_GainShieldWhenCritical_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_GainShieldWhenCritical_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Ramjet_GainShieldWhenCritical_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_GainShieldWhenCritical_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Ramjet_GainShieldWhenCritical_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_GainShieldWhenCritical_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Ramjet_GainShieldWhile_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_GainShieldWhile_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ramjet_GainSurgingWhenCritical_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_GainSurgingWhenCritical_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Ramjet_GainSurgingWhenCritical_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_GainSurgingWhenCritical_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Ramjet_GainSurgingWhenCritical_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_GainSurgingWhenCritical_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Ramjet_HeatReduction_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_HeatReduction_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ramjet_HeatReduction_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_HeatReduction_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ramjet_HeatReduction_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_HeatReduction_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ramjet_HeatReduction_v4_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_HeatReduction_v4_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ramjet_ImprovedCooldown_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_ImprovedCooldown_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Ramjet_ImprovedCooldown_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_ImprovedCooldown_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Ramjet_ImprovedCooldown_v3_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_ImprovedCooldown_v3_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Ramjet_MorePower_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_MorePower_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Ramjet_NoHeatWhileAirborne_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_NoHeatWhileAirborne_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 9
+  },
+  "T_UI_AFX_Ramjet_OverheatIncreasesPowerUntilCrash_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_OverheatIncreasesPowerUntilCrash_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ramjet_OverheatIncreasesPowerUntilCrash_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_OverheatIncreasesPowerUntilCrash_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Ramjet_OverheatingReleaseResetsHeat_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_OverheatingReleaseResetsHeat_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Ramjet_ResetHeatOnLanding_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_ResetHeatOnLanding_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Ramjet_ResetHeatOnLanding_v2_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_ResetHeatOnLanding_v2_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Ramjet_TempCanDropWhileBoosting_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Ramjet_TempCanDropWhileBoosting_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Shielded_GainOnPerfectLanding_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Shielded_GainOnPerfectLanding_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Shielded_GainOnRaceStart_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Shielded_GainOnRaceStart_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Shielded_GainOnSpeed_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Shielded_GainOnSpeed_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Slipstream_gainSurging_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Slipstream_gainSurging_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Slipstreaming_ImprovedBuffs_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Slipstreaming_ImprovedBuffs_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Slipstreaming_LastsUntilImpact_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Slipstreaming_LastsUntilImpact_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Surge_CancelChoked_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Surge_CancelChoked_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Surge_GainShielded_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Surge_GainShielded_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Surge_GainWhileAirborne_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Surge_GainWhileAirborne_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Surge_SurgeToCooled_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Surge_SurgeToCooled_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Surging_AfterburnerMoreDuration_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Surging_AfterburnerMoreDuration_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Surging_AfterburnerMorePowerful_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Surging_AfterburnerMorePowerful_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AFX_Surging_BlockSysMalf_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Surging_BlockSysMalf_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_Surging_FasterAbilityCooldowns_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Surging_FasterAbilityCooldowns_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Surging_ResetRamjet_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Surging_ResetRamjet_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 7
+  },
+  "T_UI_AFX_SysMalf_GainCooled_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_SysMalf_GainCooled_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 9
+  },
+  "T_UI_AFX_SysMalf_GainOvercharged_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_SysMalf_GainOvercharged_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_SysMalf_GainSurge_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_SysMalf_GainSurge_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_SysMalf_PowerfulAfterburner_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_SysMalf_PowerfulAfterburner_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_SysMalf_PowerfulRamjetAndAfterburner_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_SysMalf_PowerfulRamjetAndAfterburner_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_SysMalf_ShorterMalfunction_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_SysMalf_ShorterMalfunction_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_AFX_Takedown_AbilityCooldown_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Takedown_AbilityCooldown_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Takedown_GainCooled_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Takedown_GainCooled_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Takedown_GainSurgeAndOvercharged_v1_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Takedown_GainSurgeAndOvercharged_v1_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 9
+  },
+  "T_UI_AFX_Takedown_IncreaseCooledPotency_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Takedown_IncreaseCooledPotency_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 5
+  },
+  "T_UI_AFX_Takedown_IncreaseSpeedStat_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Takedown_IncreaseSpeedStat_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 6
+  },
+  "T_UI_AFX_Takedown_ResetHeat_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_AFX_Takedown_ResetHeat_Lg_Icn": {
+    "w": 236,
+    "h": 122,
+    "glyph": false,
+    "kb": 8
+  },
+  "T_UI_AbilitySurround_HUD": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_Ability_Autopilot_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 1
+  },
+  "T_UI_Ability_Disruptor_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 1
+  },
+  "T_UI_Ability_EnergyShield_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 0
+  },
+  "T_UI_Ability_IonBlast_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 3
+  },
+  "T_UI_Ability_IonBolt_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 3
+  },
+  "T_UI_Ability_Mines_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 1
+  },
+  "T_UI_Ability_Rage_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 0
+  },
+  "T_UI_Ability_Rush_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 0
+  },
+  "T_UI_Ability_Shield_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Ability_Shockwave_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Ability_StatusScrubber_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 1
+  },
+  "T_UI_Ability_Surge_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 1
+  },
+  "T_UI_Ability_Vent_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 4
+  },
+  "T_UI_Abstract_A_Icn": {
+    "w": 64,
+    "h": 64,
+    "glyph": true,
+    "kb": 0
+  },
+  "T_UI_Abstract_B_Icn": {
+    "w": 64,
+    "h": 64,
+    "glyph": true,
+    "kb": 0
+  },
+  "T_UI_Affix_Icn_1": {
+    "w": 64,
+    "h": 64,
+    "glyph": true,
+    "kb": 0
+  },
+  "T_UI_Affix_Icn_5": {
+    "w": 64,
+    "h": 64,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_Affix_Icn_9": {
+    "w": 64,
+    "h": 64,
+    "glyph": true,
+    "kb": 0
+  },
+  "T_UI_Affix_Icn_m11": {
+    "w": 64,
+    "h": 64,
+    "glyph": true,
+    "kb": 0
+  },
+  "T_UI_Affix_Icn_m20": {
+    "w": 64,
+    "h": 64,
+    "glyph": true,
+    "kb": 0
+  },
+  "T_UI_Affix_Icn_m24": {
+    "w": 64,
+    "h": 64,
+    "glyph": true,
+    "kb": 0
+  },
+  "T_UI_Affix_Icn_m9": {
+    "w": 64,
+    "h": 64,
+    "glyph": true,
+    "kb": 0
+  },
+  "T_UI_BlackMarketRepair_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 0
+  },
+  "T_UI_BuildStats_Acceleration_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_BuildStats_Advanced_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_BuildStats_Battery_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_BuildStats_Boost_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_BuildStats_Cornering_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_BuildStats_Resilience_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_FE_MainMenu_TimeEvent_Icn": {
+    "w": 64,
+    "h": 64,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_Favor_ElegantProfessional_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_ExoticVendor_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Ghost_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_InnerHonour_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Mechanic_A_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Mechanic_B_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Mentor_A_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Mentor_B_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Mercenary_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Nomad_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Promoter_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Protege_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_QuietStrength_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Rager_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Sponsor_A_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Sponsor_B_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Sponsor_C_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Star_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Thrall_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Favor_Veteran_stitch_Icn": {
+    "w": 73,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Icon_Medium_FPO": {
+    "w": 96,
+    "h": 96,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Keyword_Afterburner_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_Keyword_Burning_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_Keyword_Cooled_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_Keyword_Crash_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_Keyword_Frozen_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_Keyword_Overcharged_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_Keyword_Position_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_Keyword_Ramjet_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_RacerStyle_Abilities_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_RacerStyle_Afterburner_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_RacerStyle_Airborne_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_RacerStyle_Antagonist_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_RacerStyle_Battling_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_RacerStyle_Burning_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_RacerStyle_Cooling_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_RacerStyle_Defence_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_RacerStyle_Drafting_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_RacerStyle_Frozen_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_RacerStyle_Malfunction_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_RacerStyle_Ramjet_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_RacerStyle_Slipstreaming_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_RacerStyle_Struggling_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_RacerStyle_Surging_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_Sponsor_01_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_Sponsor_02_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_Sponsor_03_Icn": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_VehicleSelect_Bike_Fallback": {
+    "w": 560,
+    "h": 416,
+    "glyph": false,
+    "kb": 12
+  },
+  "T_UI_VehicleSelect_Car_Fallback": {
+    "w": 560,
+    "h": 416,
+    "glyph": false,
+    "kb": 35
+  },
+  "T_UI_VehicleSelect_Plane_Fallback": {
+    "w": 560,
+    "h": 416,
+    "glyph": false,
+    "kb": 19
+  },
+  "T_UI_Vehicle_Bike": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 1
+  },
+  "T_UI_Vehicle_Car": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  },
+  "T_UI_Vehicle_Plane_Icn": {
+    "w": 96,
+    "h": 61,
+    "glyph": false,
+    "kb": 2
+  },
+  "T_UI_Vehicle_Skimmer": {
+    "w": 96,
+    "h": 96,
+    "glyph": true,
+    "kb": 2
+  }
+}

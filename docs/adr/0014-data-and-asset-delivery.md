@@ -16,6 +16,14 @@ Each legacy page inlines `planner.json` (about 460 KB) and 544 icons as base64 i
   - If it grows, it's split by area (vehicles, parts, tour) so each page loads only what it needs.
 - **Text and keyword highlights** stay in the data (`hl` arrays from the game's `<H1>` tags), not baked into HTML.
 
+## Implementation (2026-11-01)
+
+- **Icons:** the datamine already exports every icon as a sized WebP, with an index of size and glyph flag. They're copied as-is to `src/assets/icons/`, with no re-encoding.
+  - `src/lib/data/index.ts` maps icon names to URLs with Vite's `import.meta.glob(..., { query: '?url' })`.
+  - Vite emits each icon as its own hashed, cacheable file, and only icons a page actually renders get downloaded.
+  - Astro's image optimizer isn't used: the files are already the right size and format, and the names are only known in the browser.
+- **Game data:** `src/data/planner.json` is imported as a JSON module, which Vite bundles once and both pages share.
+
 ## Consequences
 
 - First load should drop substantially and repeat visits should be nearly free. The exact numbers will be measured during the migration and recorded here.
