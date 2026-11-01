@@ -8,7 +8,7 @@ import svelteConfig from './svelte.config.js';
 
 // ADR 0007: strict, type-checked rules everywhere; no `any`, no unexplained non-null assertions.
 export default defineConfig(
-  { ignores: ['dist/', '.astro/', 'node_modules/', 'playwright-report/', 'test-results/'] },
+  { ignores: ['dist/', '.astro/', 'node_modules/', 'playwright-report/', 'test-results/', 'tests/legacy/'] },
   js.configs.recommended,
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,
@@ -43,6 +43,15 @@ export default defineConfig(
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
+    },
+  },
+  {
+    // ADR 0008: the engine and other logic stay framework-free, so they run in Node, tests and any UI.
+    files: ['src/lib/**/*.ts'],
+    languageOptions: { globals: { ...globals.node } },
+    rules: {
+      'no-restricted-imports': ['error', { patterns: [{ regex: '^(svelte|astro)(/.*)?$|^astro:', message: 'src/lib is framework-free (ADR 0008).' }] }],
+      'no-restricted-globals': ['error', 'window', 'document', 'localStorage', 'navigator', 'location'],
     },
   },
   {

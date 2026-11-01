@@ -23,6 +23,29 @@ The planner and tour simulator both use them, and so does Node (`test-engine.js`
   - `check-offer.js`
   - `coverage-check.js`
 
+## Implementation (2026-11-01)
+
+- **`src/lib/engine/`**
+  - `ops.ts`: tune operations, cells, the combine formula.
+  - `evaluate.ts`: `collect` and `evaluate`, including the Speed-proc Power bonus.
+  - `build.ts`: the `Build` type, `freshBuild`, mode filters.
+  - `codes.ts`: `encodeBuild` and `decodeBuild`, which index through `build-order.json` (ADR 0010).
+  - `speeds.ts`: top speed and boost bonuses for the readout.
+- **`src/lib/synergy/synergy.ts`:** the recommender (`createSynergy`).
+- **Proving parity:** the legacy `engine.js` and `synergy.js` are kept verbatim in `tests/legacy/` as reference implementations. `parity.test.ts` runs both side by side and requires identical results on:
+  - every part, ability, favour and racer style, on every vehicle, plain and with every situational effect counted
+  - every slot at every level
+  - an everything-at-once build
+  - synergy tags, scores, focus and upgrade advice for every style
+
+  A deliberate 0.1% change to the combine formula fails 16 of those tests, so they do detect drift.
+- **Retiring the reference copies:** delete `tests/legacy/` together with the legacy site. After that the explicit tests carry the regression baseline:
+  - the legacy `test-engine.js` cases
+  - real shared links
+  - the live planner's top speeds
+- **Enforcement:** ESLint fails any import of `svelte`, `astro` or `astro:*`, and any use of DOM globals, under `src/lib/`.
+- **Tour simulation: moved to its own PR.** It is a state machine written against the legacy page's UI state, and its API should be designed together with the new tour UI (ADR 0012). The part-family rule (ADR 0009) and the seeded RNG still apply when it's ported.
+
 ## Consequences
 
 - UI rewrites can't change game maths without failing a test.

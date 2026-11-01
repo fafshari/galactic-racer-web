@@ -3,11 +3,14 @@
 import type { z } from 'zod';
 import type * as S from './schema.ts';
 
-/** Recursively readonly. Branded strings are left alone, so their brand survives. */
-export type DeepReadonly<T> = T extends string | number | boolean | null | undefined
-  ? T
-  : T extends readonly (infer U)[]
-    ? readonly DeepReadonly<U>[]
+/**
+ * Recursively readonly. Branded strings are left alone, so their brand survives, and the mapped type keeps tuples
+ * as tuples (`[number, number]` stays a pair, not `number[]`).
+ */
+export type DeepReadonly<T> = unknown extends T
+  ? T // free-form game properties stay `unknown`, to be narrowed where they're read
+  : T extends string | number | boolean | null | undefined
+    ? T
     : { readonly [K in keyof T]: DeepReadonly<T[K]> };
 
 type Data<T extends z.ZodType> = DeepReadonly<z.output<T>>;
@@ -28,6 +31,7 @@ export type OfferRarity = z.output<typeof S.OfferRarity>;
 export type AbilityLevel = z.output<typeof S.AbilityLevel>;
 
 export type ConfigValue = Data<typeof S.ConfigValue>;
+export type FloatCurve = Data<typeof S.FloatCurve>;
 export type Configs = Data<typeof S.Configs>;
 export type TuneOp = Data<typeof S.TuneOp>;
 export type Tuneset = Data<typeof S.Tuneset>;

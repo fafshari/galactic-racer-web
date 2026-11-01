@@ -6,8 +6,9 @@ Fan-made theorycrafting site for STAR WARS: Galactic Racer: a **build planner** 
 > - the Astro scaffold: tooling, design tokens, layout, placeholder pages and the first components (`Tag`, `StatPips`)
 > - CI
 > - the data contract: schema, import, permanent build-code order and icons
+> - the engine, build codes, speed readout and synergy scorer, proven identical to the legacy ones
 >
-> The engine and the real pages are still to port. Until they land, the live site is the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
+> The tour simulation and the real pages are still to port. Until they land, the live site is the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
 
 Architecture decisions live in [`docs/adr/`](docs/adr/README.md). Read the relevant ADR before changing an area, and add or supersede an ADR when a decision changes.
 
@@ -174,11 +175,13 @@ src/
   integrations/       dev-pages.ts (dev-only routes), validate-data.ts (data check on dev/build start)
   styles/             global.scss, _tokens.scss (light/dark CSS variables), _breakpoints.scss
   lib/data/           schema, types, references and label checks, build-code order, loader (index.ts)
-  lib/                engine and build codes (to come)
+  lib/engine/         evaluate (tuned values), build codes, speeds, the Build type (index.ts re-exports)
+  lib/synergy/        the tour recommender (createSynergy)
   data/               imported game data (see "Game data")
   assets/icons/       game icons (WebP)
 scripts/              import-data.ts (runs on Node's built-in TypeScript support)
 tests/e2e/            Playwright specs
+tests/legacy/         verbatim legacy engine.js / synergy.js, reference for parity tests only
 docs/adr/             architecture decisions
 ```
 
@@ -186,6 +189,12 @@ docs/adr/             architecture decisions
 - Fonts are self-hosted through Astro's `fonts` config (Unbounded, Barlow, Barlow Semi Condensed, IBM Plex Mono) and exposed as `--font-display`, `--font-label`, `--font-body` and `--font-mono`.
 - Svelte components use runes (`$props`, `$state`, `$derived`) and typed `Props` interfaces. Variants are union-typed props mapped to RSCSS `-variant` classes (see `Tag.svelte`).
 - Components whose showcase needs state get a small `*Demo.svelte` wrapper (see `StatPipsDemo.svelte`).
+
+## Engine rules
+
+- **`src/lib/` is framework-free** (ADR 0008). ESLint rejects Svelte or Astro imports and DOM globals there.
+- **Game maths must not drift from the legacy planner** until it is deliberately changed. `src/lib/engine/parity.test.ts` compares against `tests/legacy/`. If you change the maths on purpose, update the legacy reference copy in the same change and record why in an ADR. Never edit `tests/legacy/` for any other reason, and delete it when the legacy site is retired.
+- **Build codes:** always encode and decode through `encodeBuild` / `decodeBuild`, never by hand.
 
 ## Toolchain notes
 
