@@ -78,7 +78,7 @@ export const Tuneset = z.discriminatedUnion('stacking', [
 
 // ---- passive rules -----------------------------------------------------------------------------
 /** Free-form game properties of a requirement or effect, as exported. */
-const Props = z.record(z.string(), z.json());
+const Props = z.record(z.string(), z.unknown());
 
 export const Requirement = z.strictObject({ type: z.string().min(1), props: Props });
 export const Effect = z.strictObject({ type: z.string().min(1), props: Props, tracked: z.boolean(), tunesets: z.array(TunesetId) });
@@ -149,7 +149,7 @@ export const Ability = z.strictObject({
   upgradesTo: z.array(AbilityId),
   mp: z.string(),
   campaign: z.string(),
-  config: z.record(z.string(), z.json()),
+  config: z.record(z.string(), z.unknown()),
   tunesets: z.array(TunesetId),
   icon: IconName,
 });
