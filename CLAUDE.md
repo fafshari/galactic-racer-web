@@ -2,7 +2,7 @@
 
 Fan-made theorycrafting site for STAR WARS: Galactic Racer: a **build planner** (Multiplayer Tour and Campaign) and a **Multiplayer Tour simulator**, built from values datamined out of the game files.
 
-> **Status: migration in progress.** This repo is being set up as the new home of the site (Astro + Svelte, deployed on Vercel). Until the migration lands, the live site is still the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
+> **Status: migration in progress.** The Astro project is scaffolded: tooling, design tokens, layout, placeholder pages and the first components (`Tag`, `StatPips`). The engine, data import and real pages are still to port. Until they land, the live site is the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
 
 Architecture decisions live in [`docs/adr/`](docs/adr/README.md). Read the relevant ADR before changing an area, and add or supersede an ADR when a decision changes.
 
@@ -116,4 +116,44 @@ Lives in `swgr-datamine`; not part of this repo.
 
 ## Commands (web)
 
-None yet; the Astro project hasn't been scaffolded. Fill this in when it is (dev, build, check, test, e2e, data import).
+Run from the repo root. Node ≥ 22.23.4.
+
+```bash
+npm run dev       # dev server at http://localhost:4321 (also serves the /components showcase)
+npm run build     # static site into dist/
+npm run preview   # serve dist/
+npm run check     # astro check + svelte-check (fails on warnings)
+npm run lint      # ESLint, type-checked
+npm test          # Vitest
+npm run e2e       # Playwright against the production build (run `npx playwright install chromium` once)
+npm run verify    # all of the above, in CI order
+```
+
+Run `npm run verify` before every commit that touches code. A data import script is still to come.
+
+## Project layout
+
+```
+src/
+  pages/              index.astro, tour.astro (built as /index.html and /tour.html)
+  layouts/            BaseLayout.astro: fonts, global styles, header, footer
+  components/<Name>/  one folder per component: Name.svelte|astro, Name.test.ts, demos
+  dev/                pages that exist only under `astro dev` (components.astro)
+  integrations/       dev-pages.ts: injects the dev-only routes
+  styles/             global.scss, _tokens.scss (light/dark CSS variables), _breakpoints.scss
+  lib/                engine, data types, build codes (to come)
+tests/e2e/            Playwright specs
+docs/adr/             architecture decisions
+```
+
+- Import from `src` with the `~/` alias (`~/components/Tag/Tag.svelte`).
+- Fonts are self-hosted through Astro's `fonts` config (Unbounded, Barlow, Barlow Semi Condensed, IBM Plex Mono) and exposed as `--font-display`, `--font-label`, `--font-body` and `--font-mono`.
+- Svelte components use runes (`$props`, `$state`, `$derived`) and typed `Props` interfaces. Variants are union-typed props mapped to RSCSS `-variant` classes (see `Tag.svelte`).
+- Components whose showcase needs state get a small `*Demo.svelte` wrapper (see `StatPipsDemo.svelte`).
+
+## Toolchain notes
+
+- **TypeScript is pinned to 6.0.** TypeScript 7 is out, but `@astrojs/check`, `svelte-check`, `@astrojs/svelte` and `typescript-eslint` support only up to 6.0. Upgrade when they do.
+- **No `eslint-plugin-jsx-a11y`:** it doesn't support ESLint 10 yet. Svelte's compiler a11y warnings still run, and `svelte-check` fails on them.
+- **Linting `.astro` files:** the type-aware `no-unsafe-*` rules are off there, because the Astro parser can't type template expressions. `astro check` covers those files instead.
+- **Preview servers:** the Claude app's browser preview may start a stale server from an old session folder. If so, run `npm run dev` in a terminal and open http://localhost:4321.

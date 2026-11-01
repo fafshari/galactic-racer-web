@@ -1,0 +1,77 @@
+// Design tokens (ADR 0005). The game's front-end menu: cream print paper, rust / mustard / teal poster inks.
+// Components read these variables only; they never hard-code a theme colour.
+
+@mixin light {
+  --color-bg: #e8e1d2;
+  --color-panel: #f4efe4;
+  --color-sunk: #e2d9c7;
+  --color-line: #cdc1a8;
+  --color-fg: #1d2428;
+  --color-muted: #675f50;
+  --color-accent: #b84a31;
+  --color-accent-soft: #f0d8ca;
+  --color-on-accent: #fbf6ea;
+  --color-mustard: #d6a03a;
+  --color-teal: #24505f;
+  --color-on-teal: #f3ead6;
+  --color-arc: rgb(29 36 40 / 13%);
+  --color-up: #487632;
+  --color-down: #b23d2a;
+  --color-cond: #24617a;
+  --color-cond-bg: #d3e2e4;
+  // rarity: white, bronze, silver, gold
+  --color-rarity-common: #d3ccbc;
+  --color-rarity-rare: #b0703f;
+  --color-rarity-epic: #98a1aa;
+  --color-rarity-legendary: #d2a12b;
+
+  color-scheme: light;
+}
+
+@mixin dark {
+  --color-bg: #13212a;
+  --color-panel: #1a2b34;
+  --color-sunk: #0f1a20;
+  --color-line: #2f4652;
+  --color-fg: #efe7d6;
+  --color-muted: #a49d8c;
+  --color-accent: #e06a4a;
+  --color-accent-soft: #3d2620;
+  --color-on-accent: #1a1410;
+  --color-mustard: #e2ae4c;
+  --color-teal: #234755;
+  --color-on-teal: #f3ead6;
+  --color-arc: rgb(239 231 214 / 7%);
+  --color-up: #8fc46f;
+  --color-down: #f08a73;
+  --color-cond: #7cc0d4;
+  --color-cond-bg: #1b3a45;
+  --color-rarity-common: #f1ece2;
+  --color-rarity-rare: #cd8a55;
+  --color-rarity-epic: #c3cad1;
+  --color-rarity-legendary: #e8b83e;
+
+  color-scheme: dark;
+}
+
+@mixin static {
+  // type: a heavy wide display face, italic condensed labels like the game's button prompts, a plain body face
+  --font-display: var(--font-unbounded), 'Bahnschrift', 'Segoe UI', sans-serif;
+  --font-label: var(--font-barlow-semi), 'Bahnschrift SemiCondensed', 'Arial Narrow', sans-serif;
+  --font-body: var(--font-barlow), 'Segoe UI', system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  // spacing scale (px)
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  // radii
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 999px;
+  // the paper grain behind every page
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .26 0 0 0 0 .18 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}

@@ -1,0 +1,80 @@
+---
+interface Props {
+  title: string;
+  eyebrow?: string;
+}
+
+const { title, eyebrow } = Astro.props;
+const path = Astro.url.pathname;
+const links = [
+  { href: '/', label: 'Build planner', current: path === '/' || path.endsWith('/index.html') },
+  { href: '/tour.html', label: 'Tour simulator', current: path.endsWith('/tour.html') || path.endsWith('/tour') },
+];
+---
+
+<header class="site-header">
+  <div class="titles">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1 class="title">{title}</h1>
+  </div>
+  <nav class="nav" aria-label="Site">
+    {links.map((l) => <a class="link" href={l.href} aria-current={l.current ? 'page' : undefined}>{l.label}</a>)}
+  </nav>
+</header>
+
+<style lang="scss">
+  // The game's top menu: wide caps, the current page in a rust pill; a rust / mustard / teal stripe underneath.
+  .site-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: end;
+    justify-content: space-between;
+    padding-bottom: var(--space-4);
+    background: linear-gradient(90deg, var(--color-accent) 0 40%, var(--color-mustard) 40% 62%, var(--color-teal) 62%) bottom / 100% 5px no-repeat;
+  }
+
+  .site-header > .titles {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .titles > .eyebrow {
+    margin: 0;
+    color: var(--color-accent);
+    font: italic 600 15px/1 var(--font-label);
+  }
+
+  .titles > .title {
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .site-header > .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .nav > .link {
+    padding: 9px 16px;
+    border-radius: var(--radius-pill);
+    color: var(--color-fg);
+    font: 800 13px/1 var(--font-display);
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      background: var(--color-sunk);
+    }
+
+    &[aria-current='page'] {
+      background: var(--color-accent);
+      color: var(--color-on-accent);
+    }
+  }
+</style>

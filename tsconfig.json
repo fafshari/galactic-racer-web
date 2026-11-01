@@ -1,0 +1,12 @@
+{
+  // ADR 0007: Astro's strictest preset (strict, noUncheckedIndexedAccess, exactOptionalPropertyTypes, ...).
+  "extends": "astro/tsconfigs/strictest",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "node_modules", "playwright-report", "test-results"],
+  "compilerOptions": {
+    "types": ["node"],
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  }
+}
