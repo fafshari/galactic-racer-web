@@ -7,6 +7,7 @@ Fan-made theorycrafting site for STAR WARS: Galactic Racer: a **build planner** 
 > - CI
 > - the data contract: schema, import, permanent build-code order and icons
 > - the engine, build codes, speed readout and synergy scorer, proven identical to the legacy ones
+> - the component library (see "Components")
 >
 > The tour simulation and the real pages are still to port. Until they land, the live site is the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
 
@@ -133,14 +134,16 @@ npm run preview   # serve dist/
 npm run check     # astro check + svelte-check (fails on warnings)
 npm run lint      # ESLint, type-checked
 npm test          # Vitest
-npm run e2e       # Playwright against the production build (run `npx playwright install chromium` once)
+npm run e2e       # Playwright: the site on the production build, the showcase on the dev server (run `npx playwright install chromium` once)
 npm run verify    # all of the above, in CI order
 npm run import-data [-- <path to swgr-datamine>]   # re-import game data after the datamine rebuilds planner.json
 ```
 
 - Run `npm run verify` before every commit that touches code.
 - CI (`.github/workflows/ci.yml`) runs the same on every PR and push to `main`.
-- Playwright serves the build on port 4322, so a running dev server on 4321 never gets in the way.
+- **Playwright ports:**
+  - The site's specs run against the production build on port 4322, so a running dev server never gets in the way.
+  - The showcase spec (`tests/e2e/showcase.spec.ts`) runs against the dev server on 4321, reusing one that's already running. Astro allows only one dev server per project.
 
 ## Game data
 
@@ -170,8 +173,9 @@ npm run import-data [-- <path to swgr-datamine>]   # re-import game data after t
 src/
   pages/              index.astro, tour.astro (built as /index.html and /tour.html)
   layouts/            BaseLayout.astro: fonts, global styles, header, footer
-  components/<Name>/  one folder per component: Name.svelte|astro, Name.test.ts, demos
-  dev/                pages that exist only under `astro dev` (components.astro)
+  components/<Name>/  one folder per component: Name.svelte|astro and Name.test.ts
+  dev/                pages that exist only under `astro dev`: components.astro + Showcase.svelte
+  lib/format/         engine rows to display values (labels, units, curves, keyword runs), no HTML
   integrations/       dev-pages.ts (dev-only routes), validate-data.ts (data check on dev/build start)
   styles/             global.scss, _tokens.scss (light/dark CSS variables), _breakpoints.scss
   lib/data/           schema, types, references and label checks, build-code order, loader (index.ts)
@@ -188,7 +192,23 @@ docs/adr/             architecture decisions
 - Import from `src` with the `~/` alias (`~/components/Tag/Tag.svelte`).
 - Fonts are self-hosted through Astro's `fonts` config (Unbounded, Barlow, Barlow Semi Condensed, IBM Plex Mono) and exposed as `--font-display`, `--font-label`, `--font-body` and `--font-mono`.
 - Svelte components use runes (`$props`, `$state`, `$derived`) and typed `Props` interfaces. Variants are union-typed props mapped to RSCSS `-variant` classes (see `Tag.svelte`).
-- Components whose showcase needs state get a small `*Demo.svelte` wrapper (see `StatPipsDemo.svelte`).
+
+## Components
+
+Showcased at `/components` under `npm run dev`. Every new component, and every new variant, gets a specimen in `src/dev/Showcase.svelte`, fed with real game data.
+
+| Group | Components |
+|---|---|
+| Basics | `Button` (default, primary, quiet; small), `ModeSwitch` (generic pill group), `Tag`, `GameIcon` (tints white glyphs, shows colour art as-is), `KeywordText` (the game's gold keywords), `InfoTip` (native popover) |
+| Overview | `StatRow` + `StatPips`, `SpeedPanel`, `StylePanel`, `AbilitySlot`, `PartRow` |
+| Pickers | `Drawer` (native modal `<dialog>`; bottom sheet on phones), `PartCard`, `RarityToggle`, `ChoiceCard`, `SearchField` |
+| Readout | `SituationalEffect` (on/off or a 0–50 trigger count), `ChangeRow` (renders a `RowView` from `src/lib/format`) |
+
+- **Logic in `src/lib`, not components.** Formatting and anything else testable without a DOM belongs in `src/lib/format` (or `lib/engine`). Components take the result as props.
+- **Native platform features over hand-rolled ones.** `Drawer` uses `<dialog>.showModal()`, which gives focus trapping, Escape to close, an inert page behind and focus returned to the opener. `InfoTip` uses the popover API (top layer, light dismiss). jsdom has neither, so test those in `tests/e2e/showcase.spec.ts`.
+- **Handlers on Svelte components need explicit parameter types** (`(n: number) => …`). ESLint can't infer them through component props and reports `any`.
+- **Shared Sass from a component** uses a relative path: `@use '../../styles/breakpoints' as bp;`. `svelte-check` compiles styles without Vite's `~/` alias.
+- **`svelte-ignore` comments hold only the warning codes.** Put the reason in a separate comment above it; the linter reads any extra words as codes.
 
 ## Engine rules
 

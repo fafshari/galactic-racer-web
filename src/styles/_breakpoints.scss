@@ -1,4 +1,4 @@
-// Shared breakpoints; import with `@use '~/styles/breakpoints' as bp;`.
+// Shared breakpoints. From a component: `@use '../../styles/breakpoints' as bp;` (a relative path, because svelte-check compiles styles without Vite's aliases).
 $phone: 520px;
 $narrow: 900px;
 
