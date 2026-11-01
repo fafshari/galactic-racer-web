@@ -44,5 +44,12 @@ The user wants type safety enforced and typing best practice followed.
 ## Consequences
 
 - The engine port is the first test of the types. Ambiguous shapes in `planner.json` get fixed at the source (the datamine build) rather than worked around.
+- **Where validation happens:** the schema lives in `src/lib/data/schema.ts`, and the types in `types.ts` are derived from it. The committed data is validated:
+  - by `npm run import-data`
+  - by `npm test`
+  - when every dev server or build starts (`src/integrations/validate-data.ts`)
+
+  Because of that, the browser doesn't re-parse a megabyte of JSON. `src/lib/data/index.ts` is the single validated boundary, and the only place raw JSON is cast to its types.
+- **Normalized on import:** the datamine writes `""` for "none". The import normalizes that to `null` and commits the normalized form, so the committed JSON is exactly what the types describe.
 - **TypeScript pinned to 6.0** (2026-11-01). TypeScript 7 is released, but the type checkers and linters this ADR relies on (`@astrojs/check`, `svelte-check`, `@astrojs/svelte`, `typescript-eslint`) declare support only up to 6.0. Move to 7 once they do.
 - Slightly more ceremony when adding fields to the data. That's intended, since the data contract is shared between two projects (ADR 0002).

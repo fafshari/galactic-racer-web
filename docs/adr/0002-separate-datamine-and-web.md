@@ -34,6 +34,17 @@ Game files, dumps, mappings and tools must never be published (ADR 0015). The us
 - The `planner.json` shape becomes an interface between the two projects. Changing it means updating `src/lib/data/types.ts` and the import validation in the same change.
 - Re-running the pipeline after a game patch is a two-step process: rebuild in the datamine, then import here.
 
-## Open questions
+## Implementation (2026-11-01)
 
-- Should the data export include a manifest (game build number, export date, usmap name), so the site can show which game build its numbers come from? Recommended: yes.
+- **`npm run import-data [-- <datamine path>]`** (`scripts/import-data.ts`) reads `out/planner.json` and `out/icons/` from the datamine.
+  - It validates everything, then writes:
+    - `src/data/planner.json`
+    - `src/data/icons.json`
+    - `src/data/build-order.json` (ADR 0010)
+    - `src/data/manifest.json`
+    - `src/assets/icons/*.webp`
+  - It writes nothing if any check fails.
+- **The manifest** records the game build, the mappings file used, a SHA-256 of the source `planner.json`, the icon count and the import time. It answers "which game build are these numbers from".
+- **Labels are owned by this repo.** `src/data/labels.json` holds the hand-written field labels and headings. They were written by hand, not datamined, so they belong with the site.
+  - The legacy pages still read `swgr-datamine/planner/labels.json` until they're retired; keep the two in step until then.
+  - The import refuses data that has a changeable field without a label.

@@ -2,7 +2,12 @@
 
 Fan-made theorycrafting site for STAR WARS: Galactic Racer: a **build planner** (Multiplayer Tour and Campaign) and a **Multiplayer Tour simulator**, built from values datamined out of the game files.
 
-> **Status: migration in progress.** The Astro project is scaffolded: tooling, design tokens, layout, placeholder pages and the first components (`Tag`, `StatPips`). The engine, data import and real pages are still to port. Until they land, the live site is the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
+> **Status: migration in progress.** Done so far:
+> - the Astro scaffold: tooling, design tokens, layout, placeholder pages and the first components (`Tag`, `StatPips`)
+> - CI
+> - the data contract: schema, import, permanent build-code order and icons
+>
+> The engine and the real pages are still to port. Until they land, the live site is the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
 
 Architecture decisions live in [`docs/adr/`](docs/adr/README.md). Read the relevant ADR before changing an area, and add or supersede an ADR when a decision changes.
 
@@ -78,6 +83,7 @@ From [ADR 0009](docs/adr/0009-game-mechanics-model.md); details and confidence l
 
 - Format: `gr2-{m|c}{vehicle}{style b36×2}{6 levels}.{parts}.{abilities}.{favours}`, stored in the URL hash.
 - Trailing sections may be missing: chat apps strip trailing dots.
+- **Positions come from `src/data/build-order.json`**, never from the order of the data arrays. That file matches the live legacy site, so every existing link decodes the same.
 - **Old links must keep loading.** Any format change needs a new prefix and a decoder for the old one. [ADR 0010](docs/adr/0010-build-codes.md)
 
 ## Legacy site (until the migration is done)
@@ -112,7 +118,8 @@ Lives in `swgr-datamine`; not part of this repo.
 - **Extractor:** `SwgrDump` (C#, CUE4Parse). Game is UE 5.7, IoStore, Oodle, no encryption. It writes JSON to `out/json`.
 - **Mappings:** the community `.usmap` in `mappings/`. The newest file is used, and it must match the game build.
 - **Data build:** `py/build_planner_data.py out` writes `out/planner.json`. It covers vehicles, styles, traits, abilities, parts (affixes), favours, tunesets and tour data, with keyword highlights from the game's `<H1>` text tags.
-- **After a game patch:** re-extract, rebuild `planner.json`, run the checks, then re-export into this repo. Ask the user before publishing.
+- **After a game patch:** re-extract, rebuild `planner.json`, run the legacy checks, then `npm run import-data` here (see "Game data"). Ask the user before publishing.
+- **Labels exist twice for now:** the legacy pages read `swgr-datamine/planner/labels.json`, while this repo owns `src/data/labels.json`. Keep them in step until the legacy pages are retired.
 
 ## Commands (web)
 
@@ -127,9 +134,34 @@ npm run lint      # ESLint, type-checked
 npm test          # Vitest
 npm run e2e       # Playwright against the production build (run `npx playwright install chromium` once)
 npm run verify    # all of the above, in CI order
+npm run import-data [-- <path to swgr-datamine>]   # re-import game data after the datamine rebuilds planner.json
 ```
 
-Run `npm run verify` before every commit that touches code. A data import script is still to come.
+- Run `npm run verify` before every commit that touches code.
+- CI (`.github/workflows/ci.yml`) runs the same on every PR and push to `main`.
+- Playwright serves the build on port 4322, so a running dev server on 4321 never gets in the way.
+
+## Game data
+
+- **Committed data:** `src/data/` holds the imported game data:
+  - `planner.json`
+  - `icons.json` (icon index)
+  - `manifest.json` (game build, mappings, source hash)
+  - `build-order.json`
+  - `labels.json`
+
+  Icons are WebP files in `src/assets/icons/`.
+- **Imported files:** everything except `labels.json` and `build-order.json` is written only by `npm run import-data`. Don't edit them by hand.
+- **`labels.json`** is hand-written and owned here. Add a label when the import reports a field without one.
+- **`build-order.json`** fixes every id's permanent build-code position (ADR 0010). The import only appends new ids; never reorder or delete entries by hand, or shared links will load the wrong build.
+- **Reading data:** go through `src/lib/data/index.ts`, which exports `planner`, `labels`, `buildOrder`, `manifest`, `iconUrl()` and `isGlyph()`. Never import the JSON files directly elsewhere.
+- **Where the shape is defined:** the schema (`src/lib/data/schema.ts`) is the contract with the datamine, and the types (`types.ts`) are derived from it.
+  - The schema uses strict objects, so a new or renamed field fails the import. Update the schema in the same change.
+  - The data is validated on import, in `npm test`, and when every dev server or build starts.
+- **After a game patch:**
+  1. In the datamine, re-extract and run `python py/build_planner_data.py out`.
+  2. Here, run `npm run import-data` and then `npm run verify`.
+  3. Review the diff, especially new or retired ids in `build-order.json`.
 
 ## Project layout
 
@@ -139,9 +171,13 @@ src/
   layouts/            BaseLayout.astro: fonts, global styles, header, footer
   components/<Name>/  one folder per component: Name.svelte|astro, Name.test.ts, demos
   dev/                pages that exist only under `astro dev` (components.astro)
-  integrations/       dev-pages.ts: injects the dev-only routes
+  integrations/       dev-pages.ts (dev-only routes), validate-data.ts (data check on dev/build start)
   styles/             global.scss, _tokens.scss (light/dark CSS variables), _breakpoints.scss
-  lib/                engine, data types, build codes (to come)
+  lib/data/           schema, types, references and label checks, build-code order, loader (index.ts)
+  lib/                engine and build codes (to come)
+  data/               imported game data (see "Game data")
+  assets/icons/       game icons (WebP)
+scripts/              import-data.ts (runs on Node's built-in TypeScript support)
 tests/e2e/            Playwright specs
 docs/adr/             architecture decisions
 ```

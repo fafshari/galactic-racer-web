@@ -22,7 +22,7 @@ Each file records one decision: the context, what we chose, and what follows fro
 | [0007](0007-typescript-strict.md) | TypeScript in strict mode | Accepted |
 | [0008](0008-framework-free-engine.md) | Framework-free engine in `src/lib` | Accepted |
 | [0009](0009-game-mechanics-model.md) | Game-mechanics model | Assumed |
-| [0010](0010-build-codes.md) | Build codes are a public contract | Accepted (stable ordering Open) |
+| [0010](0010-build-codes.md) | Build codes are a public contract | Accepted |
 | [0011](0011-vercel-hosting.md) | Host on Vercel; redirect the old GitHub Pages site | Accepted |
 | [0012](0012-build-overview-ux.md) | Build overview with slide-over drawer pickers | Accepted |
 | [0013](0013-testing.md) | Vitest and Playwright | Accepted |
