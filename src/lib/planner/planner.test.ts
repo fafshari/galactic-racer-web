@@ -118,10 +118,9 @@ describe('readout', () => {
     const cornering = planner.slots.find((s) => s.id === 'Cornering');
     if (!cornering) throw new Error('no Cornering slot');
     expect(slotImproves(planner, labels, cornering, 'Car' as VehicleId)).toContain('Grip curve');
-    // some slots only touch other vehicle classes (Advanced does nothing for a Landspeeder), but each does something somewhere
+    // every slot does something on every vehicle (Advanced's non-Podracer ops sit under the game's older "Operations" key)
     for (const s of planner.slots) {
-      const anywhere = planner.vehicles.some((v) => slotImproves(planner, labels, s, v.id).length > 0);
-      expect(anywhere, s.id).toBe(true);
+      for (const v of planner.vehicles) expect(slotImproves(planner, labels, s, v.id).length, `${s.id} ${v.id}`).toBeGreaterThan(0);
     }
   });
 });
