@@ -29,14 +29,14 @@
   <span class="field">
     {view.label}<InfoTip label={view.label}>{#each view.tip as line, i (i)}<p>{line}</p>{/each}</InfoTip>
   </span>
-  <span class="value">
+  <span class={['value', view.display.kind === 'parts' && '-parts']}>
     {#if view.display.kind === 'single' && pinnedNote && view.display.value.kind === 'number'}
       <span class="reading">{view.display.value.value}</span>
     {:else if view.display.kind === 'single'}
       {@render value(view.display.value)}
     {:else if view.display.kind === 'parts'}
       {#each view.display.items as item (item.name)}
-        <span class="part"><span class="part-name">{item.name}:</span> {@render value(item.value)}</span>
+        <span class="part"><span class="part-name">{item.name}</span>{@render value(item.value)}</span>
       {/each}
     {:else if view.display.kind === 'curve'}
       {view.display.changedPoints} curve point{view.display.changedPoints === 1 ? '' : 's'} changed
@@ -74,43 +74,69 @@
 </div>
 
 <style lang="scss">
-  // A container, so the row can stack its value under the label wherever it's placed narrowly.
   .change-row {
-    container-type: inline-size;
     border-top: 1px solid var(--color-line);
   }
 
+  // Label and value share a line when they fit; otherwise the value drops below, right-aligned. The label never
+  // gets narrower than 11em, so a long value can't squeeze it, and readings never break inside themselves.
   .change-row > .line {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    display: flex;
+    flex-wrap: wrap;
     gap: 2px 12px;
+    align-items: baseline;
     padding: 7px 0;
-  }
-
-  @container (max-width: 400px) {
-    .change-row > .line {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .line > .value {
-      justify-items: start;
-      text-align: left;
-    }
   }
 
   .line > .field {
     display: flex;
+    flex: 1 1 11em;
     flex-wrap: wrap;
     align-items: baseline;
-    overflow-wrap: anywhere;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  .line > .sources,
+  .line > .curve {
+    flex-basis: 100%;
   }
 
   .line > .value {
     display: grid;
+    flex: 0 1 auto;
     justify-items: end;
+    max-width: 100%;
+    margin-left: auto;
     font: 13px var(--font-mono);
     font-variant-numeric: tabular-nums;
     text-align: right;
+
+    // Several named values (low / mid / high speed): their own block under the label, name left, reading right.
+    &.-parts {
+      flex-basis: 100%;
+      gap: 3px;
+      justify-items: stretch;
+      padding: 4px 0 2px var(--space-3);
+      text-align: left;
+    }
+
+    // name and reading share a line when they fit; otherwise the reading drops below, right-aligned
+    .part {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 12px;
+      justify-content: space-between;
+    }
+
+    .part > .reading {
+      margin-left: auto;
+    }
+
+    // a reading never breaks inside itself ("5 s → 4.131 s (−17.4%)" stays whole)
+    .reading {
+      white-space: nowrap;
+    }
 
     .old,
     .part-name {
@@ -129,13 +155,10 @@
   .line > .sources {
     display: flex;
     flex-wrap: wrap;
-    grid-column: 1 / -1;
     gap: 4px;
   }
 
   .line > .curve {
-    grid-column: 1 / -1;
-
     summary {
       color: var(--color-accent);
       font-size: 12.5px;

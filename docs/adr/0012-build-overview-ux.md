@@ -46,8 +46,13 @@ Everything is visible at once.
 - **The readout column** holds the speed panel, situational effects and What changes. It's sticky on wide screens; everything stacks below 900 px.
 - **One `Drawer`** swaps its content by picker: vehicle, style, ability (for a given slot), part, favour. It closes after each pick.
 - **Rules:** every rule is a pure function in `src/lib/planner/`, and the Svelte island only holds state.
-- **Narrow layouts:** rows that sit in narrow panels (`ChangeRow`, `PartRow`, `FavourRow`) were made to adapt to their own width rather than the screen's. `ChangeRow` uses a container query. Part and favour rows always put their tags and controls on a second line, so nothing overflows a narrow panel on any screen.
+- **Narrow layouts:** rows that sit in narrow panels (`ChangeRow`, `PartRow`, `FavourRow`) were made to adapt to their own width rather than the screen's. `ChangeRow` wraps: the label keeps at least 11em and the value drops below it when they don't fit, readings never break inside themselves, and fields with several values (low / mid / high speed) get their own block under the label. Part and favour rows always put their tags and controls on a second line, so nothing overflows a narrow panel on any screen.
 - **One improvement over the legacy page:** once the build no longer matches the link it was opened from, the hash is dropped. In the legacy page, a reload after editing a linked build silently reverted the edits.
+
+## Tour simulator (2026-11-01)
+
+- The tour shares the components (`Panel`, `ChoiceCard`, `PartCard`, `StatRow`, `Tag`) but not the drawer: each phase offers only a handful of choices, so they sit directly in the stage panel.
+- Beside the stage, the side column shows the racer, owned abilities and parts, standings and the run log. It stacks below the stage on phones.
 
 ## Consequences
 

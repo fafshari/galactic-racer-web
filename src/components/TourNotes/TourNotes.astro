@@ -1,0 +1,47 @@
+---
+// What the tour simulator takes from the game and what it assumes (static; ships no JavaScript).
+---
+
+<section class="tour-notes" aria-label="About the simulation">
+  <p>
+    <b>Straight from the game files:</b> the three backers and their 18 contracts with credits per unit, form scoring (points per finishing
+    position and per won bet), the bottom 3 being labelled Underdog and the Underdog bonus, the six planets and their order, each planet's
+    shop and reward odds by rarity, every price (parts, abilities, upgrades, packs, rerolls), credits per race and placing, the three risk
+    bets, shop size (4 parts) and the 33.3% chance a part comes from a family you already own.
+  </p>
+  <p>
+    <b>Assumed, because the game keeps it in code:</b> how many options each reward or pack shows, how much an upgrade adds, that reroll
+    prices reset at each shop, that a contract pays its rate for every unit you achieve (targets are shown as the game's starting goal), and
+    the other 11 racers: each gets a hidden strength at the start of the tour and finishes by that strength plus a little variation each
+    race. If the game labels you differently, use the Underdog switch on the bet screen. Change the first two under "Assumptions" when you
+    start a run.
+  </p>
+  <p>
+    <b>Parts:</b> you hold one rarity of each part. Lower rarities of a part you own are never offered; a higher rarity can be, and taking it
+    replaces the one you own in the same slot.
+  </p>
+  <p>
+    <b>Recommendations:</b> every part, ability and trait is tagged from its game rules: what it triggers on and what it gives. An offer
+    scores higher when it shares your build's focus, gives something your build triggers on, or triggers on something your build produces.
+    Upgrades follow your racer style's own upgrade priority from the game files. It's a guide, not a solver.
+  </p>
+</section>
+
+<style lang="scss">
+  .tour-notes {
+    display: grid;
+    gap: var(--space-2);
+    max-width: 90ch;
+    margin-top: var(--space-5);
+    color: var(--color-muted);
+    font-size: 13.5px;
+
+    p {
+      margin: 0;
+    }
+
+    b {
+      color: var(--color-fg);
+    }
+  }
+</style>

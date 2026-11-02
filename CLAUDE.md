@@ -3,14 +3,15 @@
 Fan-made theorycrafting site for STAR WARS: Galactic Racer: a **build planner** (Multiplayer Tour and Campaign) and a **Multiplayer Tour simulator**, built from values datamined out of the game files.
 
 > **Status: migration in progress.** Done so far:
-> - the Astro scaffold: tooling, design tokens, layout, placeholder pages and the first components (`Tag`, `StatPips`)
+> - the Astro scaffold: tooling, design tokens, layout and the first components (`Tag`, `StatPips`)
 > - CI
 > - the data contract: schema, import, permanent build-code order and icons
 > - the engine, build codes, speed readout and synergy scorer, proven identical to the legacy ones
 > - the component library (see "Components")
 > - the build planner page (see "Build planner")
+> - the tour simulator: its simulation and page (see "Tour simulator")
 >
-> The tour simulator (its simulation and page) is still to port, and the site isn't deployed to Vercel yet. Until they land, the live site is the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
+> The site isn't deployed to Vercel yet. Until it is, the live site is the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
 
 Architecture decisions live in [`docs/adr/`](docs/adr/README.md). Read the relevant ADR before changing an area, and add or supersede an ADR when a decision changes.
 
@@ -183,6 +184,7 @@ src/
   lib/data/           schema, types, references and label checks, build-code order, loader (index.ts)
   lib/engine/         evaluate (tuned values), build codes, speeds, the Build type (index.ts re-exports)
   lib/synergy/        the tour recommender (createSynergy)
+  lib/tour/           tour simulation: seeded RNG, the tourAction reducer, offer fit labels, saved-run restore
   data/               imported game data (see "Game data")
   assets/icons/       game icons (WebP)
 scripts/              import-data.ts (runs on Node's built-in TypeScript support)
@@ -232,6 +234,18 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 - **Copy build link** writes the hash and copies the URL. If the clipboard is blocked, the code is left in the box to copy by hand.
 - **Readout:** "What changes" always lists the Afterburner and Ramjet top-speed bonuses (`PINNED` in `readout.ts`).
 - **Testing:** `tests/e2e/planner.spec.ts` covers these against the production build, including a real legacy link and the live planner's numbers. The stat rows' `<output>` levels are ARIA status regions too, so the toolbar message is addressed by its class in tests.
+
+## Tour simulator
+
+`src/pages/tour.astro` mounts the `TourSimulator` island and the static `TourNotes`. All game rules live in `src/lib/tour/`; the island only holds state.
+
+- **Reducer:** `tourAction(data, state, action)` returns `{ state, message? }` and never mutates its input. `TourState` is plain JSON, so it saves as is. In Svelte, pass `$state.snapshot(tour)`, not the proxy: the reducer `structuredClone`s its input, which fails on a proxy.
+- **Randomness:** `createRng` is the legacy mulberry32, re-seeded from `seed + rolls * 7919` for every roll. The same seed and actions always replay the same run (`replay`), and the unit tests rely on this.
+- **Parts:** one rarity per family (ADR 0009). Offers never include a lower or the same rarity of an owned family. A higher rarity replaces the owned part in its slot, even when the part slots are full.
+- **Fit labels:** `rateOffers` scores offers with `createSynergy`. The top offer is "Best fit"; others within 80% of it are "Good fit".
+- **Start-up:** the last run is restored from `localStorage` (`swgr-tour-v2`, `{ version: 1, state }`) through `restoreTour`, which rejects unknown ids. Otherwise a new run starts with a random seed.
+- **Layout:** the tour track and the current phase (`TourStage`) on the left; racer, owned abilities and parts, standings and the run log on the right. "Open this build in the planner" links the current build as a build code.
+- **Testing:** `src/lib/tour/tour.test.ts` plays whole runs and checks the rules; `tests/e2e/tour.spec.ts` plays races through the shop on desktop and phone.
 
 ## Engine rules
 
