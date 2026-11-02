@@ -40,7 +40,7 @@ What's particular to this site:
 - If two open PRs claim the same version, the one merged second takes the next number when it's brought up to date.
 - After a merge, `main` is tagged `vX.Y.Z` when the owner asks for a push. Tags are what the changelog's version links point to.
 
-**Baseline:** `main` as of PR #21 (Advanced upgrade effects) is **1.0.0**. Everything before it is summarised in that one entry. PR #22 (readout colours by improvement) and PR #23 (this versioning, the footer version and the "What's new" page) make up **1.0.1**. The page is minor by the table above, but the owner chose to keep it in 1.0.1 because it shipped alongside the baseline.
+**Baseline:** `main` as of PR #21 (Advanced upgrade effects) is **1.0.0**. Everything before it is summarised in that one entry. PR #22 (readout colours by improvement), PR #23 (this versioning) and PR #24 (the footer version and the "What's new" page) make up **1.0.1**. The page is minor by the table above, but the owner chose to keep it in 1.0.1 as the last piece of the versioning work.
 
 **Where the version shows:**
 - A **"What's new" page** (`/changelog.html`, in the site's navigation) shows `CHANGELOG.md` to players, so they don't need GitHub. It's built from the file at build time by `src/lib/changelog.ts`, which understands only what the changelog uses: release headings, `###` groups, one-line `- ` items, plain paragraphs before the first group, and inline links, `code` and **bold**. Anything else fails the unit tests rather than showing up broken.

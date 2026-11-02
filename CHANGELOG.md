@@ -11,7 +11,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Added
 
-- This "What's new" page, and the site's version in the footer. ([#23](https://github.com/fafshari/galactic-racer-web/pull/23))
+- This "What's new" page, and the site's version in the footer. ([#24](https://github.com/fafshari/galactic-racer-web/pull/24))
 
 ### Fixed
 
