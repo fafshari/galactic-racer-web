@@ -23,22 +23,27 @@
 </script>
 
 <div class="stat-row">
-  <GameIcon name={icon} size="md" />
-  <span class="name">
-    <span class="title">{name}{#if tip}<InfoTip label={name}>{@render tip()}</InfoTip>{/if}</span>
-    {#if part}<small class="part">{part}</small>{/if}
-  </span>
-  <StatPips {level} {max} label={name} {...onchange ? { onchange } : {}} />
-  <output class="value">{level}</output>
+  <div class="bar">
+    <span class="icon"><GameIcon name={icon} size="md" /></span>
+    <span class="name">
+      <span class="title">{name}{#if tip}<InfoTip label={name}>{@render tip()}</InfoTip>{/if}</span>
+      {#if part}<small class="part">{part}</small>{/if}
+    </span>
+    <span class="pips"><StatPips {level} {max} label={name} {...onchange ? { onchange } : {}} /></span>
+    <output class="value">{level}</output>
+  </div>
 </div>
 
 <style lang="scss">
-  @use '../../styles/breakpoints' as bp;
-
   // One stat in the game's build panel: a teal bar with the icon, the name and its pips.
+  // The row adapts to its own width, not the screen's: the stats panel can be narrow on any screen.
   .stat-row {
+    container-type: inline-size;
+  }
+
+  .stat-row > .bar {
     display: grid;
-    grid-template-columns: auto 132px minmax(0, 1fr) 26px;
+    grid-template-columns: auto 132px minmax(0, 1fr) 30px;
     gap: 10px;
     align-items: center;
     padding: 6px 10px;
@@ -46,23 +51,34 @@
     background: var(--color-teal);
     color: var(--color-on-teal);
 
-    // Ten pips don't fit beside the name on a phone, so they take a line of their own.
-    @include bp.phone {
-      grid-template-columns: 32px minmax(0, 1fr) 22px; // fixed: an auto column would grow to fit the pips row
+    // Below this, ten full-size pips no longer fit beside the name (they'd shrink and slide under the level),
+    // so they take a line of their own.
+    @container (width < 440px) {
+      grid-template-columns: 32px minmax(0, 1fr) 30px; // fixed: an auto column would grow to fit the pips row
       grid-template-areas:
         'icon name value'
         'pips pips pips';
       gap: 4px 8px;
       padding: 6px 8px;
 
-      > :nth-child(1) { grid-area: icon; }
+      > .icon { grid-area: icon; }
       > .name { grid-area: name; }
       > .value { grid-area: value; }
-      > :nth-child(3) { grid-area: pips; }
+      > .pips { grid-area: pips; }
     }
   }
 
-  .stat-row > .name {
+  .bar > .icon {
+    display: grid;
+  }
+
+  // a wrapper the row owns, so the grid can place it (scoped styles can't reach StatPips' own root)
+  .bar > .pips {
+    display: grid;
+    min-width: 0;
+  }
+
+  .bar > .name {
     display: grid;
     min-width: 0;
     line-height: 1.2;
@@ -78,9 +94,10 @@
     opacity: 0.7;
   }
 
-  .stat-row > .value {
+  .bar > .value {
     font: 800 16px var(--font-display);
     font-variant-numeric: tabular-nums;
     text-align: right;
+    white-space: nowrap;
   }
 </style>

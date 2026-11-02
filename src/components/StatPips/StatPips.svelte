@@ -47,7 +47,6 @@
     --pip-off: rgb(243 234 214 / 20%);
 
     display: flex;
-    gap: 2px;
     align-items: center;
     min-width: 0;
   }
@@ -56,10 +55,10 @@
     all: unset;
     box-sizing: border-box;
     display: grid;
-    flex: 0 1 15px; // shrinks on narrow rows, down to the width of a block
+    flex: 0 1 18px; // no gap between pips, so every pixel of the row is a click target
     place-items: center;
-    min-width: 11px;
-    height: 22px;
+    min-width: 13px;
+    height: 24px;
 
     &::after {
       content: '';
