@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Teal tile with the site's rust / mustard / cream racing stripes, slanted forward for speed. -->
+  <rect width="64" height="64" rx="14" fill="#24505f"/>
+  <path d="M6 50 L26 14 H37 L17 50 Z" fill="#b84a31"/>
+  <path d="M21 50 L41 14 H50 L30 50 Z" fill="#d6a03a"/>
+  <path d="M34 50 L54 14 H60 L40 50 Z" fill="#f3ead6"/>
+</svg>

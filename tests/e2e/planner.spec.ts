@@ -193,3 +193,52 @@ test('stat pips stay on one line, clickable and clear of the level, however narr
     await row.getByRole('button', { name: 'Level 3' }).click();
   }
 });
+
+test('vehicle traits explain themselves on hover and on keyboard focus', async ({ page }) => {
+  await page.goto(`/#${SHARED}`);
+  await ready(page);
+  const trait = page.locator('.vehicle-traits .hover-tip').first();
+  await trait.hover();
+  const tip = page.getByRole('tooltip');
+  await expect(tip).toBeVisible();
+  await expect(tip).not.toBeEmpty();
+  await page.mouse.move(0, 0);
+  await expect(tip).toBeHidden();
+  await trait.focus();
+  await expect(tip).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(tip).toBeHidden();
+});
+
+test('favourites: save a build, rename it, load it back after a reload, remove it', async ({ page }) => {
+  await page.goto(`/#${SHARED}`);
+  await ready(page);
+  await page.evaluate(() => { localStorage.removeItem('swgr-favorites'); });
+  await page.getByRole('button', { name: /Save to favourites/ }).click();
+  await expect(page.getByRole('button', { name: /In favourites/ })).toBeVisible();
+
+  await page.getByRole('button', { name: 'New build' }).click();
+  await page.reload();
+  await ready(page);
+  await page.getByRole('button', { name: /^Favourites/ }).click();
+  const drawer = page.getByRole('dialog', { name: 'Favourites' });
+  const row = drawer.locator('.favorite-row');
+  await expect(row).toHaveCount(1);
+  // the best boost with every on/off situational effect triggered: above the plain build's 597 km/h
+  const best = Number(await row.locator('.speed .number').textContent());
+  expect(best).toBeGreaterThan(597);
+  await row.getByRole('button', { name: /^Rename/ }).click();
+  await drawer.getByRole('textbox', { name: 'Favourite name' }).fill('Bike ramjet');
+  await page.keyboard.press('Enter');
+  await row.getByRole('button', { name: 'Copy link to Bike ramjet' }).click();
+  await expect(row.getByRole('status')).toHaveText('Copied');
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toMatch(/#gr2-m106475806$/);
+  await row.getByRole('button', { name: 'Load Bike ramjet' }).click();
+  await expect(drawer).toBeHidden();
+  await expect(topSpeed(page)).toHaveText('418');
+
+  await page.getByRole('button', { name: /^Favourites/ }).click();
+  await row.getByRole('button', { name: 'Remove Bike ramjet' }).click();
+  await expect(drawer.getByText('No favourites yet')).toBeVisible();
+});
+
