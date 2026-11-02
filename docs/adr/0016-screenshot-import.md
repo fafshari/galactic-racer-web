@@ -8,7 +8,7 @@
 Players want to bring the build they're running in the game into the planner without re-entering every slot. The game's **Build** screen (opened from the race menu) shows the whole build on one screen:
 - **Vehicle stats:** the vehicle name, the top speed in km/h, and a row of ten pips per stat.
 - **Racer style:** the style name and its traits by name.
-- **Abilities:** four slots, plus a crash ability that the planner doesn't model.
+- **Abilities:** four slots, plus a crash ability. The import reads the four regular slots. The planner has had a crash-ability slot since 2026-11-02 (ADR 0009), but the import doesn't read it yet.
 - **Installed parts:** a count ("4/4"), and a card per part with its name, description, icon and a row of rarity dots under the icon.
 
 The site is static (ADR 0003, 0011): there's no server to send an image to, and screenshots must not leave the player's device anyway.

@@ -30,3 +30,9 @@
 - **Build settings** (Node version, build command, output dir) live in the repo, not only in the Vercel dashboard, so they're reviewable.
 - **Base path:** the old `/galactic-racer-planner/` prefix goes away on Vercel. The site is served from the root, and the redirect pages handle old paths.
 - **Old repo:** the `fafshari/galactic-racer-planner` public repo stays, but holds only the redirects.
+
+## Status (2026-11-02)
+
+- **Live:** the site is deployed at `galactic-racer-planner.vercel.app`, connected to this repo.
+- **Source no longer private:** the repo was made public under the MIT license (ADR 0017). That removes the "source stays private" reason above, but not the decision: Vercel still keeps the GitHub username out of the address and builds from the source repo directly.
+- **Redirects not done yet:** the old GitHub Pages site still serves the legacy pages. Reducing it to redirects is still to do.

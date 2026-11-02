@@ -32,7 +32,7 @@ The planner and tour simulator both use them, and so does Node (`test-engine.js`
   - `codes.ts`: `encodeBuild` and `decodeBuild`, which index through `build-order.json` (ADR 0010).
   - `speeds.ts`: top speed and boost bonuses for the readout.
 - **`src/lib/synergy/synergy.ts`:** the recommender (`createSynergy`).
-- **Proving parity:** the legacy `engine.js` and `synergy.js` are kept verbatim in `tests/legacy/` as reference implementations. `parity.test.ts` runs both side by side and requires identical results on:
+- **Proving parity:** the legacy `engine.js` and `synergy.js` are kept verbatim in `tests/legacy/` (as `engine.cjs` and `synergy.cjs`) as reference implementations. `parity.test.ts` runs both side by side and requires identical results on:
   - every part, ability, favour and racer style, on every vehicle, plain and with every situational effect counted
   - every slot at every level
   - an everything-at-once build

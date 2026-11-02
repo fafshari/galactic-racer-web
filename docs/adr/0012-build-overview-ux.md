@@ -40,7 +40,7 @@ Everything is visible at once.
 - **The overview.** It uses `Panel`s for:
   - Vehicle stats: vehicle, art, traits and the six `StatRow`s with power.
   - Racer style: `StylePanel`, with a rank switch in Campaign.
-  - Abilities: four `AbilitySlot`s.
+  - Abilities: four `AbilitySlot`s, plus the crash-ability slot (ADR 0009).
   - Installed parts: `PartRow`s with rarity chips.
   - Favours, in Campaign.
 - **The readout column** holds the speed panel, situational effects and What changes. It's sticky on wide screens; everything stacks below 900 px.
@@ -48,6 +48,11 @@ Everything is visible at once.
 - **Rules:** every rule is a pure function in `src/lib/planner/`, and the Svelte island only holds state.
 - **Narrow layouts:** rows that sit in narrow panels (`ChangeRow`, `StatRow`, `PartRow`, `FavourRow`) were made to adapt to their own width rather than the screen's. `ChangeRow` wraps: the label keeps at least 11em and the value drops below it when they don't fit, readings never break inside themselves, and fields with several values (low / mid / high speed) get their own block under the label. `StatRow` always keeps its pips on one line with the name and level: as the row narrows, the name column gives way first (down to an ellipsis) and then the pips shrink to an explicit minimum, so they never slide under the level. Part and favour rows always put their tags and controls on a second line, so nothing overflows a narrow panel on any screen.
 - **One improvement over the legacy page:** once the build no longer matches the link it was opened from, the hash is dropped. In the legacy page, a reload after editing a linked build silently reverted the edits.
+
+## Additions (2026-11-02)
+
+- **Favourites:** a Favourites panel saves builds to `localStorage` (`swgr-favorites`) as build codes plus a name. Each `FavoriteRow` shows the build's icons, abilities and best boost, and loads the build when clicked.
+- **Collapsible panels:** a `Panel`'s title can collapse it to its header, remembered under `swgr-collapsed`. Every planner panel uses it, so a long overview can be folded down to the parts being worked on.
 
 ## Tour simulator (2026-11-01)
 

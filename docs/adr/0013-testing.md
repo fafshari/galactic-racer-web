@@ -33,4 +33,5 @@ They caught real bugs, like an unescaped apostrophe that broke a page. But the p
 ## Consequences
 
 - There are two test runners to maintain, each kept to what it's best at.
+- **Not enforced yet (2026-11-02):** CI runs `npm run verify` on every pull request and push to `main`, and `main` requires a pull request. But Vercel isn't set to wait for CI, so a failing commit that reaches `main` would still deploy.
 - Visual regression testing is out of scope for now. Playwright screenshots of `/components` can be added later (ADR 0006).

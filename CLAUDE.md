@@ -2,7 +2,7 @@
 
 Fan-made theorycrafting site for STAR WARS: Galactic Racer: a **build planner** (Multiplayer Tour and Campaign) and a **Multiplayer Tour simulator**, built from values datamined out of the game files.
 
-> **Status: migration in progress.** Done so far:
+> **Status: migration nearly done.** Done so far:
 > - the Astro scaffold: tooling, design tokens, layout and the first components (`Tag`, `StatPips`)
 > - CI
 > - the data contract: schema, import, permanent build-code order and icons
@@ -11,7 +11,10 @@ Fan-made theorycrafting site for STAR WARS: Galactic Racer: a **build planner** 
 > - the build planner page (see "Build planner")
 > - the tour simulator: its simulation and page (see "Tour simulator")
 >
-> The site isn't deployed to Vercel yet. Until it is, the live site is the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
+> - deployed on Vercel at https://galactic-racer-planner.vercel.app
+> - the repo made public under the MIT license ([ADR 0017](docs/adr/0017-open-source-mit.md))
+>
+> Still to do: turn the old GitHub Pages site (see "Legacy site") into redirects to the Vercel address. Update this file as each piece lands; once the migration is done, delete the legacy section.
 
 Architecture decisions live in [`docs/adr/`](docs/adr/README.md). Read the relevant ADR before changing an area, and add or supersede an ADR when a decision changes.
 
@@ -19,15 +22,16 @@ Architecture decisions live in [`docs/adr/`](docs/adr/README.md). Read the relev
 
 | | Path | Version control | Purpose |
 |---|---|---|---|
-| **Datamine** | `C:\Users\info\swgr-datamine` | **Never** (keep it out of git) | Extracts game files, builds `planner.json` and icons |
-| **Web** (this repo) | `C:\Users\info\galactic-racer-web` | git, private GitHub repo under **fafshari** | The site: Astro pages, Svelte components, engine, tests |
+| **Datamine** | `../swgr-datamine` (a sibling folder of this repo) | **Never** (keep it out of git) | Extracts game files, builds `planner.json` and icons |
+| **Web** (this repo) | `galactic-racer-web` | git, public GitHub repo under **fafshari**, MIT licensed | The site: Astro pages, Svelte components, engine, tests |
 
 The only things that cross from datamine to web are the **exported data files** (`planner.json` and icon images). See [ADR 0002](docs/adr/0002-separate-datamine-and-web.md).
 
 ## Hard rules
 
 - **Never commit or publish game files, dumps, mappings (`.usmap`) or the extraction tools.** Only the exported planner data belongs in this repo.
-- **GitHub account is `fafshari`**, never `ro-fafshari`. Commit as `Farzad Afshari <1194550+fafshari@users.noreply.github.com>` (already set in this repo's git config).
+- **GitHub account is `fafshari`**, never any other account logged in on this machine. The commit identity is already set in this repo's git config. Another `gh` account may be the active one, so run `gh` with `GH_TOKEN=$(gh auth token --user fafshari)`.
+- **The repo is public:** keep personal details (local paths, other accounts, email addresses) out of files, commit messages and PRs.
 - **Push and deploy only when the user asks.** Commit only when asked.
 - **Don't inject into or modify the running game.** Data comes from reading game files only.
 - Keep the fan-made / not-affiliated notice on every page.
@@ -100,7 +104,7 @@ The live site is built from the datamine folder:
 - `engine.js`, `synergy.js`: shared logic. `labels.json`: field labels.
 - `swgr-datamine/site/`: a git repo that publishes to GitHub Pages at https://fafshari.github.io/galactic-racer-planner/ (built files only).
 
-Rebuild and check (run from `C:\Users\info\swgr-datamine`, Git Bash):
+Rebuild and check (run from the `swgr-datamine` folder, Git Bash):
 
 ```bash
 python py/build_planner_data.py out
