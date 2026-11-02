@@ -18,9 +18,9 @@
     {#if v.kind === 'toggle'}
       <span class="old">{v.base}</span> → {v.value}
     {:else if v.kind === 'change'}
-      <span class={['delta', `-${v.direction}`]}>{v.text}</span>
+      <span class={['delta', `-${v.tone}`]}>{v.text}</span>
     {:else}
-      <span class="old">{v.base}</span> → <span class={['delta', `-${v.direction}`]}>{v.value}</span>{#if v.percent}&nbsp;({v.percent}){/if}
+      <span class="old">{v.base}</span> → <span class={['delta', `-${v.tone}`]}>{v.value}</span>{#if v.percent}&nbsp;({v.percent}){/if}
     {/if}
   </span>
 {/snippet}
@@ -138,11 +138,12 @@
       color: var(--color-muted);
     }
 
-    .delta.-up {
+    // coloured by whether it's an improvement, not by which way the number moved
+    .delta.-good {
       color: var(--color-up);
     }
 
-    .delta.-down {
+    .delta.-bad {
       color: var(--color-down);
     }
   }

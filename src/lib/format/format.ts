@@ -32,6 +32,8 @@ export interface FieldInfo {
   axisScale: readonly [number, number];
   sure: Confidence;
   tip: string;
+  /** Which way is an improvement, per part (the last entry covers any further parts). */
+  better: readonly Better[];
 }
 
 export function fieldInfo(labels: Labels, cfg: string, field: string): FieldInfo {
@@ -45,6 +47,7 @@ export function fieldInfo(labels: Labels, cfg: string, field: string): FieldInfo
     axisScale: l?.axisScale ?? [1, 1],
     sure: l?.sure ?? 'name',
     tip: l?.tip ?? '',
+    better: typeof l?.better === 'string' ? [l.better] : (l?.better ?? ['higher']),
   };
 }
 
@@ -56,36 +59,44 @@ export function groupInfo(labels: Labels, cfg: string): { heading: string; desc:
 }
 
 export type Direction = 'up' | 'down' | 'same';
+export type Better = 'higher' | 'lower';
+/** Whether a change is an improvement, which is what the readout colours. */
+export type Tone = 'good' | 'bad' | 'same';
+
+const toneOf = (d: Direction, better: Better): Tone => (d === 'same' ? 'same' : (d === 'up') === (better === 'higher') ? 'good' : 'bad');
 
 /** One cell, formatted. */
 export type FormattedValue =
   /** A yes/no setting. */
   | { kind: 'toggle'; base: string; value: string }
-  /** Base value unknown (a code default): only the change, e.g. "+20% of default". */
-  | { kind: 'change'; text: string; direction: Direction }
+  /** Base value unknown (a code default): only the change, e.g. "20% more than default". */
+  | { kind: 'change'; text: string; direction: Direction; tone: Tone }
   /** Base → value, with the % change from the unconverted numbers. */
-  | { kind: 'number'; base: string; value: string; percent: string | null; direction: Direction };
+  | { kind: 'number'; base: string; value: string; percent: string | null; direction: Direction; tone: Tone };
 
-export function formatValue(base: number | boolean | undefined, value: CellValue, unit: string, scale = 1): FormattedValue {
+export function formatValue(base: number | boolean | undefined, value: CellValue, unit: string, scale = 1, better: Better = 'higher'): FormattedValue {
   const u = unitSuffix(unit);
   if (typeof value === 'boolean') return { kind: 'toggle', base: base === undefined ? 'default' : String(base), value: value ? 'yes' : 'no' };
   if (isModifier(value)) {
     const add = scale === 1 ? value.add : round1(value.add * scale);
     const parts: string[] = [];
     if (add) parts.push(`${add > 0 ? '+' : '−'}${fmt(Math.abs(add))}${u}`);
-    if (value.mult) parts.push(`${value.mult > 0 ? '+' : '−'}${fmt(Math.abs(value.mult * 100))}% of default`);
+    if (value.mult) parts.push(`${fmt(Math.abs(value.mult * 100))}% ${value.mult > 0 ? 'more' : 'less'} than default`);
     if (value.mul !== 1) parts.push(`×${fmt(value.mul)}`);
-    return { kind: 'change', text: parts.join(', ') || 'no change', direction: (add || value.mult) > 0 || value.mul > 1 ? 'up' : 'down' };
+    const direction: Direction = (add || value.mult) > 0 || value.mul > 1 ? 'up' : 'down';
+    return { kind: 'change', text: parts.join(', ') || 'no change', direction, tone: toneOf(direction, better) };
   }
   const b = Number(base);
   const d = value - b;
   const shown = (n: number): string => fmt(scale === 1 ? n : round1(n * scale)) + u;
+  const direction: Direction = d > 0 ? 'up' : d < 0 ? 'down' : 'same';
   return {
     kind: 'number',
     base: shown(b),
     value: shown(value),
     percent: b ? `${d > 0 ? '+' : ''}${fmt((100 * d) / Math.abs(b))}%` : null,
-    direction: d > 0 ? 'up' : d < 0 ? 'down' : 'same',
+    direction,
+    tone: toneOf(direction, better),
   };
 }
 
@@ -138,6 +149,7 @@ function axisParts(axis: string): [string, string] {
 export function describeRow(labels: Labels, r: Row): RowView {
   const info = fieldInfo(labels, r.cfg, r.field);
   const partName = (i: string): string => info.parts[Number(i)] ?? 'XYZ'[Number(i)] ?? i;
+  const betterAt = (i: string): Better => info.better[Math.min(Number(i) || 0, info.better.length - 1)] ?? 'higher';
   // the tooltip explains what the value is; where its meaning came from stays in labels.json ("sure")
   const tip = info.tip ? [info.tip] : [];
   const base = { label: info.label, tip, sources: r.sources };
@@ -146,11 +158,11 @@ export function describeRow(labels: Labels, r: Row): RowView {
 
   if (!curveCells.length) {
     const only = r.cells[0];
-    if (r.cells.length === 1 && only?.cell === '') return { ...base, display: { kind: 'single', value: formatValue(only.base, only.value, info.unit, info.scale) } };
+    if (r.cells.length === 1 && only?.cell === '') return { ...base, display: { kind: 'single', value: formatValue(only.base, only.value, info.unit, info.scale, betterAt('')) } };
     const moved = r.cells.filter((c) => typeof c.value !== 'number' || c.value !== c.base);
     return {
       ...base,
-      display: { kind: 'parts', items: (moved.length ? moved : r.cells).map((c) => ({ name: partName(c.cell), value: formatValue(c.base, c.value, info.unit, info.scale) })) },
+      display: { kind: 'parts', items: (moved.length ? moved : r.cells).map((c) => ({ name: partName(c.cell), value: formatValue(c.base, c.value, info.unit, info.scale, betterAt(c.cell)) })) },
     };
   }
 

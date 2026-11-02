@@ -63,7 +63,7 @@
       <span class="legend">Base → with this build</span>
       <InfoTip label="Reading the numbers">
         <p>Each row shows the base value for your vehicle, then the value with this build and the % change. The tags underneath say which upgrade, part or trait caused it.</p>
-        <p>"of default" means the base value is built into the game's code and isn't in any data file, so only the change is shown.</p>
+        <p>"more than default" and "less than default" mean the base value is built into the game's code and isn't in any data file, so only the change is shown: "73% less than default" is 73% below what the vehicle normally has.</p>
         <p>Values are combined as (base + adds + base × % adds) × multipliers. Speeds are shown in km/h; the game stores them in mph.</p>
       </InfoTip>
     {/snippet}

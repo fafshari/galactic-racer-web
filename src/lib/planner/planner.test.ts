@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { labels, planner } from '../data/index.ts';
 import type { AbilityId, FavourId, Part, PartId, StyleId, VehicleId } from '../data/types.ts';
 import { decodeBuild, encodeBuild, evaluate, freshBuild } from '../engine/index.ts';
+import { describeRow } from '../format/format.ts';
 import * as A from './actions.ts';
 import { abilityCooldowns, changeGroups, cooldownText, situationalWhen, slotImproves } from './readout.ts';
 import { restoreBuild } from './storage.ts';
@@ -122,6 +123,23 @@ describe('readout', () => {
     for (const s of planner.slots) {
       for (const v of planner.vehicles) expect(slotImproves(planner, labels, s, v.id).length, `${s.id} ${v.id}`).toBeGreaterThan(0);
     }
+  });
+
+  it('never colours an upgrade as a change for the worse', () => {
+    // upgrades only improve a vehicle, so a red reading here means a label has "better" the wrong way round
+    const worse: string[] = [];
+    for (const v of planner.vehicles) {
+      for (const s of planner.slots) {
+        const b = { ...freshBuild('mp'), vehicle: v.id, abilities: [] as AbilityId[], style: 'none' as StyleId };
+        const rows = evaluate(planner, { ...b, levels: { ...b.levels, [s.id]: 10 } }).rows.filter((r) => r.sources.some((x) => x.source.startsWith(s.name)));
+        for (const r of rows) {
+          const d = describeRow(labels, r).display;
+          const values = d.kind === 'single' ? [d.value] : d.kind === 'parts' ? d.items.map((i) => i.value) : [];
+          if (values.some((x) => x.kind !== 'toggle' && x.tone === 'bad')) worse.push(`${v.id} ${s.id}: ${r.cfg}.${r.field}`);
+        }
+      }
+    }
+    expect(worse).toEqual([]);
   });
 });
 
