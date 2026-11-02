@@ -57,7 +57,7 @@
     display: grid;
     flex: 0 1 18px; // no gap between pips, so every pixel of the row is a click target
     place-items: center;
-    min-width: 13px;
+    min-width: var(--pip-min, 13px); // StatRow sets this (lower on narrow rows) and sizes its pips column from it
     height: 24px;
 
     &::after {

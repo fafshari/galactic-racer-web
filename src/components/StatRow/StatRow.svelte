@@ -23,10 +23,10 @@
 </script>
 
 <div class="stat-row">
-  <div class="bar">
+  <div class="bar" style:--pip-count={max}>
     <span class="icon"><GameIcon name={icon} size="md" /></span>
     <span class="name">
-      <span class="title">{name}{#if tip}<InfoTip label={name}>{@render tip()}</InfoTip>{/if}</span>
+      <span class="title"><span class="label">{name}</span>{#if tip}<InfoTip label={name}>{@render tip()}</InfoTip>{/if}</span>
       {#if part}<small class="part">{part}</small>{/if}
     </span>
     <span class="pips"><StatPips {level} {max} label={name} {...onchange ? { onchange } : {}} /></span>
@@ -35,15 +35,20 @@
 </div>
 
 <style lang="scss">
-  // One stat in the game's build panel: a teal bar with the icon, the name and its pips.
-  // The row adapts to its own width, not the screen's: the stats panel can be narrow on any screen.
+  // One stat in the game's build panel: a teal bar with the icon, the name, its pips and the level, always on one
+  // line. The row adapts to its own width, not the screen's, since the stats panel can be narrow on any screen:
+  // the name gives up space first (down to an ellipsis), then the pips shrink, never under the level.
   .stat-row {
     container-type: inline-size;
   }
 
   .stat-row > .bar {
     display: grid;
-    grid-template-columns: auto 132px minmax(0, 1fr) 30px;
+    --pip-min: 13px;
+
+    // the pips' minimum is explicit: a flex row's min-content doesn't count its items' min-width, so the name
+    // column would otherwise keep its 132px and push the pips under the level
+    grid-template-columns: auto minmax(0, 132px) minmax(calc(var(--pip-count) * var(--pip-min)), 1fr) 30px;
     gap: 10px;
     align-items: center;
     padding: 6px 10px;
@@ -51,20 +56,11 @@
     background: var(--color-teal);
     color: var(--color-on-teal);
 
-    // Below this, ten full-size pips no longer fit beside the name (they'd shrink and slide under the level),
-    // so they take a line of their own.
-    @container (width < 440px) {
-      grid-template-columns: 32px minmax(0, 1fr) 30px; // fixed: an auto column would grow to fit the pips row
-      grid-template-areas:
-        'icon name value'
-        'pips pips pips';
-      gap: 4px 8px;
-      padding: 6px 8px;
+    @container (width < 400px) {
+      --pip-min: 11px;
 
-      > .icon { grid-area: icon; }
-      > .name { grid-area: name; }
-      > .value { grid-area: value; }
-      > .pips { grid-area: pips; }
+      gap: 6px;
+      padding: 6px 8px;
     }
   }
 
@@ -72,10 +68,8 @@
     display: grid;
   }
 
-  // a wrapper the row owns, so the grid can place it (scoped styles can't reach StatPips' own root)
   .bar > .pips {
     display: grid;
-    min-width: 0;
   }
 
   .bar > .name {
@@ -85,12 +79,22 @@
   }
 
   .name > .title {
+    display: flex;
+    align-items: center;
+    min-width: 0;
     font-weight: 600;
     white-space: nowrap;
   }
 
+  .title > .label,
+  .name > .part {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .name > .part {
     font-size: 12px;
+    white-space: nowrap;
     opacity: 0.7;
   }
 
