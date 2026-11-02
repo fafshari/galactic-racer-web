@@ -40,7 +40,7 @@
     gap: var(--space-3);
     align-items: center;
     min-height: 72px;
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-2) 28px var(--space-2) var(--space-3); // room for the remove button
     border: 1px solid var(--color-line);
     border-radius: var(--radius-md);
     background: var(--color-panel);
@@ -71,9 +71,9 @@
   }
 
   .text > .name {
-    font: 800 13px/1.2 var(--font-display);
+    font: 800 12px/1.2 var(--font-display);
     text-transform: uppercase;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word; // wrap between words; only split a word that can't fit on its own
   }
 
   .text > .slot {

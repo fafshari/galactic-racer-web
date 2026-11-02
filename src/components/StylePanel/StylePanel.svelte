@@ -21,7 +21,7 @@
     <GameIcon name={icon} size="xl" />
     <div class="titles">
       <span class="eyebrow">Racer style</span>
-      <h3 class="name">{name}{#if rank !== null}<span class="rank"> · rank {rank}</span>{/if}</h3>
+      <h3 class="name">{name}{#if rank !== null}<span class="rank">&nbsp;· rank {rank}</span>{/if}</h3>
     </div>
     {#if onchange}<Button size="sm" onclick={onchange}>Change</Button>{/if}
   </header>

@@ -33,14 +33,12 @@
 </div>
 
 <style lang="scss">
-  @use '../../styles/breakpoints' as bp;
-
   // A line in the game's Installed Parts panel: icon badge, name in caps, the effect with its keywords.
   .part-row {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: var(--space-3);
-    align-items: center;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-2) var(--space-3);
+    align-items: start;
     padding: var(--space-2) var(--space-3);
     border: 1px solid var(--color-line);
     border-left: 4px solid var(--rarity, var(--color-line));
@@ -51,15 +49,6 @@
     &.-rare { --rarity: var(--color-rarity-rare); }
     &.-epic { --rarity: var(--color-rarity-epic); }
     &.-legendary { --rarity: var(--color-rarity-legendary); }
-
-    @include bp.phone {
-      grid-template-columns: auto minmax(0, 1fr);
-
-      .side {
-        grid-column: 1 / -1;
-        justify-content: flex-start;
-      }
-    }
   }
 
   .part-row > .badge {
@@ -93,11 +82,16 @@
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
+    grid-column: 2; // tags and controls get their own line under the text, so nothing overflows a narrow panel
     align-items: center;
-    justify-content: flex-end;
+
+    &:empty {
+      display: none;
+    }
   }
 
   .side > .remove {
+    margin-left: auto;
     padding: 0 4px;
     border: 0;
     background: transparent;

@@ -92,5 +92,5 @@ test('pips, rarity chips and counters update the build', async ({ page }) => {
   const toggle = page.getByRole('group', { name: 'Afterburner Efficiency rarity' });
   await toggle.getByRole('button', { name: 'Legendary' }).click();
   await expect(toggle.getByRole('button', { name: 'Legendary' })).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.getByText('Afterburner Efficiency IV')).toBeVisible();
+  await expect(page.getByText('Afterburner Efficiency IV').first()).toBeVisible();
 });

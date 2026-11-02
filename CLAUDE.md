@@ -8,8 +8,9 @@ Fan-made theorycrafting site for STAR WARS: Galactic Racer: a **build planner** 
 > - the data contract: schema, import, permanent build-code order and icons
 > - the engine, build codes, speed readout and synergy scorer, proven identical to the legacy ones
 > - the component library (see "Components")
+> - the build planner page (see "Build planner")
 >
-> The tour simulation and the real pages are still to port. Until they land, the live site is the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
+> The tour simulator (its simulation and page) is still to port, and the site isn't deployed to Vercel yet. Until they land, the live site is the legacy single-file build described under "Legacy site". Update this file as each piece lands; once the migration is done, delete the legacy section.
 
 Architecture decisions live in [`docs/adr/`](docs/adr/README.md). Read the relevant ADR before changing an area, and add or supersede an ADR when a decision changes.
 
@@ -176,6 +177,7 @@ src/
   components/<Name>/  one folder per component: Name.svelte|astro and Name.test.ts
   dev/                pages that exist only under `astro dev`: components.astro + Showcase.svelte
   lib/format/         engine rows to display values (labels, units, curves, keyword runs), no HTML
+  lib/planner/        planner rules as pure build → build functions, readout grouping, saved-build restore
   integrations/       dev-pages.ts (dev-only routes), validate-data.ts (data check on dev/build start)
   styles/             global.scss, _tokens.scss (light/dark CSS variables), _breakpoints.scss
   lib/data/           schema, types, references and label checks, build-code order, loader (index.ts)
@@ -203,12 +205,33 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 | Overview | `StatRow` + `StatPips`, `SpeedPanel`, `StylePanel`, `AbilitySlot`, `PartRow` |
 | Pickers | `Drawer` (native modal `<dialog>`; bottom sheet on phones), `PartCard`, `RarityToggle`, `ChoiceCard`, `SearchField` |
 | Readout | `SituationalEffect` (on/off or a 0–50 trigger count), `ChangeRow` (renders a `RowView` from `src/lib/format`) |
+| Layout | `Panel` (a titled overview panel with a count and actions), `FavourRow` |
+| Pages | `BuildPlanner/` (the planner island and its pickers), `PlannerNotes.astro` |
 
 - **Logic in `src/lib`, not components.** Formatting and anything else testable without a DOM belongs in `src/lib/format` (or `lib/engine`). Components take the result as props.
 - **Native platform features over hand-rolled ones.** `Drawer` uses `<dialog>.showModal()`, which gives focus trapping, Escape to close, an inert page behind and focus returned to the opener. `InfoTip` uses the popover API (top layer, light dismiss). jsdom has neither, so test those in `tests/e2e/showcase.spec.ts`.
 - **Handlers on Svelte components need explicit parameter types** (`(n: number) => …`). ESLint can't infer them through component props and reports `any`.
 - **Shared Sass from a component** uses a relative path: `@use '../../styles/breakpoints' as bp;`. `svelte-check` compiles styles without Vite's `~/` alias.
 - **`svelte-ignore` comments hold only the warning codes.** Put the reason in a separate comment above it; the linter reads any extra words as codes.
+
+## Build planner
+
+`src/pages/index.astro` mounts `BuildPlanner` (`client:load`). The island only holds the build and wires components together; every rule is a pure function in `src/lib/planner/actions.ts`, tested in `planner.test.ts`. Behaviour to keep:
+- **Picking:** the drawer closes after every pick, and focus returns to what opened it.
+- **Rarity:**
+  - One rarity per part family: an owned family's card shows "In build".
+  - Changing an installed part's rarity moves its situational counts to the new part.
+- **Style changes:**
+  - A new style replaces the old style's starting abilities and keeps other abilities.
+  - Campaign keeps the current rank.
+- **Mode switches** keep the same-named style, drop parts the mode doesn't allow, and drop favours when leaving Campaign.
+- **Start-up:**
+  - A `#gr2-…` link wins.
+  - Otherwise the last build is restored from `localStorage` (`swgr-build`, the legacy key), validated by `restoreBuild`.
+- **Stale links:** once the build stops matching the link it was opened from, the hash is removed, so a reload keeps the user's edits.
+- **Copy build link** writes the hash and copies the URL. If the clipboard is blocked, the code is left in the box to copy by hand.
+- **Readout:** "What changes" always lists the Afterburner and Ramjet top-speed bonuses (`PINNED` in `readout.ts`).
+- **Testing:** `tests/e2e/planner.spec.ts` covers these against the production build, including a real legacy link and the live planner's numbers. The stat rows' `<output>` levels are ARIA status regions too, so the toolbar message is addressed by its class in tests.
 
 ## Engine rules
 
