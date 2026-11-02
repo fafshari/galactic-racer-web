@@ -15,6 +15,10 @@ interface Props {
 }
 
 const { title, description, eyebrow, noindex = false } = Astro.props;
+// Link previews (Discord, Slack, ...) need absolute URLs; `site` is set in astro.config.ts.
+const site = Astro.site ?? Astro.url;
+const pageUrl = new URL(Astro.url.pathname.replace(/index\.html$/, ''), site).href;
+const image = new URL('/og.png', site).href;
 ---
 
 <!doctype html>
@@ -26,6 +30,18 @@ const { title, description, eyebrow, noindex = false } = Astro.props;
     {noindex && <meta name="robots" content="noindex" />}
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={pageUrl} />
+    <meta name="theme-color" content="#b84a31" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Galactic Racer Planner" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Galactic Racer build planner and tour simulator." />
+    <meta name="twitter:card" content="summary_large_image" />
     <script is:inline define:vars={{ key: THEME_KEY }}>
       // Apply a saved theme before first paint, so a picked theme never flashes the device's one first.
       try {

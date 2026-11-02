@@ -29,3 +29,18 @@ test('the component showcase is not in the production build', async ({ page }) =
   const response = await page.goto('/components');
   expect(response?.status()).toBe(404);
 });
+
+test('link previews (Discord, Slack, ...) get a title, description and a 1200×630 image', async ({ page, request }) => {
+  await page.goto('/tour.html');
+  const meta = (property: string) => page.locator(`meta[property="${property}"]`).getAttribute('content');
+  expect(await meta('og:title')).toBe('Galactic Racer Tour Simulator');
+  expect(await meta('og:description')).toBeTruthy();
+  expect(await meta('og:url')).toMatch(/^https:\/\/[^/]+\/tour\.html$/);
+  const image = await meta('og:image');
+  expect(image).toMatch(/^https:\/\/[^/]+\/og\.png$/);
+  // served by this build (the absolute URL points at production, so fetch its path here)
+  const res = await request.get(new URL(image ?? '').pathname);
+  expect(res.status()).toBe(200);
+  expect(res.headers()['content-type']).toBe('image/png');
+});
+

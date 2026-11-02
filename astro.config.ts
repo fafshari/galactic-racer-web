@@ -5,7 +5,12 @@ import ocrData from './src/integrations/ocr-data';
 import validateData from './src/integrations/validate-data';
 
 // Static site (ADR 0003). `build.format: 'file'` keeps the legacy URLs: / , /index.html and /tour.html.
+// The public address, for absolute links in link previews (Open Graph needs full URLs). Vercel sets its production
+// domain at build time; elsewhere (local builds, CI) the current one is assumed.
+const productionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? 'galactic-racer-planner.vercel.app';
+
 export default defineConfig({
+  site: `https://${productionHost}`,
   output: 'static',
   build: { format: 'file' },
   integrations: [validateData(), svelte(), devPages(), ocrData()],

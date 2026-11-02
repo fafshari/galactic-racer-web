@@ -237,7 +237,7 @@
     <div class="overview">
       <div class="panels">
         <div class="stack -main">
-          <Panel title="Vehicle stats" count={`Power ${String(power)} / 60`}>
+          <Panel title="Vehicle stats" collapseKey="planner.vehicle" count={`Power ${String(power)} / 60`}>
             {#snippet actions()}<Button size="sm" onclick={() => (picker = { kind: 'vehicle' })}>Change vehicle</Button>{/snippet}
             {#if vehicle}
               <div class="vehicle">
@@ -264,7 +264,7 @@
             </div>
           </Panel>
 
-          <Panel title="Installed parts" count={`${String(parts.length)} / ${String(A.maxParts(planner))}`}>
+          <Panel title="Installed parts" collapseKey="planner.parts" count={`${String(parts.length)} / ${String(A.maxParts(planner))}`}>
             {#snippet actions()}
               <Button size="sm" variant="primary" disabled={parts.length >= A.maxParts(planner)} onclick={() => (picker = { kind: 'part' })}>Add part</Button>
             {/snippet}
@@ -297,7 +297,7 @@
         </div>
 
         <div class="stack -side">
-          <Panel>
+          <Panel title="Racer style" collapseKey="planner.style">
             {#if style}
               <StylePanel name={style.name} icon={style.icon} rank={style.rank} {traits} onchange={() => (picker = { kind: 'style' })} />
             {/if}
@@ -306,7 +306,7 @@
             {/if}
           </Panel>
 
-          <Panel title="Abilities" count={`${String(regular.length)} / ${String(A.maxAbilities(planner))}${crash === undefined ? '' : ' + crash'}`}>
+          <Panel title="Abilities" collapseKey="planner.abilities" count={`${String(regular.length)} / ${String(A.maxAbilities(planner))}${crash === undefined ? '' : ' + crash'}`}>
             <div class="abilities">
               {#each Array.from({ length: A.maxAbilities(planner) }, (_, i) => i) as i (i)}
                 {@const id = regular[i]}
@@ -330,7 +330,7 @@
           </Panel>
 
           {#if build.mode === 'campaign'}
-            <Panel title="Favours" count={String(favours.length)}>
+            <Panel title="Favours" collapseKey="planner.favours" count={String(favours.length)}>
               {#snippet actions()}<Button size="sm" onclick={() => (picker = { kind: 'favour' })}>Add favour</Button>{/snippet}
               {#if favours.length}
                 <div class="rows">

@@ -242,3 +242,23 @@ test('favourites: save a build, rename it, load it back after a reload, remove i
   await expect(drawer.getByText('No favourites yet')).toBeVisible();
 });
 
+
+test('panel titles collapse their panel, and the choice survives a reload', async ({ page }) => {
+  await page.goto(`/#${SHARED}`);
+  await ready(page);
+  await page.evaluate(() => { localStorage.removeItem('swgr-collapsed'); });
+  const toggle = page.getByRole('button', { name: /^Installed parts/ });
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.getByText('No parts yet.')).toBeHidden();
+  await expect(page.getByRole('button', { name: 'Add part' })).toBeVisible(); // the header's actions stay
+
+  await page.reload();
+  await ready(page);
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await toggle.click();
+  await expect(page.getByText('No parts yet.')).toBeVisible();
+  await page.getByRole('button', { name: /^What changes/ }).click();
+  await expect(page.locator('.change-row').first()).toBeHidden();
+});
