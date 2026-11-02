@@ -5,7 +5,7 @@
 
 ## Context
 
-The site is built from datamined game content (numbers, text, icons and art) for a commercial game owned by Lucasfilm / Electronic Arts. Publishing it is fan use, and some things must never be published. Two GitHub accounts exist on this machine. Earlier attempts to read live game memory (UE4SS) failed against the game's protection and were abandoned.
+The site is built from datamined game content (numbers, text, icons and art) for a commercial game owned by Lucasfilm / Electronic Arts. Publishing it is fan use, and some things must never be published.
 
 ## Decision
 
@@ -14,7 +14,8 @@ The site is built from datamined game content (numbers, text, icons and art) for
   - the extractor or probe tools
   - anything from `swgr-datamine` other than the exported planner data and images (ADR 0002)
 - **Read files only.** Data comes from reading game files on disk. No injection into, or modification of, the running game.
-- **Publish under the `fafshari` GitHub account only** (never `ro-fafshari`), committing as `1194550+fafshari@users.noreply.github.com`.
+- **Publish under the project's `fafshari` GitHub account only**, committing with that account's GitHub noreply address.
+- **Licensing:** the code is MIT licensed; the game content is not ours to license (ADR 0017).
 - **Fan notice:** every page carries the fan-made notice ("not affiliated with or endorsed by Lucasfilm, Electronic Arts or the game's developers; all names, text and icons belong to their owners").
 - **Non-commercial:** no ads, paid features or monetisation. This also keeps the site within Vercel's Hobby terms (ADR 0011).
 - **Deploys and pushes happen only on the user's explicit request.**

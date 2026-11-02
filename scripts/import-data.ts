@@ -14,7 +14,8 @@ import { checkLabels, checkReferences } from '../src/lib/data/references.ts';
 import { BuildOrder, mergeOrder } from '../src/lib/data/order.ts';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
-const datamine = process.argv[2] ?? process.env.SWGR_DATAMINE ?? 'C:/Users/info/swgr-datamine';
+// The datamine defaults to a sibling folder of this repo.
+const datamine = process.argv[2] ?? process.env.SWGR_DATAMINE ?? join(root, '..', 'swgr-datamine');
 const src = { planner: join(datamine, 'out', 'planner.json'), icons: join(datamine, 'out', 'icons'), mappings: join(datamine, 'mappings') };
 const out = {
   planner: join(root, 'src', 'data', 'planner.json'),

@@ -5,7 +5,7 @@
 
 ## Context
 
-`C:\Users\info\swgr-datamine` holds several things:
+`swgr-datamine`, a separate local folder, holds several things:
 - the extraction tooling (`SwgrDump`, a CUE4Parse extractor)
 - the community mappings (`.usmap`)
 - raw game dumps
@@ -20,7 +20,7 @@ Game files, dumps, mappings and tools must never be published (ADR 0015). The us
 
 - **Two projects.**
   - `swgr-datamine` stays outside version control and holds everything that touches game files.
-  - `galactic-racer-web` (this repo) is a private git repo under the GitHub account `fafshari` and holds the site.
+  - `galactic-racer-web` (this repo) is a git repo under the GitHub account `fafshari` and holds the site. It started private and has been public since 2026-11-02 (ADR 0017).
 - **One-way data handoff.** The datamine exports into this repo, and nothing flows back. The export is `planner.json` plus icon images.
   - These are derived data and are already public inside the built pages, so committing them is fine.
   - An import script in this repo copies them from the datamine and validates the JSON against the TypeScript types (ADR 0007).
@@ -48,3 +48,4 @@ Game files, dumps, mappings and tools must never be published (ADR 0015). The us
 - **Labels are owned by this repo.** `src/data/labels.json` holds the hand-written field labels and headings. They were written by hand, not datamined, so they belong with the site.
   - The legacy pages still read `swgr-datamine/planner/labels.json` until they're retired; keep the two in step until then.
   - The import refuses data that has a changeable field without a label.
+- **The legacy pages were rewritten, not moved.** The planner and tour simulator were rebuilt as Astro pages and Svelte components. Only the legacy `engine.js` and `synergy.js` were copied in, verbatim, to `tests/legacy/` as references for the parity tests (ADR 0008). The templates and check scripts stay in the datamine until the legacy site is retired.
