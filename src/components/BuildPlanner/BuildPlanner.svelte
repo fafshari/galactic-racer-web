@@ -192,110 +192,114 @@
 
   <div class="layout">
     <div class="overview">
-      <Panel title="Vehicle stats" count={`Power ${String(power)} / 60`}>
-        {#snippet actions()}<Button size="sm" onclick={() => (picker = { kind: 'vehicle' })}>Change vehicle</Button>{/snippet}
-        {#if vehicle}
-          <div class="vehicle">
-            <GameIcon name={vehicle.icon} size="xl" />
-            <div class="vehicle-text">
-              <span class="vehicle-name">{vehicle.name}</span>
-              <span class="vehicle-traits">{vehicle.traits.map((t) => t.name).join(' · ')}</span>
-            </div>
-            {#if vehicleArt}<img class="vehicle-art" src={vehicleArt} alt="" width="160" height="120" />{/if}
-          </div>
-        {/if}
-        <div class="stats">
-          {#each planner.slots as s (s.id)}
-            {@const improves = slotImproves(planner, labels, s, build.vehicle)}
-            <StatRow icon={s.icon} name={s.name} part={s.part} level={build.levels[s.id] ?? 0} onchange={(n: number) => { update(A.setLevel(build, s.id, n)); }}>
-              {#snippet tip()}
-                <p>Each level adds 1 to your power rating{improves.length ? ' and improves:' : '.'}</p>
-                {#if improves.length}<p>{improves.join(' · ')}</p>{/if}
-              {/snippet}
-            </StatRow>
-          {/each}
-        </div>
-      </Panel>
-
-      <div class="column">
-        <Panel>
-          {#if style}
-            <StylePanel name={style.name} icon={style.icon} rank={style.rank} {traits} onchange={() => (picker = { kind: 'style' })} />
-          {/if}
-          {#if ranks.length > 1}
-            <ModeSwitch label="Style rank" options={ranks.map((r) => ({ value: r.id, label: `Rank ${String(r.rank)}` }))} value={build.style} onchange={(id: StyleId) => { update(A.setRank(build, id)); }} />
-          {/if}
-        </Panel>
-
-        <Panel title="Abilities" count={`${String(regular.length)} / ${String(A.maxAbilities(planner))}${crash === undefined ? '' : ' + crash'}`}>
-          <div class="abilities">
-            {#each Array.from({ length: A.maxAbilities(planner) }, (_, i) => i) as i (i)}
-              {@const id = regular[i]}
-              <AbilitySlot
-                ability={abilityById(id)}
-                label={`Ability ${String(i + 1)}`}
-                {...cooldownOf(id)}
-                onselect={() => (picker = { kind: 'ability', slot: i })}
-                {...id === undefined ? {} : { onremove: () => { update(A.removeAbility(build, id)); } }}
-              />
-            {/each}
-            <AbilitySlot
-              ability={abilityById(crash)}
-              label="Crash ability"
-              takes="crash ability"
-              {...cooldownOf(crash)}
-              onselect={() => (picker = { kind: 'ability', slot: 'crash' })}
-              {...crash === undefined ? {} : { onremove: () => { update(A.removeAbility(build, crash)); } }}
-            />
-          </div>
-        </Panel>
-      </div>
-
-      <Panel title="Installed parts" count={`${String(parts.length)} / ${String(A.maxParts(planner))}`}>
-        {#snippet actions()}
-          <Button size="sm" variant="primary" disabled={parts.length >= A.maxParts(planner)} onclick={() => (picker = { kind: 'part' })}>Add part</Button>
-        {/snippet}
-        {#if parts.length}
-          <div class="rows">
-            {#each parts as p, i (p.id)}
-              {@const family = A.familyOf(planner, p, build.mode)}
-              {@const r = A.offerRarity(p)}
-              <PartRow part={p} situational={A.isSituational(p)} onremove={() => { update(A.removePart(build, i)); }}>
-                {#snippet controls()}
-                  {#if r && family.length > 1}
-                    <RarityToggle
-                      value={r}
-                      available={family.map(A.offerRarity).filter((x) => x !== null)}
-                      label={`${A.familyName(planner, p)} rarity`}
-                      onchange={(to) => {
-                        const target = family.find((x) => x.rarity === to);
-                        if (target) update(A.swapPart(planner, build, i, target.id));
-                      }}
-                    />
-                  {/if}
-                {/snippet}
-              </PartRow>
-            {/each}
-          </div>
-        {:else}
-          <p class="empty">No parts yet. You start with {planner.meta.partSlots.start} slots unlocked and can fill up to {A.maxParts(planner)}.</p>
-        {/if}
-      </Panel>
-
-      {#if build.mode === 'campaign'}
-        <Panel title="Favours" count={String(favours.length)}>
-          {#snippet actions()}<Button size="sm" onclick={() => (picker = { kind: 'favour' })}>Add favour</Button>{/snippet}
-          {#if favours.length}
-            <div class="rows">
-              {#each favours as f, i (f.id)}
-                <FavourRow favour={f} situational={A.isSituational(f)} onremove={() => { update(A.removeFavour(build, i)); }} />
+      <div class="panels">
+        <div class="stack -main">
+          <Panel title="Vehicle stats" count={`Power ${String(power)} / 60`}>
+            {#snippet actions()}<Button size="sm" onclick={() => (picker = { kind: 'vehicle' })}>Change vehicle</Button>{/snippet}
+            {#if vehicle}
+              <div class="vehicle">
+                <GameIcon name={vehicle.icon} size="xl" />
+                <div class="vehicle-text">
+                  <span class="vehicle-name">{vehicle.name}</span>
+                  <span class="vehicle-traits">{vehicle.traits.map((t) => t.name).join(' · ')}</span>
+                </div>
+                {#if vehicleArt}<img class="vehicle-art" src={vehicleArt} alt="" width="160" height="120" />{/if}
+              </div>
+            {/if}
+            <div class="stats">
+              {#each planner.slots as s (s.id)}
+                {@const improves = slotImproves(planner, labels, s, build.vehicle)}
+                <StatRow icon={s.icon} name={s.name} part={s.part} level={build.levels[s.id] ?? 0} onchange={(n: number) => { update(A.setLevel(build, s.id, n)); }}>
+                  {#snippet tip()}
+                    <p>Each level adds 1 to your power rating{improves.length ? ' and improves:' : '.'}</p>
+                    {#if improves.length}<p>{improves.join(' · ')}</p>{/if}
+                  {/snippet}
+                </StatRow>
               {/each}
             </div>
-          {:else}
-            <p class="empty">No favours yet.</p>
+          </Panel>
+
+          <Panel title="Installed parts" count={`${String(parts.length)} / ${String(A.maxParts(planner))}`}>
+            {#snippet actions()}
+              <Button size="sm" variant="primary" disabled={parts.length >= A.maxParts(planner)} onclick={() => (picker = { kind: 'part' })}>Add part</Button>
+            {/snippet}
+            {#if parts.length}
+              <div class="rows">
+                {#each parts as p, i (p.id)}
+                  {@const family = A.familyOf(planner, p, build.mode)}
+                  {@const r = A.offerRarity(p)}
+                  <PartRow part={p} situational={A.isSituational(p)} onremove={() => { update(A.removePart(build, i)); }}>
+                    {#snippet controls()}
+                      {#if r && family.length > 1}
+                        <RarityToggle
+                          value={r}
+                          available={family.map(A.offerRarity).filter((x) => x !== null)}
+                          label={`${A.familyName(planner, p)} rarity`}
+                          onchange={(to) => {
+                            const target = family.find((x) => x.rarity === to);
+                            if (target) update(A.swapPart(planner, build, i, target.id));
+                          }}
+                        />
+                      {/if}
+                    {/snippet}
+                  </PartRow>
+                {/each}
+              </div>
+            {:else}
+              <p class="empty">No parts yet. You start with {planner.meta.partSlots.start} slots unlocked and can fill up to {A.maxParts(planner)}.</p>
+            {/if}
+          </Panel>
+        </div>
+
+        <div class="stack -side">
+          <Panel>
+            {#if style}
+              <StylePanel name={style.name} icon={style.icon} rank={style.rank} {traits} onchange={() => (picker = { kind: 'style' })} />
+            {/if}
+            {#if ranks.length > 1}
+              <ModeSwitch label="Style rank" options={ranks.map((r) => ({ value: r.id, label: `Rank ${String(r.rank)}` }))} value={build.style} onchange={(id: StyleId) => { update(A.setRank(build, id)); }} />
+            {/if}
+          </Panel>
+
+          <Panel title="Abilities" count={`${String(regular.length)} / ${String(A.maxAbilities(planner))}${crash === undefined ? '' : ' + crash'}`}>
+            <div class="abilities">
+              {#each Array.from({ length: A.maxAbilities(planner) }, (_, i) => i) as i (i)}
+                {@const id = regular[i]}
+                <AbilitySlot
+                  ability={abilityById(id)}
+                  label={`Ability ${String(i + 1)}`}
+                  {...cooldownOf(id)}
+                  onselect={() => (picker = { kind: 'ability', slot: i })}
+                  {...id === undefined ? {} : { onremove: () => { update(A.removeAbility(build, id)); } }}
+                />
+              {/each}
+              <AbilitySlot
+                ability={abilityById(crash)}
+                label="Crash ability"
+                takes="crash ability"
+                {...cooldownOf(crash)}
+                onselect={() => (picker = { kind: 'ability', slot: 'crash' })}
+                {...crash === undefined ? {} : { onremove: () => { update(A.removeAbility(build, crash)); } }}
+              />
+            </div>
+          </Panel>
+
+          {#if build.mode === 'campaign'}
+            <Panel title="Favours" count={String(favours.length)}>
+              {#snippet actions()}<Button size="sm" onclick={() => (picker = { kind: 'favour' })}>Add favour</Button>{/snippet}
+              {#if favours.length}
+                <div class="rows">
+                  {#each favours as f, i (f.id)}
+                    <FavourRow favour={f} situational={A.isSituational(f)} onremove={() => { update(A.removeFavour(build, i)); }} />
+                  {/each}
+                </div>
+              {:else}
+                <p class="empty">No favours yet.</p>
+              {/if}
+            </Panel>
           {/if}
-        </Panel>
-      {/if}
+        </div>
+      </div>
     </div>
 
     <aside class="readout" aria-label="Build readout">
@@ -407,16 +411,39 @@
     }
   }
 
+  // Two independent stacks, so a tall Abilities panel never leaves a gap under Vehicle stats. Where there's only
+  // room for one column, the stacks dissolve and the panels keep the game's order.
   .layout > .overview {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-    gap: var(--space-4);
-    align-items: start;
+    min-width: 0;
+    container-type: inline-size;
   }
 
-  .overview > .column {
+  .overview > .panels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    align-items: start;
+
+    @container (width < 700px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .panels > .stack {
     display: grid;
     gap: var(--space-4);
+    min-width: 0;
+
+    @container (width < 700px) {
+      display: contents;
+
+      // stats, style, abilities, parts, favours
+      &.-main > :global(:nth-child(1)) { order: 1; }
+      &.-main > :global(:nth-child(2)) { order: 4; }
+      &.-side > :global(:nth-child(1)) { order: 2; }
+      &.-side > :global(:nth-child(2)) { order: 3; }
+      &.-side > :global(:nth-child(3)) { order: 5; }
+    }
   }
 
   .layout > .readout {
