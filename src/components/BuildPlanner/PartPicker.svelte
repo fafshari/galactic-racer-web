@@ -3,7 +3,6 @@
   import type { OfferRarity, Part, PartId } from '~/lib/data/types.ts';
   import type { Build } from '~/lib/engine/build.ts';
   import { cannotAddPart, familyKey, familyName, isSituational, offerRarity, partFamilies } from '~/lib/planner/actions.ts';
-  import Button from '../Button/Button.svelte';
   import PartCard from '../PartCard/PartCard.svelte';
   import RarityToggle from '../RarityToggle/RarityToggle.svelte';
   import SearchField from '../SearchField/SearchField.svelte';
@@ -44,8 +43,8 @@
       {@const r = offerRarity(p)}
       <PartCard part={p} name={familyName(planner, p)} situational={isSituational(p)} disabled={why !== null} onselect={() => { onadd(p.id); }}>
         {#snippet footer()}
-          {#if r && fam.length > 1}<RarityToggle value={r} available={rarities(fam)} onchange={(x: OfferRarity) => { show(fam, x); }} label={`${familyName(planner, p)} rarity`} />{/if}
-          <Button size="sm" disabled={why !== null} onclick={() => { onadd(p.id); }}>{why ? blocked[why] : 'Add'}</Button>
+          {#if r}<RarityToggle value={r} available={rarities(fam)} onchange={(x: OfferRarity) => { show(fam, x); }} label={`${familyName(planner, p)} rarity`} />{/if}
+          {#if why}<span class="blocked">{blocked[why]}</span>{/if}
         {/snippet}
       </PartCard>
     {:else}
@@ -71,6 +70,12 @@
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     grid-auto-rows: max-content;
     gap: 10px;
+  }
+
+  // why a card can't be picked, in place of the old Add button
+  .blocked {
+    color: var(--color-muted);
+    font: italic 600 13px var(--font-label);
   }
 
   .cards > .empty {

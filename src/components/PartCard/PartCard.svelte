@@ -11,10 +11,10 @@
     /** Shown instead of the part's own name, e.g. a family name without its "II". */
     name?: string;
     situational?: boolean;
-    /** Makes the card itself pick the part (the footer's own buttons still work). */
+    /** Makes the whole card pick the part, strip included; the strip's own controls still work. */
     onselect?: () => void;
     disabled?: boolean;
-    /** The strip under the card: rarity chips, an Add or remove button. */
+    /** The strip under the card: rarity chips, a status or a button. Hidden when it renders nothing. */
     footer?: Snippet;
   }
 
@@ -48,6 +48,7 @@
   .part-card {
     --keyword-color: var(--color-mustard);
 
+    position: relative;
     display: grid;
     grid-template-rows: minmax(0, 1fr) auto;
     overflow: hidden;
@@ -86,6 +87,13 @@
 
     &:is(button) {
       cursor: pointer;
+    }
+
+    // stretch the click target over the whole card, strip included
+    &:is(button)::after {
+      position: absolute;
+      inset: 0;
+      content: '';
     }
 
     &:is(button):hover:not(:disabled) .name {
@@ -157,5 +165,18 @@
     border-top: 4px solid var(--rarity, var(--color-line));
     background: var(--color-panel);
     color: var(--color-fg);
+
+    // clicks on the strip's background reach the card's click area; its own controls sit above it
+    pointer-events: none;
+
+    // the strip's content comes from the parent's snippet, so it's out of this component's scope
+    > :global(*) {
+      position: relative;
+      pointer-events: auto;
+    }
+
+    &:not(:has(*)) {
+      display: none;
+    }
   }
 </style>
