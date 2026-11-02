@@ -21,6 +21,7 @@
   import StatRow from '~/components/StatRow/StatRow.svelte';
   import StylePanel from '~/components/StylePanel/StylePanel.svelte';
   import Tag from '~/components/Tag/Tag.svelte';
+  import ThemeSwitch from '~/components/ThemeSwitch/ThemeSwitch.svelte';
   import { labels, planner } from '~/lib/data/index.ts';
   import type { GameMode, OfferRarity, Part, SlotId, VehicleId } from '~/lib/data/types.ts';
   import { decodeBuild, evaluate, speeds, type ActiveCount, type Build } from '~/lib/engine/index.ts';
@@ -91,6 +92,10 @@
     <article class="specimen">
       <h3 class="name">ModeSwitch</h3>
       <ModeSwitch label="Game mode" options={[{ value: 'mp', label: 'Multiplayer Tour' }, { value: 'campaign', label: 'Campaign' }]} value={mode} onchange={(m: GameMode) => (mode = m)} />
+    </article>
+    <article class="specimen">
+      <h3 class="name">ThemeSwitch</h3>
+      <p class="row"><ThemeSwitch /> Sets the whole site's theme (this page's Theme switch above overrides it inside the showcase).</p>
     </article>
     <article class="specimen">
       <h3 class="name">Tag</h3>

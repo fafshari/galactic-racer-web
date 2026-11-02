@@ -2,6 +2,7 @@
 import { Font } from 'astro:assets';
 import SiteHeader from '~/components/SiteHeader/SiteHeader.astro';
 import SiteFooter from '~/components/SiteFooter/SiteFooter.astro';
+import { THEME_KEY } from '~/lib/theme.ts';
 import '~/styles/global.scss';
 
 interface Props {
@@ -24,6 +25,13 @@ const { title, description, eyebrow, noindex = false } = Astro.props;
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <title>{title}</title>
+    <script is:inline define:vars={{ key: THEME_KEY }}>
+      // Apply a saved theme before first paint, so a picked theme never flashes the device's one first.
+      try {
+        const t = localStorage.getItem(key);
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
     <Font cssVariable="--font-unbounded" preload />
     <Font cssVariable="--font-barlow" />
     <Font cssVariable="--font-barlow-semi" />
