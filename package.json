@@ -2,6 +2,7 @@
   "name": "galactic-racer-web",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "description": "Galactic Racer build planner and tour simulator (Astro + Svelte)",
   "type": "module",
   "engines": {
