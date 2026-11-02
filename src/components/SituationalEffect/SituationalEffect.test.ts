@@ -31,4 +31,13 @@ describe('SituationalEffect', () => {
     render(SituationalEffect, { ...base, repeatable: true, value: undefined, onchange: vi.fn() });
     expect(screen.getByText(/Stacks each time it triggers\. Tracked Vehicle Condition: Surging — While Surging/)).toBeTruthy();
   });
+
+  it('counts a time-based effect in seconds', async () => {
+    const onchange = vi.fn();
+    render(SituationalEffect, { owner: 'Potential Energy (trait)', detail: 'Each second airborne', repeatable: false, perSecond: 'airborne', value: undefined, onchange });
+    const input = screen.getByRole('spinbutton', { name: 'Potential Energy (trait) seconds airborne' });
+    await fireEvent.input(input, { target: { value: '4' } });
+    expect(onchange).toHaveBeenLastCalledWith(4);
+    expect(screen.getByText(/^Each second airborne/)).toBeTruthy();
+  });
 });

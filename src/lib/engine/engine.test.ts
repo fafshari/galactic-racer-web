@@ -5,6 +5,7 @@ import type { PartId, SlotId, StyleId, VehicleId } from '../data/types.ts';
 import { freshBuild, type Build } from './build.ts';
 import { evaluate, type Evaluation, type Row } from './evaluate.ts';
 import { isModifier, type CellValue } from './ops.ts';
+import { speeds } from './speeds.ts';
 
 // Like the legacy tests: no racer style, so no trait effects mix in.
 const build = (patch: Partial<Build>): Build => ({ ...freshBuild('mp'), style: 'none' as StyleId, abilities: [], ...patch });
@@ -118,5 +119,24 @@ describe('engine (speed procs feed Power, ADR 0009)', () => {
     const r = evaluate(planner, build({ levels: allSlots(9), parts: [id], active: { [c.key]: 20 } }));
     expect(r.power).toBe(54);
     expect(r.powerBonus).toBe(6);
+  });
+});
+
+describe('engine (time-counted traits)', () => {
+  it('Potential Energy is counted in seconds airborne: each adds +10% Afterburner power', () => {
+    const stunt = planner.styles.find((s) => s.mode === 'mp' && s.name === 'Stunt Runner');
+    if (!stunt) throw new Error('no Stunt Runner style');
+    const b = { ...freshBuild('mp'), style: stunt.id, abilities: [] };
+    const c = evaluate(planner, b).conditionals.find((x) => x.owner === 'Potential Energy (trait)' && x.perSecond);
+    if (!c) throw new Error('no per-second Potential Energy effect');
+    expect(c.perSecond).toBe('airborne');
+    const afterburner = (n: number): number => {
+      const active = n ? { [c.key]: n } : {};
+      const nb = { ...b, active };
+      return speeds(planner, nb, evaluate(planner, nb)).afterburner;
+    };
+    const base = afterburner(0);
+    expect(afterburner(1) / base).toBeCloseTo(1.1);
+    expect(afterburner(5) / base).toBeCloseTo(1.5);
   });
 });

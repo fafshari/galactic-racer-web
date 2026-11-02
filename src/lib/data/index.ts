@@ -9,9 +9,11 @@ import labelsJson from '../../data/labels.json';
 import orderJson from '../../data/build-order.json';
 import manifestJson from '../../data/manifest.json';
 import type { BuildOrder } from './order.ts';
+import { resolveText } from './text.ts';
 import type { IconIndex, IconName, Labels, Manifest, PlannerData } from './types.ts';
 
-export const planner = plannerJson as unknown as PlannerData;
+/** Trait text has its {perc} placeholders filled from the traits' own rules (see text.ts). */
+export const planner = resolveText(plannerJson as unknown as PlannerData);
 export const icons = iconsJson as unknown as IconIndex;
 export const labels = labelsJson as unknown as Labels;
 export const buildOrder = orderJson as unknown as Readonly<BuildOrder>;

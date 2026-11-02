@@ -208,6 +208,7 @@
             detail={conditionLabel(c)}
             {...c.desc ? { desc: c.desc } : {}}
             repeatable={c.repeatable}
+            {...c.perSecond ? { perSecond: c.perSecond } : {}}
             value={active[c.key]}
             onchange={(v: ActiveCount | undefined) => {
               const rest = Object.fromEntries(Object.entries(active).filter(([k]) => k !== c.key));

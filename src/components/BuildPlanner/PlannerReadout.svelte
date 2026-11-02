@@ -44,6 +44,7 @@
             detail={conditionLabel(c)}
             {...c.desc ? { desc: c.desc } : {}}
             repeatable={c.repeatable}
+            {...c.perSecond ? { perSecond: c.perSecond } : {}}
             value={build.active[c.key]}
             onchange={(v: ActiveCount | undefined) => { onactive(c.key, v); }}
           />

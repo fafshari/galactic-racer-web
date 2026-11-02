@@ -9,12 +9,17 @@
     desc?: string;
     /** Counted per trigger (a number) instead of on/off. */
     repeatable: boolean;
+    /** Counted in seconds of something instead, e.g. "airborne". */
+    perSecond?: string;
     value: ActiveCount | undefined;
     onchange: (value: ActiveCount | undefined) => void;
   }
 
   const MAX_TIMES = 50;
-  const { owner, detail, desc, repeatable, value, onchange }: Props = $props();
+  const { owner, detail, desc, repeatable, perSecond, value, onchange }: Props = $props();
+  const counted = $derived(repeatable || perSecond !== undefined);
+  // a timed effect's detail already says "Each second airborne", so only per-trigger effects need the note
+  const stacks = $derived(repeatable && !perSecond ? 'Stacks each time it triggers.' : '');
   const id = $props.id();
   const times = $derived(value === true ? 1 : (value ?? 0));
 
@@ -24,8 +29,8 @@
   }
 </script>
 
-<div class={['situational-effect', repeatable && '-stacking']}>
-  {#if repeatable}
+<div class={['situational-effect', counted && '-stacking']}>
+  {#if counted}
     <input
       class="times"
       id={`${id}-control`}
@@ -38,7 +43,7 @@
       aria-describedby={`${id}-detail`}
       oninput={(e) => { setTimes(e.currentTarget.value); }}
     />
-    <label class="owner" for={`${id}-control`}>{owner} <span class="unit">× triggers</span></label>
+    <label class="owner" for={`${id}-control`}>{owner} <span class="unit">{perSecond ? `seconds ${perSecond}` : '× triggers'}</span></label>
   {:else}
     <input
       class="check"
@@ -51,7 +56,7 @@
     <label class="owner" for={`${id}-control`}>{owner}</label>
   {/if}
   <small class="detail" id={`${id}-detail`}>
-    {[repeatable ? 'Stacks each time it triggers.' : '', detail, desc ? `— ${desc}` : ''].filter(Boolean).join(' ')}
+    {[stacks, detail, desc ? `— ${desc}` : ''].filter(Boolean).join(' ')}
   </small>
 </div>
 
