@@ -151,6 +151,8 @@ export const Ability = z.strictObject({
   campaign: z.string(),
   config: z.record(z.string(), z.unknown()),
   tunesets: z.array(TunesetId),
+  /** Applied to your own vehicle while the ability is active (e.g. Surging Autopilot II's +6 Power). */
+  activation: TunesetId.nullable(),
   icon: IconName,
 });
 

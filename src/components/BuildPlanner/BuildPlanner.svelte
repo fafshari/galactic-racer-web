@@ -6,7 +6,7 @@
   import type { AbilityId, FavourId, GameMode, PartId, StyleId } from '~/lib/data/types.ts';
   import { decodeBuild, encodeBuild, evaluate, freshBuild, speeds, BuildCodeError, type ActiveCount, type Build } from '~/lib/engine/index.ts';
   import * as A from '~/lib/planner/actions.ts';
-  import { changeGroups, slotImproves } from '~/lib/planner/readout.ts';
+  import { abilityCooldowns, changeGroups, cooldownText, slotImproves } from '~/lib/planner/readout.ts';
   import { restoreBuild, STORAGE_KEY } from '~/lib/planner/storage.ts';
   import AbilitySlot from '../AbilitySlot/AbilitySlot.svelte';
   import Button from '../Button/Button.svelte';
@@ -26,7 +26,7 @@
   import PlannerReadout from './PlannerReadout.svelte';
   import ScreenshotImport from './ScreenshotImport.svelte';
 
-  type Picker = { kind: 'vehicle' } | { kind: 'style' } | { kind: 'ability'; slot: number } | { kind: 'part' } | { kind: 'favour' } | { kind: 'import' };
+  type Picker = { kind: 'vehicle' } | { kind: 'style' } | { kind: 'ability'; slot: number | 'crash' } | { kind: 'part' } | { kind: 'favour' } | { kind: 'import' };
   const PICKER_TITLE: Record<Picker['kind'], string> = {
     vehicle: 'Choose a vehicle',
     style: 'Choose a racer style',
@@ -54,6 +54,14 @@
   const traits = $derived((style?.traits ?? []).map((t) => planner.traits[t]).filter((t) => t !== undefined));
   const ranks = $derived(A.ranksOf(planner, build));
   const parts = $derived(build.parts.map((id) => planner.affixes.find((p) => p.id === id)).filter((p) => p !== undefined));
+  const regular = $derived(A.regularAbilities(planner, build));
+  const crash = $derived(A.crashAbility(planner, build));
+  const cooldowns = $derived(abilityCooldowns(planner, build.abilities, result));
+  const cooldownOf = (id: AbilityId | undefined): { cooldown?: string } => {
+    const c = id === undefined ? undefined : cooldowns.get(id);
+    return c ? { cooldown: cooldownText(c) } : {};
+  };
+  const abilityById = (id: AbilityId | undefined) => (id === undefined ? null : (planner.abilities.find((a) => a.id === id) ?? null));
   const favours = $derived(build.favours.map((id) => planner.favours.find((f) => f.id === id)).filter((f) => f !== undefined));
   const power = $derived(A.powerOf(planner, build));
   const vehicleArt = $derived(vehicle?.art ? iconUrl(vehicle.art) : undefined);
@@ -219,17 +227,26 @@
           {/if}
         </Panel>
 
-        <Panel title="Abilities" count={`${String(build.abilities.length)} / ${String(A.maxAbilities(planner))}`}>
+        <Panel title="Abilities" count={`${String(regular.length)} / ${String(A.maxAbilities(planner))}${crash === undefined ? '' : ' + crash'}`}>
           <div class="abilities">
             {#each Array.from({ length: A.maxAbilities(planner) }, (_, i) => i) as i (i)}
-              {@const id = build.abilities[i]}
+              {@const id = regular[i]}
               <AbilitySlot
-                ability={id === undefined ? null : (planner.abilities.find((a) => a.id === id) ?? null)}
+                ability={abilityById(id)}
                 label={`Ability ${String(i + 1)}`}
+                {...cooldownOf(id)}
                 onselect={() => (picker = { kind: 'ability', slot: i })}
-                {...id === undefined ? {} : { onremove: () => { update(A.removeAbility(build, i)); } }}
+                {...id === undefined ? {} : { onremove: () => { update(A.removeAbility(build, id)); } }}
               />
             {/each}
+            <AbilitySlot
+              ability={abilityById(crash)}
+              label="Crash ability"
+              takes="crash ability"
+              {...cooldownOf(crash)}
+              onselect={() => (picker = { kind: 'ability', slot: 'crash' })}
+              {...crash === undefined ? {} : { onremove: () => { update(A.removeAbility(build, crash)); } }}
+            />
           </div>
         </Panel>
       </div>
@@ -293,7 +310,7 @@
     </aside>
   </div>
 
-  <Drawer open={picker !== null} title={picker ? PICKER_TITLE[picker.kind] : ''} onclose={() => { picker = null; screenshot = null; }}>
+  <Drawer open={picker !== null} title={picker?.kind === 'ability' && picker.slot === 'crash' ? 'Choose a crash ability' : picker ? PICKER_TITLE[picker.kind] : ''} onclose={() => { picker = null; screenshot = null; }}>
     {#if picker?.kind === 'vehicle'}
       <div class="choices">
         {#each planner.vehicles.filter((v) => planner.meta.modes[build.mode].vehicles.includes(v.id)) as v (v.id)}
@@ -314,7 +331,7 @@
       </div>
     {:else if picker?.kind === 'ability'}
       {@const slot = picker.slot}
-      <AbilityPicker {build} onpick={(id: AbilityId) => { pick(A.placeAbility(planner, build, id, slot)); }} />
+      <AbilityPicker {build} slot={slot === 'crash' ? 'crash' : 'regular'} onpick={(id: AbilityId) => { pick(A.placeAbility(planner, build, id, slot === 'crash' ? 0 : slot)); }} />
     {:else if picker?.kind === 'part'}
       <PartPicker {build} onadd={(id: PartId) => { pick(A.addPart(planner, build, id)); }} />
     {:else if picker?.kind === 'favour'}

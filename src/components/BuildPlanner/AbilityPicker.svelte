@@ -2,13 +2,15 @@
   import { planner } from '~/lib/data/index.ts';
   import type { Ability, AbilityId } from '~/lib/data/types.ts';
   import type { Build } from '~/lib/engine/build.ts';
-  import { abilityChoices } from '~/lib/planner/actions.ts';
+  import { abilityChoices, type AbilitySlotKind } from '~/lib/planner/actions.ts';
   import ChoiceCard from '../ChoiceCard/ChoiceCard.svelte';
   import ModeSwitch from '../ModeSwitch/ModeSwitch.svelte';
   import SearchField from '../SearchField/SearchField.svelte';
 
   interface Props {
     build: Build;
+    /** Regular slots offer regular abilities; the crash slot offers crash abilities. */
+    slot: AbilitySlotKind;
     onpick: (id: AbilityId) => void;
   }
 
@@ -20,10 +22,10 @@
     { value: 'Level3', label: 'Lv 3' },
   ];
 
-  const { build, onpick }: Props = $props();
+  const { build, slot, onpick }: Props = $props();
   let query = $state('');
   let level = $state<LevelFilter>('all');
-  const choices = $derived(abilityChoices(planner, build.mode, level, query));
+  const choices = $derived(abilityChoices(planner, build.mode, slot, level, query));
 </script>
 
 <div class="ability-picker">

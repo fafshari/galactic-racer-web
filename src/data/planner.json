@@ -8970,6 +8970,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": "TNS_Ability_Autopilot",
       "icon": "T_UI_Ability_Autopilot_Icn"
     },
     {
@@ -8989,6 +8990,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": "TNS_Ability_Autopilot",
       "icon": "T_UI_Ability_Autopilot_Icn"
     },
     {
@@ -9006,6 +9008,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": "TNS_Ability_Autopilot",
       "icon": "T_UI_Ability_Autopilot_Icn"
     },
     {
@@ -9025,6 +9028,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": "TNS_Ability_Autopilot",
       "icon": "T_UI_Ability_Autopilot_Icn"
     },
     {
@@ -9042,6 +9046,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": "TNS_Ability_Autopilot_Enhanced",
       "icon": "T_UI_Ability_Autopilot_Icn"
     },
     {
@@ -9072,6 +9077,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_IonBolt_Icn"
     },
     {
@@ -9102,6 +9108,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_IonBolt_Icn"
     },
     {
@@ -9130,6 +9137,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_IonBolt_Icn"
     },
     {
@@ -9161,6 +9169,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_IonBolt_Icn"
     },
     {
@@ -9193,6 +9202,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_IonBolt_Icn"
     },
     {
@@ -9221,6 +9231,7 @@
         "EnergyCost": 0
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_IonBlast_Icn"
     },
     {
@@ -9249,6 +9260,7 @@
         "EnergyCost": 0
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_IonBlast_Icn"
     },
     {
@@ -9278,6 +9290,7 @@
         "EnergyCost": 0
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_IonBlast_Icn"
     },
     {
@@ -9305,6 +9318,7 @@
         "EnergyCost": 0
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_IonBlast_Icn"
     },
     {
@@ -9325,6 +9339,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Mines_Icn"
     },
     {
@@ -9345,6 +9360,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Mines_Icn"
     },
     {
@@ -9361,6 +9377,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Mines_Icn"
     },
     {
@@ -9379,6 +9396,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Mines_Icn"
     },
     {
@@ -9397,6 +9415,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Mines_Icn"
     },
     {
@@ -9431,6 +9450,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_StatusScrubber_Icn"
     },
     {
@@ -9468,6 +9488,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_StatusScrubber_Icn"
     },
     {
@@ -9511,6 +9532,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_StatusScrubber_Icn"
     },
     {
@@ -9546,6 +9568,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_StatusScrubber_Icn"
     },
     {
@@ -9579,6 +9602,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_StatusScrubber_Icn"
     },
     {
@@ -9599,6 +9623,7 @@
         "ImprovedUseNoEnergyCost": true
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Shield_Icn"
     },
     {
@@ -9618,6 +9643,7 @@
         "ImprovedUseNoEnergyCost": true
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Shield_Icn"
     },
     {
@@ -9636,6 +9662,7 @@
         "ImprovedUseNoEnergyCost": true
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Shield_Icn"
     },
     {
@@ -9658,6 +9685,7 @@
         "ImprovedUseNoEnergyCost": true
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Shield_Icn"
     },
     {
@@ -9679,6 +9707,7 @@
         "ImprovedUseNoEnergyCost": true
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Shield_Icn"
     },
     {
@@ -9707,6 +9736,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Shockwave_Icn"
     },
     {
@@ -9739,6 +9769,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Shockwave_Icn"
     },
     {
@@ -9770,6 +9801,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Shockwave_Icn"
     },
     {
@@ -9799,6 +9831,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Shockwave_Icn"
     },
     {
@@ -9826,6 +9859,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Shockwave_Icn"
     },
     {
@@ -9849,6 +9883,7 @@
         "ImprovedUseNoEnergyCost": true
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Surge_Icn"
     },
     {
@@ -9871,6 +9906,7 @@
         "ImprovedUseNoEnergyCost": true
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Surge_Icn"
     },
     {
@@ -9892,6 +9928,7 @@
         "ImprovedUseNoEnergyCost": true
       },
       "tunesets": [],
+      "activation": null,
       "icon": "T_UI_Ability_Surge_Icn"
     },
     {
@@ -9917,6 +9954,7 @@
       "tunesets": [
         "TNS_Ability_Surge_IncreasePotency"
       ],
+      "activation": null,
       "icon": "T_UI_Ability_Surge_Icn"
     },
     {
@@ -9941,6 +9979,7 @@
       "tunesets": [
         "TNS_Ability_Surge_IncreasePotency"
       ],
+      "activation": null,
       "icon": "T_UI_Ability_Surge_Icn"
     },
     {
@@ -9962,6 +10001,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": "TNS_Ability_Vent",
       "icon": "T_UI_Ability_Vent_Icn"
     },
     {
@@ -9983,6 +10023,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": "TNS_Ability_Vent",
       "icon": "T_UI_Ability_Vent_Icn"
     },
     {
@@ -10002,6 +10043,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": "TNS_Ability_Vent",
       "icon": "T_UI_Ability_Vent_Icn"
     },
     {
@@ -10021,6 +10063,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": "TNS_Ability_Vent",
       "icon": "T_UI_Ability_Vent_Icn"
     },
     {
@@ -10041,6 +10084,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": "TNS_Ability_Vent",
       "icon": "T_UI_Ability_Vent_Icn"
     },
     {
@@ -10060,6 +10104,7 @@
         "WarmUpTime": 15
       },
       "tunesets": [],
+      "activation": "TNS_Ability_Vent",
       "icon": "T_UI_Ability_Vent_Icn"
     }
   ],
@@ -30947,6 +30992,407 @@
         }
       ]
     },
+    "TNS_Ability_Autopilot": {
+      "stacking": false,
+      "ops": [
+        {
+          "op": "Vector2DSubtractMultiple",
+          "cfg": "VehicleRamjetConfig",
+          "field": "ActiveHeatingRate",
+          "f": 0,
+          "i": 0,
+          "v2": [
+            0.4,
+            0.4
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatCurveAllSubtractMultiple",
+          "cfg": "VehicleRamjetConfig",
+          "field": "SpeedScaleVsCoolingRate",
+          "f": 0,
+          "i": 0,
+          "v2": [
+            0.25,
+            0.25
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAdd",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "MinInputForKnifing",
+          "f": 0.2,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "IntSubtract",
+          "cfg": "VehicleConditionConfig",
+          "field": "FrozenTuneSetStrength",
+          "f": 0,
+          "i": 10,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "IntAdd",
+          "cfg": "VehicleGameplayConfig",
+          "field": "Cornering",
+          "f": 0,
+          "i": 10,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "IntAdd",
+          "cfg": "VehicleGameplayConfig",
+          "field": "Advanced",
+          "f": 0,
+          "i": 10,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "VehicleBrakeConfig",
+          "field": "Deceleration",
+          "f": 1.2,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "BikeBrakeConfig",
+          "field": "Deceleration",
+          "f": 1.1,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "PlaneBrakeConfig",
+          "field": "Deceleration",
+          "f": 1.1,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "BikeBrakeConfig",
+          "field": "EnergyBrakeDeceleration",
+          "f": 1.1,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "PlaneBrakeConfig",
+          "field": "AirBrakeDeceleration",
+          "f": 1.1,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        }
+      ]
+    },
+    "TNS_Ability_Autopilot_Enhanced": {
+      "stacking": false,
+      "ops": [
+        {
+          "op": "Vector2DSubtractMultiple",
+          "cfg": "VehicleRamjetConfig",
+          "field": "ActiveHeatingRate",
+          "f": 0,
+          "i": 0,
+          "v2": [
+            0.4,
+            0.4
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatCurveAllSubtractMultiple",
+          "cfg": "VehicleRamjetConfig",
+          "field": "SpeedScaleVsCoolingRate",
+          "f": 0,
+          "i": 0,
+          "v2": [
+            0.25,
+            0.25
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAdd",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "MinInputForKnifing",
+          "f": 0.2,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "IntSubtract",
+          "cfg": "VehicleConditionConfig",
+          "field": "FrozenTuneSetStrength",
+          "f": 0,
+          "i": 10,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "IntAdd",
+          "cfg": "VehicleGameplayConfig",
+          "field": "Cornering",
+          "f": 0,
+          "i": 10,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "IntAdd",
+          "cfg": "VehicleGameplayConfig",
+          "field": "Advanced",
+          "f": 0,
+          "i": 10,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "IntAdd",
+          "cfg": "VehicleGameplayConfig",
+          "field": "Power",
+          "f": 0,
+          "i": 6,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "VehicleBrakeConfig",
+          "field": "Deceleration",
+          "f": 1.2,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "BikeBrakeConfig",
+          "field": "Deceleration",
+          "f": 1.1,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "PlaneBrakeConfig",
+          "field": "Deceleration",
+          "f": 1.1,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "BikeBrakeConfig",
+          "field": "EnergyBrakeDeceleration",
+          "f": 1.1,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "PlaneBrakeConfig",
+          "field": "AirBrakeDeceleration",
+          "f": 1.1,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        }
+      ]
+    },
     "TNS_Ability_Surge_IncreasePotency": {
       "stacking": false,
       "ops": [
@@ -31010,6 +31456,96 @@
           "v2": [
             0,
             0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        }
+      ]
+    },
+    "TNS_Ability_Vent": {
+      "stacking": false,
+      "ops": [
+        {
+          "op": "BoolSetTrue",
+          "cfg": "VehicleRamjetConfig",
+          "field": "AllowCoolingWhenBoosting",
+          "f": 0,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "BoolSetTrue",
+          "cfg": "VehicleRamjetConfig",
+          "field": "ExplodeLatchDraining",
+          "f": 2,
+          "i": 0,
+          "v2": [
+            0.1,
+            0.1
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "Vector2DSubtractMultiple",
+          "cfg": "VehicleRamjetConfig",
+          "field": "ActiveHeatingRate",
+          "f": 0,
+          "i": 0,
+          "v2": [
+            1.5,
+            1.5
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatSubtractMultiple",
+          "cfg": "VehicleRamjetConfig",
+          "field": "PassiveHeatingRate",
+          "f": 1.5,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatCurveAllAddMultiple",
+          "cfg": "VehicleRamjetConfig",
+          "field": "OverheatedSpeedScaleVsCoolingRate",
+          "f": 0,
+          "i": 0,
+          "v2": [
+            0,
+            0.8
           ],
           "v3": [
             0,

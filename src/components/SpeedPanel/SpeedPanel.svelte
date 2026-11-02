@@ -40,7 +40,6 @@
     <div class={['tile', faster === 'ramjet' && '-faster']}>
       <h3 class="heading">Ramjet{#if faster === 'ramjet'}<span class="_visually-hidden">, the faster boost</span>{/if}<InfoTip label="Ramjet">
         <p>Top speed plus the Ramjet's top-speed bonus (base 128.7 km/h, raised by Boost upgrades and Ramjet-power parts).</p>
-        <p>The base isn't in the game data: it was measured in game (80 mph).</p>
       </InfoTip></h3>
       <span class="number">{withRamjet}{#if !speeds.ramjetKnown}&nbsp;+ ?{/if}<small>km/h</small></span>
       <span class="detail">+{kmh(speeds.ramjet)} km/h{#if !speeds.ramjetKnown} · unknown base{/if}</span>

@@ -78,6 +78,8 @@ From [ADR 0009](docs/adr/0009-game-mechanics-model.md); details and confidence l
 - **Measured values** override missing defaults and are flagged as measured. Ramjet top-speed bonus = 80 mph (measured and confirmed).
 - **Units:** speeds are stored in mph and shown in km/h (× 1.609344).
 - **Power:** each Power point is one step of the power tuneset (+2.5 mph top speed, more on Podracer). Situational "increase Speed" effects add Power too. The engine caps total Power at 60; whether the game does is **unknown**.
+- **Abilities (confirmed):** four regular slots plus one crash-ability slot (the Blasts, marked by `VehicleCrashClass` in their config). `fitAbilities` keeps a build's list valid.
+- **Ability effects:** an ability's activation tuneset (e.g. Surging Autopilot II's +6 Power) and a Blast's Power per opponent hit are situational effects. Reload time is `WarmUpTime` × `AbilityTuneConfig.GlobalCooldownScale`.
 - **Parts (confirmed):** grouped by family, and a build holds one rarity per family.
   - In a tour, owning a part removes its lower rarities from every offer.
   - A higher rarity, if offered, is a buy-and-replace upgrade into the same slot.
@@ -210,7 +212,7 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 | Basics | `Button` (default, primary, quiet; small), `ModeSwitch` (generic pill group), `Tag`, `GameIcon` (tints white glyphs, shows colour art as-is), `KeywordText` (the game's gold keywords), `InfoTip` (native popover), `ThemeSwitch` (in the site header) |
 | Overview | `StatRow` + `StatPips`, `SpeedPanel`, `StylePanel`, `AbilitySlot`, `PartRow` |
 | Pickers | `Drawer` (native modal `<dialog>`; bottom sheet on phones), `PartCard`, `RarityToggle`, `ChoiceCard`, `SearchField` |
-| Readout | `SituationalEffect` (on/off or a 0–50 trigger count), `ChangeRow` (renders a `RowView` from `src/lib/format`) |
+| Readout | `SituationalEffect` (on/off or a 0–50 trigger count), `ChangeRow` (renders a `RowView` from `src/lib/format`), `CurveChart` (before/after line chart) |
 | Layout | `Panel` (a titled overview panel with a count and actions), `FavourRow` |
 | Pages | `BuildPlanner/` (the planner island, its pickers and the screenshot import), `PlannerNotes.astro` |
 
@@ -237,6 +239,9 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 - **Stale links:** once the build stops matching the link it was opened from, the hash is removed, so a reload keeps the user's edits.
 - **Copy build link** writes the hash and copies the URL. If the clipboard is blocked, the code is left in the box to copy by hand.
 - **Readout:** "What changes" always lists the Afterburner and Ramjet top-speed bonuses (`PINNED` in `readout.ts`).
+- **Situational effects** show the game's own description. A short plain "when" line (`situationalWhen`) appears only where that isn't enough: an ability's while-active effect, or one trait with several rules. Numbers belong in "What changes", not here.
+- **Tooltips** explain what a value is. They don't say where its meaning came from or give the game's field name (`sure` in `labels.json` stays for us).
+- **Curves** ("Show curve") show the field's explanation, a before/after chart (`CurveChart`) and one plain sentence per changed point.
 - **Screenshot import** ([ADR 0016](docs/adr/0016-screenshot-import.md)): paste (anywhere on the planner), drop, or "Import screenshot" opens a review drawer; nothing applies until "Use this build".
   - Recognition is `src/lib/import/` (OCR text matched to game names, pips counted, part rarity from the dots under the icon). The OCR engine is injected.
   - Browser glue is `BuildPlanner/screenshot.ts`, loaded only when an image arrives. tesseract.js and its English data are self-hosted; the `ocr-data` integration serves the data at `/ocr/4.0.0_best_int/`.

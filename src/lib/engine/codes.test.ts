@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { buildOrder, planner } from '../data/index.ts';
 import type { BuildOrder } from '../data/order.ts';
 import type { VehicleId } from '../data/types.ts';
-import { freshBuild, type Build } from './build.ts';
+import { fitAbilities, freshBuild, type Build } from './build.ts';
 import { BuildCodeError, decodeBuild, encodeBuild } from './codes.ts';
 import { evaluate } from './evaluate.ts';
 import { speeds, toKmh } from './speeds.ts';
@@ -35,7 +35,7 @@ const sampleBuilds = (): Build[] => {
       style: style.id,
       levels: Object.fromEntries(planner.slots.map((s, k) => [s.id, (i + k * 3) % 11])),
       parts: planner.affixes.filter((_, k) => k % (37 + i) === 0).slice(0, 10).map((p) => p.id),
-      abilities: planner.abilities.filter((_, k) => k % (11 + i) === 0).slice(0, 4).map((a) => a.id),
+      abilities: fitAbilities(planner, planner.abilities.filter((_, k) => k % (11 + i) === 0).map((a) => a.id)),
       favours: campaign ? planner.favours.filter((_, k) => k % (13 + i) === 0).map((f) => f.id) : [],
     };
   });

@@ -1,10 +1,22 @@
 // Planner rules as pure functions: each takes a build and returns the next one (ADR 0008, 0012).
 // Ported from the legacy planner's event handlers; the UI only calls these.
 import type { Ability, AbilityId, FavourId, GameMode, OfferRarity, Part, PartId, PlannerData, SlotId, StyleId, VehicleId } from '../data/types.ts';
-import { abilityAllowed, freshBuild, MAX_LEVEL, partAllowed, stylesFor, type ActiveCount, type Build } from '../engine/build.ts';
+import { abilityAllowed, fitAbilities, freshBuild, isCrashAbility, MAX_LEVEL, partAllowed, stylesFor, type ActiveCount, type Build } from '../engine/build.ts';
 
 export const maxParts = (data: PlannerData): number => data.meta.partSlots.max;
+/** Regular ability slots; the crash ability has a slot of its own on top. */
 export const maxAbilities = (data: PlannerData): number => data.meta.abilitySlots;
+
+/** Which slot an ability goes in. */
+export type AbilitySlotKind = 'regular' | 'crash';
+const slotOf = (data: PlannerData, id: AbilityId): AbilitySlotKind => {
+  const a = byId(data.abilities, id);
+  return a && isCrashAbility(a) ? 'crash' : 'regular';
+};
+/** The regular abilities, in slot order. */
+export const regularAbilities = (data: PlannerData, b: Build): AbilityId[] => b.abilities.filter((id) => slotOf(data, id) === 'regular');
+/** The crash ability, if one is installed. */
+export const crashAbility = (data: PlannerData, b: Build): AbilityId | undefined => b.abilities.find((id) => slotOf(data, id) === 'crash');
 
 /** The effect only applies in some situations ("while Surging", "after a takedown"). */
 export const isSituational = (p: { rules: Part['rules'] }): boolean => p.rules.some((r) => r.requires.length > 0 || r.effects.length > 0);
@@ -62,7 +74,7 @@ export function setMode(data: PlannerData, b: Build, mode: GameMode): Build {
     mode,
     vehicle: vehicles.includes(b.vehicle) ? b.vehicle : (vehicles[0] ?? b.vehicle),
     style: style.id,
-    abilities: [...style.abilities, ...keepAbilities].slice(0, maxAbilities(data)),
+    abilities: fitAbilities(data, [...style.abilities, ...keepAbilities]),
     parts: b.parts.filter((id) => {
       const p = byId(data.affixes, id);
       return p !== undefined && partAllowed(p, mode);
@@ -81,7 +93,7 @@ export function setStyle(data: PlannerData, b: Build, picked: StyleId): Build {
   if (!p) return b;
   const style = (old?.rank != null ? data.styles.find((s) => s.group === p.group && s.rank === old.rank) : undefined) ?? p;
   const kept = b.abilities.filter((a) => !(old?.abilities.includes(a) ?? false) && !style.abilities.includes(a));
-  return { ...b, style: style.id, abilities: [...style.abilities, ...kept].slice(0, maxAbilities(data)), active: {} };
+  return { ...b, style: style.id, abilities: fitAbilities(data, [...style.abilities, ...kept]), active: {} };
 }
 
 /** Campaign ranks of the current style, lowest first; empty for Multiplayer styles. */
@@ -100,21 +112,33 @@ export const setLevel = (b: Build, slot: SlotId, level: number): Build => ({
 export const powerOf = (data: PlannerData, b: Build): number =>
   data.slots.reduce((n, s) => n + (s.levels[b.levels[s.id] ?? 0]?.power ?? 0), 0);
 
-/** Puts an ability in a slot: replaces what's there, or fills the next free slot. No duplicates. */
+/**
+ * Puts an ability in a slot. A crash ability goes in the crash slot, replacing the one there. A regular one replaces
+ * what's in regular slot `slot`, or fills the next free regular slot. No duplicates.
+ */
 export function placeAbility(data: PlannerData, b: Build, id: AbilityId, slot: number): Build {
   if (b.abilities.includes(id)) return b;
-  const abilities = [...b.abilities];
-  if (slot < abilities.length) abilities[slot] = id;
-  else if (abilities.length < maxAbilities(data)) abilities.push(id);
+  if (slotOf(data, id) === 'crash') return { ...b, abilities: [...regularAbilities(data, b), id] };
+  const regular = regularAbilities(data, b);
+  if (slot < regular.length) regular[slot] = id;
+  else if (regular.length < maxAbilities(data)) regular.push(id);
   else return b;
-  return { ...b, abilities };
+  const crash = crashAbility(data, b);
+  return { ...b, abilities: crash === undefined ? regular : [...regular, crash] };
 }
 
-export const removeAbility = (b: Build, index: number): Build => ({ ...b, abilities: b.abilities.filter((_, i) => i !== index) });
+export const removeAbility = (b: Build, id: AbilityId): Build => ({ ...b, abilities: b.abilities.filter((x) => x !== id) });
 
-export function abilityChoices(data: PlannerData, mode: GameMode, level: Ability['level'] | 'all', query: string): Ability[] {
+/** Abilities a slot can take: regular slots take regular abilities, the crash slot takes crash abilities. */
+export function abilityChoices(data: PlannerData, mode: GameMode, slot: AbilitySlotKind, level: Ability['level'] | 'all', query: string): Ability[] {
   const q = query.trim().toLowerCase();
-  return data.abilities.filter((a) => abilityAllowed(a, mode) && (level === 'all' || a.level === level) && (!q || `${a.name} ${a.desc}`.toLowerCase().includes(q)));
+  return data.abilities.filter(
+    (a) =>
+      abilityAllowed(a, mode) &&
+      isCrashAbility(a) === (slot === 'crash') &&
+      (level === 'all' || a.level === level) &&
+      (!q || `${a.name} ${a.desc}`.toLowerCase().includes(q)),
+  );
 }
 
 /** Why a part can't be added right now, or null if it can. */

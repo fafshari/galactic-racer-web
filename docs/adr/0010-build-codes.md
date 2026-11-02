@@ -12,6 +12,7 @@ Users share builds as links like `https://…/#gr2-m106475806.….….…`. Thos
 - **Format** (version 2, stored in the URL hash): `gr2-{m|c}{vehicle}{style as 2 base-36 digits}{6 slot levels}.{parts}.{abilities}.{favours}`.
   - `m` / `c`: Multiplayer Tour / Campaign.
   - The parts, abilities and favours sections each hold 2-character base-36 indexes into the data arrays.
+  - Abilities: up to four regular ones, then the crash ability (ADR 0009). The list needs no marker, since an ability's kind comes from the data. A code with a crash ability among the first four (made before the crash slot existed) still decodes; the crash ability moves to its slot.
 - **Encoding:** the encoder strips trailing dots, and the decoder accepts missing trailing sections.
 - **Index order:** indexes refer to positions in the exported data. The data export must keep array order stable across game patches. New items go at the end, and removed items leave a placeholder, so old codes keep pointing at the same things.
 - **Format changes:** any incompatible change gets a new prefix (`gr3-`). Decoders for every older prefix stay in the code, with tests using real saved links.

@@ -140,3 +140,39 @@ describe('engine (time-counted traits)', () => {
     expect(afterburner(5) / base).toBeCloseTo(1.5);
   });
 });
+
+describe('engine (ability speed)', () => {
+  const ability = (name: string) => {
+    const a = planner.abilities.find((x) => x.name === name);
+    if (!a) throw new Error(`no ability ${name}`);
+    return a.id;
+  };
+  const withAbility = (name: string, key: string, count: true | number) => {
+    const b = build({ abilities: [ability(name)] });
+    const c = evaluate(planner, b).conditionals.find((x) => x.key.endsWith(key));
+    if (!c) throw new Error(`no ${key} effect for ${name}`);
+    const counted = { ...b, active: { [c.key]: count } };
+    return { c, plain: evaluate(planner, b), counted: evaluate(planner, counted), speedsOf: (r: Evaluation, bb: Build) => speeds(planner, bb, r), b, countedBuild: counted };
+  };
+
+  it('Surging Autopilot II adds +6 Power (top speed) while active', () => {
+    const { c, plain, counted, speedsOf, b, countedBuild } = withAbility('Surging Autopilot II', '#active', true);
+    expect(c.kind).toBe('active');
+    expect(plain.powerBonus).toBe(0);
+    expect(counted.powerBonus).toBe(6);
+    expect(speedsOf(counted, countedBuild).top).toBeGreaterThan(speedsOf(plain, b).top);
+  });
+
+  it('plain Autopilot changes handling while active, but not speed', () => {
+    const { counted } = withAbility('Autopilot', '#active', true);
+    expect(counted.powerBonus).toBe(0);
+    expect(counted.rows.some((r) => r.field === 'Cornering')).toBe(true);
+  });
+
+  it('Ion Blast adds +3 Power per opponent hit', () => {
+    const { c, counted } = withAbility('Ion Blast', '#victims', 2);
+    expect(c.repeatable).toBe(true);
+    expect(c.power).toBe(3);
+    expect(counted.powerBonus).toBe(6);
+  });
+});

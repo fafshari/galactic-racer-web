@@ -2,8 +2,7 @@
   import type { ActiveCount, Build } from '~/lib/engine/build.ts';
   import type { Evaluation } from '~/lib/engine/evaluate.ts';
   import type { Speeds } from '~/lib/engine/speeds.ts';
-  import { conditionLabel } from '~/lib/format/format.ts';
-  import type { ChangeGroup } from '~/lib/planner/readout.ts';
+  import { situationalWhen, type ChangeGroup } from '~/lib/planner/readout.ts';
   import ChangeRow from '../ChangeRow/ChangeRow.svelte';
   import InfoTip from '../InfoTip/InfoTip.svelte';
   import Panel from '../Panel/Panel.svelte';
@@ -21,6 +20,8 @@
   }
 
   const { build, result, speeds, groups, summary, onactive }: Props = $props();
+  // when each situational effect applies, where its description alone doesn't say (see situationalWhen)
+  const whens = $derived(situationalWhen(result));
 </script>
 
 <div class="planner-readout">
@@ -39,12 +40,14 @@
     {#if result.conditionals.length}
       <div class="effects">
         {#each result.conditionals as c (c.key)}
+          {@const when = whens.get(c.key)}
           <SituationalEffect
             owner={c.owner}
-            detail={conditionLabel(c)}
             {...c.desc ? { desc: c.desc } : {}}
             repeatable={c.repeatable}
             {...c.perSecond ? { perSecond: c.perSecond } : {}}
+            {...when ? { when } : {}}
+            {...c.kind === 'victims' ? { countLabel: 'opponents hit' } : {}}
             value={build.active[c.key]}
             onchange={(v: ActiveCount | undefined) => { onactive(c.key, v); }}
           />

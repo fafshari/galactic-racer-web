@@ -70,7 +70,7 @@ test('dropping a screenshot opens the review, where a slot can be corrected befo
   await drawer(page).getByRole('button', { name: 'Use this build' }).click();
 
   await expect(page.locator('.part-row').nth(3)).toContainText('Repulsormod II');
-  await expect(page.getByRole('button', { name: 'Ability 2: Shield. Change' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /^Ability 2: Shield, Reload/ })).toBeVisible();
 });
 
 test('an image that is not the build screen gets a clear message', async ({ page }) => {
