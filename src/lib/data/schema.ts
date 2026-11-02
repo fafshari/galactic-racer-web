@@ -301,6 +301,8 @@ export const Labels = z.strictObject({
       parts: z.array(z.string()).optional(),
       axes: z.tuple([z.string(), z.string()]).optional(),
       axisScale: z.tuple([z.number(), z.number()]).optional(),
+      /** Which way is an improvement, when it's lower; one entry per part when the parts differ. */
+      better: z.union([z.literal('lower'), z.array(z.enum(['higher', 'lower']))]).optional(),
     }),
   ),
 });
