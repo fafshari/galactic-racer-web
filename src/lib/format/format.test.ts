@@ -21,12 +21,19 @@ describe('number and text helpers', () => {
 
 describe('formatValue', () => {
   it('shows base → value with the percent change from unconverted numbers', () => {
-    expect(formatValue(40, 50, 'km/h', 1.609344)).toEqual({ kind: 'number', base: '64.4 km/h', value: '80.5 km/h', percent: '+25%', direction: 'up' });
+    expect(formatValue(40, 50, 'km/h', 1.609344)).toEqual({ kind: 'number', base: '64.4 km/h', value: '80.5 km/h', percent: '+25%', direction: 'up', tone: 'good' });
+  });
+
+  it('colours a drop as an improvement where lower is better', () => {
+    expect(formatValue(100, 26.923, '', 1, 'lower')).toMatchObject({ direction: 'down', tone: 'good' });
+    expect(formatValue(100, 120, '', 1, 'lower')).toMatchObject({ direction: 'up', tone: 'bad' });
+    expect(formatValue(undefined, { add: 0, mult: 0, mul: 0.5 }, '', 1, 'lower')).toMatchObject({ tone: 'good' });
+    expect(formatValue(5, 5, '', 1, 'lower')).toMatchObject({ tone: 'same' });
   });
 
   it('shows only the change when the base is a code default', () => {
-    expect(formatValue(undefined, { add: 0, mult: 0.2, mul: 1 }, '')).toEqual({ kind: 'change', text: '+20% of default', direction: 'up' });
-    expect(formatValue(undefined, { add: 0, mult: 0, mul: 0.5 }, '')).toEqual({ kind: 'change', text: '×0.5', direction: 'down' });
+    expect(formatValue(undefined, { add: 0, mult: 0.2, mul: 1 }, '')).toEqual({ kind: 'change', text: '20% more than default', direction: 'up', tone: 'good' });
+    expect(formatValue(undefined, { add: 0, mult: 0, mul: 0.5 }, '')).toEqual({ kind: 'change', text: '×0.5', direction: 'down', tone: 'bad' });
   });
 
   it('shows yes/no settings', () => {
@@ -52,6 +59,17 @@ describe('describeRow', () => {
     if (curve?.display.kind !== 'curve') throw new Error('no curve row in this build');
     expect(curve.display.changedPoints).toBeGreaterThan(0);
     expect(curve.display.points.some((p) => p.changed[0] || p.changed[1])).toBe(true);
+  });
+
+  it('reads which way is better per part from the labels', () => {
+    const tone = (field: string, cfg: string, cells: Row['cells']): string[] => {
+      const v = describeRow(labels, { cfg, field, base: 0, cells, known: true, sources: [] });
+      return v.display.kind === 'parts' ? v.display.items.map((i) => (i.value.kind === 'toggle' ? '' : i.value.tone)) : v.display.kind === 'single' && v.display.value.kind !== 'toggle' ? [v.display.value.tone] : [];
+    };
+    // knifing loss falling is good; afterburner burn time (part 0) rising is good, its refill time (part 1) rising is bad
+    expect(tone('KnifingAccelerationLoss', 'SkimmerSteeringConfig', [{ cell: '0', base: 100, value: 26.9 }])).toEqual(['good']);
+    expect(tone('BaseEnergyBarChangeTimes', 'VehicleAfterburnerConfig', [{ cell: '0', base: 4, value: 5 }, { cell: '1', base: 4, value: 5 }])).toEqual(['good', 'bad']);
+    expect(tone('Deceleration', 'VehicleBrakeConfig', [{ cell: '', base: 4, value: 5 }])).toEqual(['good']);
   });
 
   it('falls back to the field name when there is no label', () => {

@@ -78,7 +78,7 @@ The `/components` showcase is **development only**: the route is injected for `a
 
 From [ADR 0009](docs/adr/0009-game-mechanics-model.md); details and confidence levels are in the ADR.
 - **Combine order (assumed):** a tuned value is `(base + Σadd + base·Σmultiple) · Πmultiply`.
-- **Code defaults:** values missing from the cooked data are code defaults shared by every vehicle. They show as "of default" when the base is unknown.
+- **Code defaults:** values missing from the cooked data are code defaults shared by every vehicle. When the base is unknown only the change shows, as "20% more than default" / "73% less than default".
 - **Measured values** override missing defaults and are flagged as measured. Ramjet top-speed bonus = 80 mph (measured and confirmed).
 - **Units:** speeds are stored in mph and shown in km/h (× 1.609344).
 - **Power:** each Power point is one step of the power tuneset (+2.5 mph top speed, more on Podracer). Situational "increase Speed" effects add Power too. The engine caps total Power at 60; whether the game does is **unknown**.
@@ -246,6 +246,7 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 - **Favourites** (`lib/planner/favorites.ts`): saved in `localStorage` under `swgr-favorites` as build codes plus a name, newest first, at most 100. Saving the same build again moves it to the top. The row's speed is the faster of Afterburner and Ramjet with every on/off situational effect triggered (`allTriggered`); counted effects (per trigger, per second, per opponent) stay at zero.
 - **Copy build link** writes the hash and copies the URL. If the clipboard is blocked, the code is left in the box to copy by hand.
 - **Readout:** "What changes" always lists the Afterburner and Ramjet top-speed bonuses (`PINNED` in `readout.ts`).
+- **Colours:** a change is green when it's an improvement and red when it's worse, not by which way the number moved. Mark a field `"better": "lower"` in `labels.json` (or one `higher`/`lower` per part) when lower is the improvement. Upgrades only ever improve, and a test fails if one reads red.
 - **Situational effects** show the game's own description. A short plain "when" line (`situationalWhen`) appears only where that isn't enough: an ability's while-active effect, or one trait with several rules. Numbers belong in "What changes", not here.
 - **Tooltips** explain what a value is. They don't say where its meaning came from or give the game's field name (`sure` in `labels.json` stays for us).
 - **Curves** ("Show curve") show the field's explanation, a before/after chart (`CurveChart`) and one plain sentence per changed point.

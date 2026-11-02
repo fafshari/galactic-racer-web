@@ -12,7 +12,7 @@ The game's numbers come from cooked data (configs, tunesets, passive rules). How
 | Area | Model | Evidence | Confidence |
 |---|---|---|---|
 | **Combine order** | `value = (base + Σadd + base·Σmultiple) · Πmultiply`, with `Set` overriding | Operation names from `ETuneOperations`; order not in data | Assumed |
-| **Missing values** | Unversioned serialization omits values equal to the code default, so a missing field is the code default, shared by all vehicles. Shown as "of default" (change only) when the base is unknown | How UE unversioned properties work; explicit zeros are stored (e.g. `BoostTopSpeedIncreaseMph = 0`) | High |
+| **Missing values** | Unversioned serialization omits values equal to the code default, so a missing field is the code default, shared by all vehicles. Shown as "more/less than default" (change only) when the base is unknown | How UE unversioned properties work; explicit zeros are stored (e.g. `BoostTopSpeedIncreaseMph = 0`) | High |
 | **Measured values** | Missing defaults may be filled from in-game measurement and flagged "measured": Ramjet `TopSpeedIncreaseMph = 80` | Speeder Bike peaked at 595 km/h with a known build, which works out to about 79 mph; the user confirmed 80 (2026-11-01) | Confirmed |
 | **Units** | Speeds stored in mph, shown in km/h (× 1.609344) | Field names (`…Mph`) and in-game readouts | High |
 | **Top speed** | `VehicleThrustConfig.HighSpeedStep[1]` + Power steps (+2.5 mph per Power; 4.1667 on Podracer) | Power tuneset ops | High |
@@ -27,7 +27,7 @@ The game's numbers come from cooked data (configs, tunesets, passive rules). How
 
 ## Consequences
 
-- The UI must keep showing which numbers are inferred or measured (tooltips and "of default" labels), not present them as fact.
+- The UI must keep showing which numbers are inferred or measured (tooltips and "than default" labels), not present them as fact.
 - Each row maps to engine code (ADR 0008). Changing one means a superseding ADR and a test update.
 - **The tour simulator must enforce the part-family rule**, and the port must carry it over with tests. The legacy version used to break it in two ways, both fixed on 2026-11-01:
   - Its normal rolls only skipped the exact parts you owned, so a lower rarity of an owned family could still be offered.
