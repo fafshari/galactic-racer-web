@@ -179,12 +179,13 @@ src/
   dev/                pages that exist only under `astro dev`: components.astro + Showcase.svelte
   lib/format/         engine rows to display values (labels, units, curves, keyword runs), no HTML
   lib/planner/        planner rules as pure build → build functions, readout grouping, saved-build restore
-  integrations/       dev-pages.ts (dev-only routes), validate-data.ts (data check on dev/build start)
+  integrations/       dev-pages.ts (dev-only routes), validate-data.ts (data check on dev/build start), ocr-data.ts (serves OCR language data)
   styles/             global.scss, _tokens.scss (light/dark CSS variables), _breakpoints.scss
   lib/data/           schema, types, references and label checks, build-code order, loader (index.ts)
   lib/engine/         evaluate (tuned values), build codes, speeds, the Build type (index.ts re-exports)
   lib/synergy/        the tour recommender (createSynergy)
   lib/theme.ts        the visitor's saved colour theme (auto / light / dark)
+  lib/import/         screenshot import: panel layout, OCR text matching, pip counting (ADR 0016)
   lib/tour/           tour simulation: seeded RNG, the tourAction reducer, offer fit labels, saved-run restore
   data/               imported game data (see "Game data")
   assets/icons/       game icons (WebP)
@@ -210,7 +211,7 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 | Pickers | `Drawer` (native modal `<dialog>`; bottom sheet on phones), `PartCard`, `RarityToggle`, `ChoiceCard`, `SearchField` |
 | Readout | `SituationalEffect` (on/off or a 0–50 trigger count), `ChangeRow` (renders a `RowView` from `src/lib/format`) |
 | Layout | `Panel` (a titled overview panel with a count and actions), `FavourRow` |
-| Pages | `BuildPlanner/` (the planner island and its pickers), `PlannerNotes.astro` |
+| Pages | `BuildPlanner/` (the planner island, its pickers and the screenshot import), `PlannerNotes.astro` |
 
 - **Logic in `src/lib`, not components.** Formatting and anything else testable without a DOM belongs in `src/lib/format` (or `lib/engine`). Components take the result as props.
 - **Native platform features over hand-rolled ones.** `Drawer` uses `<dialog>.showModal()`, which gives focus trapping, Escape to close, an inert page behind and focus returned to the opener. `InfoTip` uses the popover API (top layer, light dismiss). jsdom has neither, so test those in `tests/e2e/showcase.spec.ts`.
@@ -235,6 +236,10 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 - **Stale links:** once the build stops matching the link it was opened from, the hash is removed, so a reload keeps the user's edits.
 - **Copy build link** writes the hash and copies the URL. If the clipboard is blocked, the code is left in the box to copy by hand.
 - **Readout:** "What changes" always lists the Afterburner and Ramjet top-speed bonuses (`PINNED` in `readout.ts`).
+- **Screenshot import** ([ADR 0016](docs/adr/0016-screenshot-import.md)): paste (anywhere on the planner), drop, or "Import screenshot" opens a review drawer; nothing applies until "Use this build".
+  - Recognition is `src/lib/import/` (OCR text matched to game names, pips counted, part rarity from the dots under the icon). The OCR engine is injected.
+  - Browser glue is `BuildPlanner/screenshot.ts`, loaded only when an image arrives. tesseract.js and its English data are self-hosted; the `ocr-data` integration serves the data at `/ocr/4.0.0_best_int/`.
+  - Fixtures are real captures in `src/lib/import/fixtures/`. After a game UI change, add a capture and update the reference coordinates.
 - **Testing:** `tests/e2e/planner.spec.ts` covers these against the production build, including a real legacy link and the live planner's numbers. The stat rows' `<output>` levels are ARIA status regions too, so the toolbar message is addressed by its class in tests.
 
 ## Tour simulator

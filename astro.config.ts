@@ -1,13 +1,14 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import svelte from '@astrojs/svelte';
 import devPages from './src/integrations/dev-pages';
+import ocrData from './src/integrations/ocr-data';
 import validateData from './src/integrations/validate-data';
 
 // Static site (ADR 0003). `build.format: 'file'` keeps the legacy URLs: / , /index.html and /tour.html.
 export default defineConfig({
   output: 'static',
   build: { format: 'file' },
-  integrations: [validateData(), svelte(), devPages()],
+  integrations: [validateData(), svelte(), devPages(), ocrData()],
   // Self-hosted at build time from Google Fonts; exposed as CSS variables used by the design tokens.
   fonts: [
     { provider: fontProviders.google(), name: 'Unbounded', cssVariable: '--font-unbounded', weights: ['600', '700', '800', '900'], fallbacks: ['sans-serif'] },
