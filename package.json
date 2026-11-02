@@ -17,6 +17,7 @@
     "test:watch": "vitest",
     "e2e": "playwright test",
     "import-data": "node scripts/import-data.ts",
+    "og-image": "node scripts/og-image.ts",
     "verify": "npm run check && npm run lint && npm run test && npm run build && npm run e2e"
   },
   "dependencies": {

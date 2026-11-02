@@ -25,12 +25,12 @@
 </script>
 
 <div class="planner-readout">
-  <Panel title="Build readout">
+  <Panel title="Build readout" collapseKey="planner.readout">
     {#snippet actions()}<span class="summary">{summary}</span>{/snippet}
     <SpeedPanel {speeds} powerBonus={result.powerBonus} />
   </Panel>
 
-  <Panel title="Situational effects">
+  <Panel title="Situational effects" collapseKey="planner.situational">
     {#snippet actions()}
       <InfoTip label="Situational effects">
         <p>Effects that only apply in some situations, like "while Surging" or "after a takedown". Tick one to add it to the numbers.</p>
@@ -58,7 +58,7 @@
     {/if}
   </Panel>
 
-  <Panel title="What changes">
+  <Panel title="What changes" collapseKey="planner.changes">
     {#snippet actions()}
       <span class="legend">Base → with this build</span>
       <InfoTip label="Reading the numbers">

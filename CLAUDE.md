@@ -192,13 +192,14 @@ src/
   lib/tour/           tour simulation: seeded RNG, the tourAction reducer, offer fit labels, saved-run restore
   data/               imported game data (see "Game data")
   assets/icons/       game icons (WebP)
-public/               favicon.svg (served as is)
+public/               favicon.svg, og.png (link-preview image; redraw with `npm run og-image`)
 scripts/              import-data.ts (runs on Node's built-in TypeScript support)
 tests/e2e/            Playwright specs
 tests/legacy/         verbatim legacy engine.js / synergy.js, reference for parity tests only
 docs/adr/             architecture decisions
 ```
 
+- **Link previews:** `BaseLayout` sets Open Graph tags (title, description, `og.png`) and `theme-color` (Discord's embed colour). They need absolute URLs, so `site` in `astro.config.ts` comes from Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, falling back to the current production host. Builds live in the URL hash, which link-preview bots never see, so every link shows the same card.
 - Import from `src` with the `~/` alias (`~/components/Tag/Tag.svelte`).
 - Fonts are self-hosted through Astro's `fonts` config (Unbounded, Barlow, Barlow Semi Condensed, IBM Plex Mono) and exposed as `--font-display`, `--font-label`, `--font-body` and `--font-mono`.
 - **Theme:** tokens follow `prefers-color-scheme` unless `<html data-theme>` says otherwise. `ThemeSwitch` in the header sets it and saves the choice (`swgr-theme`; "auto" removes both). An inline script in `BaseLayout` applies the saved theme before first paint, so there's no flash.
@@ -214,7 +215,7 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 | Overview | `StatRow` + `StatPips`, `SpeedPanel`, `StylePanel`, `AbilitySlot`, `PartRow` |
 | Pickers | `Drawer` (native modal `<dialog>`; bottom sheet on phones), `PartCard`, `RarityToggle`, `ChoiceCard`, `SearchField` |
 | Readout | `SituationalEffect` (on/off or a 0–50 trigger count), `ChangeRow` (renders a `RowView` from `src/lib/format`), `CurveChart` (before/after line chart) |
-| Layout | `Panel` (a titled overview panel with a count and actions), `FavourRow`, `FavoriteRow` (a saved build: icons, ability diamond, name, best boost) |
+| Layout | `Panel` (a titled overview panel with a count and actions; with `collapseKey` its title collapses it, remembered under `swgr-collapsed`), `FavourRow`, `FavoriteRow` (a saved build: icons, ability diamond, name, best boost) |
 | Pages | `BuildPlanner/` (the planner island, its pickers and the screenshot import), `PlannerNotes.astro` |
 
 - **Logic in `src/lib`, not components.** Formatting and anything else testable without a DOM belongs in `src/lib/format` (or `lib/engine`). Components take the result as props.

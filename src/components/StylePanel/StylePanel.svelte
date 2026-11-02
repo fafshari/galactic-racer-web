@@ -20,7 +20,6 @@
   <header class="head">
     <GameIcon name={icon} size="xl" />
     <div class="titles">
-      <span class="eyebrow">Racer style</span>
       <h3 class="name">{name}{#if rank !== null}<span class="rank">&nbsp;· rank {rank}</span>{/if}</h3>
     </div>
     {#if onchange}<Button size="sm" onclick={onchange}>Change</Button>{/if}
@@ -53,12 +52,6 @@
     min-width: 0;
   }
 
-  .titles > .eyebrow {
-    color: var(--color-muted);
-    font: 800 11px/1 var(--font-display);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
 
   .titles > .name {
     font-size: 18px;
