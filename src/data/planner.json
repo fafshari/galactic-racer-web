@@ -27240,7 +27240,569 @@
     "TNS_Upgrade_Advanced_Max": {
       "stacking": true,
       "steps": 13,
-      "core": [],
+      "core": [
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "CarSteeringConfig",
+          "field": "DriftIntentDecay",
+          "f": 0.030769,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "CarSteeringConfig",
+          "field": "DriftIntentRateFromSteering",
+          "f": 0.015385,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "CarSteeringConfig",
+          "field": "DriftIntentRateFromCounterSteering",
+          "f": 0.038462,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "CarSteeringConfig",
+          "field": "MaintainSpeedRange",
+          "f": 0.038462,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "CarSteeringConfig",
+          "field": "MaintainScale",
+          "f": 0.076923,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatCurveSingleSubtractMultiple",
+          "cfg": "CarSteeringConfig",
+          "field": "DriftingTurnRadiusMetersAtSpeedMph",
+          "f": 0.769231,
+          "i": 2,
+          "v2": [
+            0,
+            0.007692
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorAddMultiple",
+          "cfg": "CarSteeringConfig",
+          "field": "DriftStrafeSpeeds",
+          "f": 0,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0.076923,
+            0.057692,
+            0.038462
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatSubtract",
+          "cfg": "BikeBrakeConfig",
+          "field": "FullChargeTime",
+          "f": 0.076923,
+          "i": 1,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "BikeSteeringConfig",
+          "field": "OnEnergyBrakeGripMultiplier",
+          "f": 0.038462,
+          "i": 1,
+          "v2": [
+            0,
+            0.153846
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "BikeSteeringConfig",
+          "field": "OnEnergyBrakeSideDragMultiplier",
+          "f": 0.025385,
+          "i": 1,
+          "v2": [
+            0,
+            0.153846
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatCurveAllSubtractMultiple",
+          "cfg": "BikeSteeringConfig",
+          "field": "OnEnergyBrakeTurnRadiusEffectAtSpeedMph",
+          "f": 0.025385,
+          "i": 1,
+          "v2": [
+            0,
+            0.015385
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "BikeBrakeConfig",
+          "field": "EnergyEconomy",
+          "f": 0.129,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorAddMultiple",
+          "cfg": "BikeBrakeConfig",
+          "field": "ActiveEffectAdditionalAccelerationScale",
+          "f": 0.038462,
+          "i": 1,
+          "v2": [
+            0,
+            0.153846
+          ],
+          "v3": [
+            0.11,
+            0.11,
+            0.11
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatAddMultiple",
+          "cfg": "BikeBrakeConfig",
+          "field": "EnergyBrakeDeceleration",
+          "f": 0.038462,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatSubtractMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingTopSpeedDecreaseMph",
+          "f": 0.073077,
+          "i": 1,
+          "v2": [
+            0,
+            0.076923
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorSubtractMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingAccelerationLoss",
+          "f": 0.076923,
+          "i": 1,
+          "v2": [
+            0,
+            0.076923
+          ],
+          "v3": [
+            0.073077,
+            0.073077,
+            0.073077
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatCurveSingleSubtractMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingTurnRadiusMetersAtSpeedMph",
+          "f": 0.769231,
+          "i": 1,
+          "v2": [
+            0,
+            0.015385
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorCurveXSingleAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSlipAngleToGripMultiplierAtSpeeds",
+          "f": 0.769231,
+          "i": 0,
+          "v2": [
+            0,
+            0.05
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorCurveXSingleAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSlipAngleToGripMultiplierAtSpeeds",
+          "f": 0.769231,
+          "i": 1,
+          "v2": [
+            0,
+            0.025615
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorCurveXSingleAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSlipAngleToGripMultiplierAtSpeeds",
+          "f": 0.769231,
+          "i": 2,
+          "v2": [
+            0,
+            0.05
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorCurveYSingleAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSlipAngleToGripMultiplierAtSpeeds",
+          "f": 0.769231,
+          "i": 0,
+          "v2": [
+            0,
+            0.076923
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorCurveYSingleAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSlipAngleToGripMultiplierAtSpeeds",
+          "f": 0.769231,
+          "i": 1,
+          "v2": [
+            0,
+            0.033077
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorCurveYSingleAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSlipAngleToGripMultiplierAtSpeeds",
+          "f": 0.769231,
+          "i": 2,
+          "v2": [
+            0,
+            0.076923
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorCurveAllAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSlipAngleToGripMultiplierAtSpeeds",
+          "f": 0.769231,
+          "i": 2,
+          "v2": [
+            0,
+            0.076923
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorCurveAllAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSlipAngleToSideDragMultiplierAtSpeeds",
+          "f": 0,
+          "i": 0,
+          "v2": [
+            0,
+            0.015385
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorCurveAllAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSlipAngleToSideDragMultiplierAtSpeeds",
+          "f": 0,
+          "i": 1,
+          "v2": [
+            0,
+            0.042308
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorCurveAllAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSlipAngleToSideDragMultiplierAtSpeeds",
+          "f": 0,
+          "i": 2,
+          "v2": [
+            0,
+            0.173077
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "VectorSubtractMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifeSteerRates",
+          "f": 0,
+          "i": 0,
+          "v2": [
+            0,
+            0
+          ],
+          "v3": [
+            0.019231,
+            0.019231,
+            0.019231
+          ],
+          "pri": 0
+        },
+        {
+          "op": "Vector2DAdd",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifeSteeringRateModifier",
+          "f": 0,
+          "i": 0,
+          "v2": [
+            0,
+            0.038462
+          ],
+          "v3": [
+            0.025385,
+            0.025385,
+            0.025385
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatCurveSingleAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSideDragSlipAngleGraphLerp",
+          "f": 0,
+          "i": 1,
+          "v2": [
+            0.075385,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatCurveSingleAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingSideDragSlipAngleGraphLerp",
+          "f": 0,
+          "i": 2,
+          "v2": [
+            0.040385,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatCurveSingleAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingGripSlipAngleGraphLerp",
+          "f": 0,
+          "i": 1,
+          "v2": [
+            0.060308,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        },
+        {
+          "op": "FloatCurveSingleAddMultiple",
+          "cfg": "SkimmerSteeringConfig",
+          "field": "KnifingGripSlipAngleGraphLerp",
+          "f": 0,
+          "i": 2,
+          "v2": [
+            0.032308,
+            0
+          ],
+          "v3": [
+            0,
+            0,
+            0
+          ],
+          "pri": 0
+        }
+      ],
       "plane": [
         {
           "op": "FloatCurveAllAddMultiple",
