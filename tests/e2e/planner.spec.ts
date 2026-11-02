@@ -26,7 +26,7 @@ test('a link shared from the legacy planner opens the same build with the same n
   const tiles = page.locator('.speed-panel .boosts .number');
   await expect(tiles.nth(0)).toContainText('504');
   await expect(tiles.nth(1)).toContainText('597');
-  await expect(tiles.nth(2)).toContainText('+24');
+  await expect(tiles.nth(2)).toContainText('+24/80'); // Surge: sustained / burst
   await expect(page.getByRole('group', { name: 'Boost level' }).getByRole('button', { name: 'Level 8' })).toHaveAttribute('aria-pressed', 'true');
   expect(errors).toEqual([]);
 });
@@ -66,7 +66,36 @@ test('one rarity per part family: an owned family shows as in build', async ({ p
   await drawer.getByRole('button', { name: 'Add Afterburner Efficiency I', exact: true }).click();
   await page.getByRole('button', { name: 'Add part' }).click();
   await drawer.getByRole('searchbox', { name: 'Search parts' }).fill('Afterburner Efficiency');
-  await expect(drawer.getByRole('button', { name: 'In build' })).toBeDisabled();
+  const card = drawer.locator('.part-card').filter({ hasText: 'In build' });
+  await expect(card).toHaveCount(1);
+  await expect(card.getByRole('button', { name: /^Add Afterburner Efficiency/ })).toBeDisabled();
+});
+
+test('part cards: the whole card adds the part, and single-rarity parts show every rarity with the others off', async ({ page }) => {
+  await page.goto(`/#${SHARED}`);
+  await ready(page);
+  await page.getByRole('button', { name: 'Add part' }).click();
+  const drawer = page.getByRole('dialog', { name: 'Add a part' });
+  await drawer.getByRole('searchbox', { name: 'Search parts' }).fill('Ability Catalyst');
+  const card = drawer.locator('.part-card').first();
+  await expect(card.getByRole('button', { name: 'Add', exact: true })).toHaveCount(0);
+  const chips = card.getByRole('group', { name: 'Ability Catalyst rarity' }).getByRole('button');
+  await expect(chips).toHaveCount(4);
+  await expect(chips.and(page.locator(':enabled'))).toHaveCount(1);
+
+  // the chips still work inside the clickable card: switching a multi-rarity family doesn't add it
+  await drawer.getByRole('searchbox', { name: 'Search parts' }).fill('Afterburner Efficiency');
+  await drawer.getByRole('group', { name: 'Afterburner Efficiency rarity' }).getByRole('button', { name: 'Epic' }).click();
+  await expect(drawer).toBeVisible();
+  await expect(drawer.getByRole('button', { name: 'Add Afterburner Efficiency III', exact: true })).toBeVisible();
+  await drawer.getByRole('searchbox', { name: 'Search parts' }).fill('Ability Catalyst');
+
+  // a click on the strip, beside the chips, still adds the part
+  const strip = await card.locator('.strip').boundingBox();
+  if (!strip) throw new Error('no strip');
+  await page.mouse.click(strip.x + 6, strip.y + strip.height / 2);
+  await expect(drawer).toBeHidden();
+  await expect(page.locator('.part-row').filter({ hasText: 'Ability Catalyst' })).toHaveCount(1);
 });
 
 test('edits survive a reload, and the stale link is dropped from the address bar', async ({ page }) => {

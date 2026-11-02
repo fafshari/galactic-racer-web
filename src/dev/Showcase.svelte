@@ -181,10 +181,10 @@
       <div class="cards">
         {#if part}
           <PartCard {part} name="Afterburner Efficiency" onselect={noop}>
-            {#snippet footer()}<RarityToggle value={part.rarity === 'Faulty' ? 'Common' : part.rarity} {available} onchange={setRarity} /><Button size="sm">Add</Button>{/snippet}
+            {#snippet footer()}<RarityToggle value={part.rarity === 'Faulty' ? 'Common' : part.rarity} {available} onchange={setRarity} />{/snippet}
           </PartCard>
         {/if}
-        {#if landings}<PartCard part={landings} situational disabled onselect={noop}>{#snippet footer()}<Button size="sm" disabled>In build</Button>{/snippet}</PartCard>{/if}
+        {#if landings}<PartCard part={landings} situational disabled onselect={noop}>{#snippet footer()}<span>In build</span>{/snippet}</PartCard>{/if}
       </div>
     </article>
     <article class="specimen">
@@ -230,7 +230,7 @@
       <SearchField value={query} label="Search parts" placeholder="Search parts by name or effect…" oninput={(v: string) => (query = v)} autofocus />
       <div class="cards">
         {#each matches as p (p.id)}
-          <PartCard part={p} onselect={() => (drawerOpen = false)}>{#snippet footer()}<Button size="sm" onclick={() => (drawerOpen = false)}>Add</Button>{/snippet}</PartCard>
+          <PartCard part={p} onselect={() => (drawerOpen = false)} />
         {/each}
       </div>
     </div>

@@ -36,7 +36,7 @@ test('plays a race through rewards to the shop', async ({ page }) => {
 
   await page.locator('.tour-stage .choice-card').first().click(); // the upgrade
   await expect(stageTitle(page)).toHaveText('Jakku: High Risk bet won');
-  await page.locator('.tour-stage .part-card').first().getByRole('button', { name: 'Take' }).click();
+  await page.locator('.tour-stage .part-card').first().getByRole('button', { name: 'Take', exact: true }).click();
   await expect(stageTitle(page)).toHaveText('Jakku: shop');
   await expect(page.locator('.owned .item')).toHaveCount(2); // starting ability + the part taken
   await expect(page.locator('.log .text').first()).toContainText('High Risk bet won:');
