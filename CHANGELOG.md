@@ -9,6 +9,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [1.0.1] - 2026-11-02
 
+### Added
+
+- This "What's new" page, and the site's version in the footer. ([#24](https://github.com/fafshari/galactic-racer-web/pull/24))
+
 ### Fixed
 
 - "What changes" colours a change green when it's an improvement and red when it's worse, instead of by whether the number went up. Lower-is-better values, such as acceleration lost while knifing, no longer show as penalties. ([#22](https://github.com/fafshari/galactic-racer-web/pull/22))

@@ -20,7 +20,7 @@ npm run verify   # type checks, lint, unit and browser tests
 
 Bug reports and pull requests are welcome. Every change is reviewed before it's merged.
 
-What changed in each version is in the [changelog](CHANGELOG.md). A pull request that changes the site bumps the version and adds a changelog entry; [ADR 0018](docs/adr/0018-versioning-and-changelog.md) explains how to choose the bump.
+What changed in each version is in the [changelog](CHANGELOG.md), also shown on the site's [What's new](https://galactic-racer-planner.vercel.app/changelog.html) page. A pull request that changes the site bumps the version and adds a changelog entry; [ADR 0018](docs/adr/0018-versioning-and-changelog.md) explains how to choose the bump.
 
 ## License
 

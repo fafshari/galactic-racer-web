@@ -1,6 +1,6 @@
 ---
 // Required on every page (ADR 0015). The version links to the changelog (ADR 0018).
-import { changelogUrl, siteVersion } from '~/lib/version.ts';
+import { changelogPath, siteVersion } from '~/lib/version.ts';
 ---
 
 <footer class="site-footer">
@@ -9,7 +9,7 @@ import { changelogUrl, siteVersion } from '~/lib/version.ts';
     game names, text and icons belong to their respective owners.
   </p>
   <p class="version">
-    <a href={changelogUrl}>v{siteVersion}: what's new</a>
+    <a href={changelogPath}>v{siteVersion}: what's new</a>
   </p>
 </footer>
 
