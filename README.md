@@ -22,4 +22,4 @@ Bug reports and pull requests are welcome. Every change is reviewed before it's 
 
 ## License
 
-The code is [MIT licensed](LICENSE). The game data and icons belong to the game's owners and aren't covered by the license.
+The code is [MIT licensed](LICENSE). The license covers this project's own code only. The game data in `src/data/` (except `labels.json` and `build-order.json`) and the images in `src/assets/icons/` are taken from STAR WARS: Galactic Racer, belong to their respective owners and aren't covered by the license.
