@@ -1,0 +1,25 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ReleaseNotes from '~/components/ReleaseNotes/ReleaseNotes.astro';
+import { parseChangelog } from '~/lib/changelog.ts';
+import changelog from '../../CHANGELOG.md?raw';
+
+// Built from CHANGELOG.md at build time (ADR 0018).
+const releases = parseChangelog(changelog);
+---
+
+<BaseLayout title="What's new" description="Every change to the Galactic Racer build planner and tour simulator, newest first.">
+  <p class="changelog-intro">
+    Every change to the planner and tour simulator, newest first. The first number goes up if old build links ever stop working, the
+    middle one for new features and game updates, and the last one for fixes.
+  </p>
+  <ReleaseNotes releases={releases} />
+</BaseLayout>
+
+<style lang="scss">
+  .changelog-intro {
+    max-width: 90ch;
+    margin: 0 0 var(--space-4);
+    color: var(--color-muted);
+  }
+</style>

@@ -99,7 +99,7 @@ From [ADR 0009](docs/adr/0009-game-mechanics-model.md); details and confidence l
 
 ## Versioning and changelog
 
-From [ADR 0018](docs/adr/0018-versioning-and-changelog.md). The version lives in `package.json`, shows in the site footer and has a section in `CHANGELOG.md` (Keep a Changelog style, written for players).
+From [ADR 0018](docs/adr/0018-versioning-and-changelog.md). The version lives in `package.json`, shows in the site footer and has a section in `CHANGELOG.md` (Keep a Changelog style, written for players). The "What's new" page (`/changelog.html`) renders that file, so entries stay to its subset: `###` groups, one-line `- ` items, links, `code` and **bold** (`src/lib/changelog.ts`; unsupported Markdown fails the tests).
 
 **Triage every change** before opening its PR, and propose the bump to the user before writing it. Take the highest row that applies:
 
@@ -202,7 +202,7 @@ npm run import-data [-- <path to swgr-datamine>]   # re-import game data after t
 
 ```
 src/
-  pages/              index.astro, tour.astro (built as /index.html and /tour.html)
+  pages/              index.astro, tour.astro, changelog.astro (built as /index.html, /tour.html and /changelog.html)
   layouts/            BaseLayout.astro: fonts, global styles, header, footer
   components/<Name>/  one folder per component: Name.svelte|astro and Name.test.ts
   dev/                pages that exist only under `astro dev`: components.astro + Showcase.svelte
@@ -214,7 +214,8 @@ src/
   lib/engine/         evaluate (tuned values), build codes, speeds, the Build type (index.ts re-exports)
   lib/synergy/        the tour recommender (createSynergy)
   lib/theme.ts        the visitor's saved colour theme (auto / light / dark)
-  lib/version.ts      the site version (from package.json) and the changelog link
+  lib/version.ts      the site version (from package.json) and the "What's new" link
+  lib/changelog.ts    CHANGELOG.md parsed into releases for the "What's new" page
   lib/import/         screenshot import: panel layout, OCR text matching, pip counting (ADR 0016)
   lib/tour/           tour simulation: seeded RNG, the tourAction reducer, offer fit labels, saved-run restore
   data/               imported game data (see "Game data")

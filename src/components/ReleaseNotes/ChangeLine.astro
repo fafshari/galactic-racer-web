@@ -1,0 +1,24 @@
+---
+// One changelog line: plain text, **bold**, `code` and links (parsed in lib/changelog.ts, so no raw HTML).
+import type { ChangeText } from '~/lib/changelog.ts';
+
+interface Props {
+  runs: ChangeText[];
+}
+
+const { runs } = Astro.props;
+---
+
+{
+  runs.map((r) =>
+    r.kind === 'link' ? (
+      <a href={r.href} rel={r.href.startsWith('http') ? 'noopener' : undefined}>{r.text}</a>
+    ) : r.kind === 'code' ? (
+      <code>{r.text}</code>
+    ) : r.kind === 'strong' ? (
+      <b>{r.text}</b>
+    ) : (
+      r.text
+    ),
+  )
+}

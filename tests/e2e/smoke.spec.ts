@@ -4,6 +4,7 @@ const pages = [
   { path: '/', title: 'Galactic Racer Build Planner' },
   { path: '/index.html', title: 'Galactic Racer Build Planner' },
   { path: '/tour.html', title: 'Galactic Racer Tour Simulator' },
+  { path: '/changelog.html', title: "What's new" },
 ];
 
 for (const { path, title } of pages) {
@@ -44,3 +45,16 @@ test('link previews (Discord, Slack, ...) get a title, description and a 1200×6
   expect(res.headers()['content-type']).toBe('image/png');
 });
 
+
+test("the footer's version opens What's new, with the current version first", async ({ page }) => {
+  await page.goto('/');
+  const version = page.locator('.site-footer > .version > a');
+  const text = (await version.textContent()) ?? '';
+  const number = /^v(\d+\.\d+\.\d+)/.exec(text)?.[1];
+  expect(number).toBeTruthy();
+  await version.click();
+  await expect(page).toHaveURL(/\/changelog\.html$/);
+  const latest = page.locator('.release-card').first();
+  await expect(latest.getByRole('heading', { level: 2 })).toHaveText(`Version ${number ?? ''}`);
+  await expect(latest.getByText('Latest')).toBeVisible();
+});

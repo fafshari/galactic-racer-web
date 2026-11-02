@@ -1,0 +1,109 @@
+---
+// The "What's new" list: one card per release from CHANGELOG.md, newest first (ADR 0018). Static; ships no JavaScript.
+import Tag from '../Tag/Tag.svelte';
+import ChangeLine from './ChangeLine.astro';
+import { formatReleaseDate, type Release } from '~/lib/changelog.ts';
+
+interface Props {
+  releases: Release[];
+}
+
+const { releases } = Astro.props;
+---
+
+<div class="release-notes">
+  {
+    releases.map((r, i) => (
+      <article class="release-card" id={`v${r.version}`} aria-labelledby={`v${r.version}-title`}>
+        <header class="head">
+          <h2 class="version" id={`v${r.version}-title`}>
+            Version {r.version}
+          </h2>
+          {i === 0 && <Tag variant="good">Latest</Tag>}
+          <time class="date" datetime={r.date}>
+            {formatReleaseDate(r.date)}
+          </time>
+        </header>
+        {r.summary.map((p) => (
+          <p class="summary">
+            <ChangeLine runs={p} />
+          </p>
+        ))}
+        {r.groups.map((g) => (
+          <section class="group">
+            <h3 class="title">{g.title}</h3>
+            <ul class="items">
+              {g.items.map((item) => (
+                <li>
+                  <ChangeLine runs={item} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </article>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  .release-notes {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 90ch;
+  }
+
+  .release-card {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-panel);
+    scroll-margin-top: var(--space-4);
+  }
+
+  .release-card > .head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    align-items: center;
+  }
+
+  .head > .version {
+    margin: 0;
+    font: 800 20px/1.1 var(--font-display);
+  }
+
+  .head > .date {
+    margin-left: auto;
+    color: var(--color-muted);
+    font: 600 14px/1 var(--font-label);
+  }
+
+  .release-card > .summary {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .release-card > .group {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .group > .title {
+    margin: 0;
+    color: var(--color-accent);
+    font: 700 13px/1 var(--font-label);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .group > .items {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding-left: 1.2em;
+    line-height: 1.45;
+  }
+</style>
