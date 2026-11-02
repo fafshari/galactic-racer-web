@@ -1,5 +1,6 @@
 ---
-// Required on every page (ADR 0015).
+// Required on every page (ADR 0015). The version links to the changelog (ADR 0018).
+import { changelogUrl, siteVersion } from '~/lib/version.ts';
 ---
 
 <footer class="site-footer">
@@ -7,13 +8,25 @@
     Fan-made tool. Not affiliated with or endorsed by Lucasfilm, Electronic Arts or the game's developers. STAR WARS and all
     game names, text and icons belong to their respective owners.
   </p>
+  <p class="version">
+    <a href={changelogUrl}>v{siteVersion}: what's new</a>
+  </p>
 </footer>
 
 <style lang="scss">
-  .site-footer > .notice {
+  .site-footer > .notice,
+  .site-footer > .version {
     max-width: 90ch;
     margin: 0;
     color: var(--color-muted);
     font-size: 13px;
+  }
+
+  .site-footer > .version {
+    margin-top: var(--space-2);
+  }
+
+  .site-footer > .version > a {
+    color: inherit;
   }
 </style>

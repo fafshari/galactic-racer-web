@@ -13,6 +13,7 @@ Fan-made theorycrafting site for STAR WARS: Galactic Racer: a **build planner** 
 >
 > - deployed on Vercel at https://galactic-racer-planner.vercel.app
 > - the repo made public under the MIT license ([ADR 0017](docs/adr/0017-open-source-mit.md))
+> - versioning and a changelog, starting at 1.0.0 (see "Versioning and changelog")
 >
 > Still to do: turn the old GitHub Pages site (see "Legacy site") into redirects to the Vercel address. Update this file as each piece lands; once the migration is done, delete the legacy section.
 
@@ -95,6 +96,27 @@ From [ADR 0009](docs/adr/0009-game-mechanics-model.md); details and confidence l
 - Trailing sections may be missing: chat apps strip trailing dots.
 - **Positions come from `src/data/build-order.json`**, never from the order of the data arrays. That file matches the live legacy site, so every existing link decodes the same.
 - **Old links must keep loading.** Any format change needs a new prefix and a decoder for the old one. [ADR 0010](docs/adr/0010-build-codes.md)
+
+## Versioning and changelog
+
+From [ADR 0018](docs/adr/0018-versioning-and-changelog.md). The version lives in `package.json`, shows in the site footer and has a section in `CHANGELOG.md` (Keep a Changelog style, written for players).
+
+**Triage every change** before opening its PR, and propose the bump to the user before writing it. Take the highest row that applies:
+
+| Bump | When the change… |
+|---|---|
+| **Major** | breaks a public contract: an old build link stops loading or loads a different build, saved builds, favourites or tour runs are lost, or a page is removed without a redirect |
+| **Minor** | adds something a visitor can use (page, panel, picker, readout, setting), or re-imports game data that adds ids after a patch |
+| **Patch** | corrects what's there: bug fixes, data or label corrections, wording, tips, styling, performance, a re-import with no new ids |
+| **None** | doesn't change the deployed site: docs, ADRs, tests, CI, tooling, invisible refactors, the `/components` showcase |
+
+- A new build-code prefix that keeps old links loading is minor. A deliberate maths change is minor if it adds a mechanic, patch if it corrects one.
+- **Bump in the same PR:** every merge to `main` deploys, so the PR runs `npm version <x.y.z> --no-git-tag-version` and adds a `## [x.y.z] - YYYY-MM-DD` section at the top of `CHANGELOG.md`, plus its compare link at the bottom. Group entries under `Added`, `Changed`, `Fixed` or `Removed`, and link the PR.
+- "None" changes get no bump and no entry.
+- If another open PR already took the next number, whichever merges second renumbers when it's brought up to date.
+- `src/lib/version.test.ts` fails when `package.json`, `package-lock.json` and the newest changelog heading disagree.
+- Tag `main` as `vX.Y.Z` after the merge, but only when the user asks for a push.
+- Say the classification and the version in the PR description.
 
 ## Legacy site (until the migration is done)
 
@@ -192,6 +214,7 @@ src/
   lib/engine/         evaluate (tuned values), build codes, speeds, the Build type (index.ts re-exports)
   lib/synergy/        the tour recommender (createSynergy)
   lib/theme.ts        the visitor's saved colour theme (auto / light / dark)
+  lib/version.ts      the site version (from package.json) and the changelog link
   lib/import/         screenshot import: panel layout, OCR text matching, pip counting (ADR 0016)
   lib/tour/           tour simulation: seeded RNG, the tourAction reducer, offer fit labels, saved-run restore
   data/               imported game data (see "Game data")
