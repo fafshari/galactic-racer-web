@@ -25,6 +25,7 @@ const { title, description, eyebrow, noindex = false } = Astro.props;
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script is:inline define:vars={{ key: THEME_KEY }}>
       // Apply a saved theme before first paint, so a picked theme never flashes the device's one first.
       try {

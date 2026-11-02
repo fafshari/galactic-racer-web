@@ -14,6 +14,7 @@
   import Drawer from '../Drawer/Drawer.svelte';
   import FavourRow from '../FavourRow/FavourRow.svelte';
   import GameIcon from '../GameIcon/GameIcon.svelte';
+  import HoverTip from '../HoverTip/HoverTip.svelte';
   import ModeSwitch from '../ModeSwitch/ModeSwitch.svelte';
   import Panel from '../Panel/Panel.svelte';
   import PartRow from '../PartRow/PartRow.svelte';
@@ -25,8 +26,10 @@
   import PartPicker from './PartPicker.svelte';
   import PlannerReadout from './PlannerReadout.svelte';
   import ScreenshotImport from './ScreenshotImport.svelte';
+  import FavoriteRow from '../FavoriteRow/FavoriteRow.svelte';
+  import { addFavorite, defaultName, FAVORITES_KEY, isFavorite, removeFavorite, renameFavorite, restoreFavorites, saveFavorites, summarize, type Favorite } from '~/lib/planner/favorites.ts';
 
-  type Picker = { kind: 'vehicle' } | { kind: 'style' } | { kind: 'ability'; slot: number | 'crash' } | { kind: 'part' } | { kind: 'favour' } | { kind: 'import' };
+  type Picker = { kind: 'vehicle' } | { kind: 'style' } | { kind: 'ability'; slot: number | 'crash' } | { kind: 'part' } | { kind: 'favour' } | { kind: 'import' } | { kind: 'favorites' };
   const PICKER_TITLE: Record<Picker['kind'], string> = {
     vehicle: 'Choose a vehicle',
     style: 'Choose a racer style',
@@ -34,6 +37,7 @@
     part: 'Add a part',
     favour: 'Add a favour',
     import: 'Import from a screenshot',
+    favorites: 'Favourites',
   };
   const MODES = (Object.entries(planner.meta.modes) as [GameMode, { name: string }][]).map(([value, m]) => ({ value, label: m.name }));
 
@@ -45,6 +49,9 @@
   /** An image pasted or dropped onto the page, handed to the import drawer. */
   let screenshot = $state<Blob | null>(null);
   let statusTimer: ReturnType<typeof setTimeout> | undefined;
+  /** Saved builds, newest first, kept in the browser (see lib/planner/favorites.ts). */
+  let favorites = $state<Favorite[]>([]);
+  const saved = $derived(isFavorite(favorites, build));
 
   const result = $derived(evaluate(planner, build));
   const speedValues = $derived(speeds(planner, build, result));
@@ -87,7 +94,21 @@
     }
   }
 
+  function saveFavorite(): void {
+    if (saved) {
+      say('This build is already in your favourites.');
+      return;
+    }
+    favorites = addFavorite(planner, favorites, build, defaultName(planner, build), Date.now(), crypto.randomUUID());
+    say('Saved to favourites. Open Favourites to rename it.');
+  }
+
   onMount(() => {
+    try {
+      favorites = restoreFavorites(planner, JSON.parse(localStorage.getItem(FAVORITES_KEY) ?? 'null'));
+    } catch {
+      // storage blocked or unreadable: no favourites yet
+    }
     // A build link wins; otherwise pick up where the visitor left off.
     if (location.hash.startsWith('#gr2-')) loadCode(location.hash.slice(1), 'the link');
     else {
@@ -118,6 +139,16 @@
   });
 
   $effect(() => {
+    const snapshot = saveFavorites(favorites);
+    if (!loaded) return;
+    try {
+      localStorage.setItem(FAVORITES_KEY, snapshot);
+    } catch {
+      // private mode or storage full: favourites last until the page closes
+    }
+  });
+
+  $effect(() => {
     const snapshot = JSON.stringify(build);
     const code = encodeBuild(build);
     if (!loaded) return;
@@ -132,6 +163,16 @@
       history.replaceState(null, '', location.pathname + location.search);
     }
   });
+
+  /** Copies text; false when the browser blocks the clipboard. */
+  async function copyText(text: string): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      return false;
+    }
+  }
 
   async function copyLink(): Promise<void> {
     const code = encodeBuild(build);
@@ -181,6 +222,8 @@
     <div class="actions">
       <Button onclick={() => { screenshot = null; picker = { kind: 'import' }; }}>Import screenshot</Button>
       <Button onclick={newBuild}>New build</Button>
+      <Button onclick={saveFavorite} aria-pressed={saved}>{saved ? '★ In favourites' : '☆ Save to favourites'}</Button>
+      <Button onclick={() => (picker = { kind: 'favorites' })}>Favourites{favorites.length ? ` (${String(favorites.length)})` : ''}</Button>
       <Button variant="primary" onclick={copyLink}>Copy build link</Button>
     </div>
     <form class="load" onsubmit={(e) => { e.preventDefault(); loadCode(codeInput, 'the code'); }}>
@@ -201,7 +244,9 @@
                 <GameIcon name={vehicle.icon} size="xl" />
                 <div class="vehicle-text">
                   <span class="vehicle-name">{vehicle.name}</span>
-                  <span class="vehicle-traits">{vehicle.traits.map((t) => t.name).join(' · ')}</span>
+                  <span class="vehicle-traits">
+                    {#each vehicle.traits as t, i (t.name)}{#if i}<span class="sep" aria-hidden="true">·</span>{/if}{#if t.desc}<HoverTip text={t.name}>{t.desc}</HoverTip>{:else}{t.name}{/if}{/each}
+                  </span>
                 </div>
                 {#if vehicleArt}<img class="vehicle-art" src={vehicleArt} alt="" width="160" height="120" />{/if}
               </div>
@@ -336,6 +381,23 @@
     {:else if picker?.kind === 'ability'}
       {@const slot = picker.slot}
       <AbilityPicker {build} slot={slot === 'crash' ? 'crash' : 'regular'} onpick={(id: AbilityId) => { pick(A.placeAbility(planner, build, id, slot === 'crash' ? 0 : slot)); }} />
+    {:else if picker?.kind === 'favorites'}
+      {#if favorites.length}
+        <div class="favorites">
+          {#each favorites as f (f.id)}
+            <FavoriteRow
+              name={f.name}
+              summary={summarize(planner, f)}
+              onopen={() => { pick(decodeBuild(f.code)); say(`Loaded ${f.name}.`); }}
+              onrename={(n: string) => { favorites = renameFavorite(favorites, f.id, n); }}
+              onremove={() => { favorites = removeFavorite(favorites, f.id); }}
+              oncopy={() => copyText(`${location.origin}${location.pathname}#${f.code}`)}
+            />
+          {/each}
+        </div>
+      {:else}
+        <p class="empty">No favourites yet. Use “Save to favourites” to keep a build here; they stay in this browser.</p>
+      {/if}
     {:else if picker?.kind === 'part'}
       <PartPicker {build} onadd={(id: PartId) => { pick(A.addPart(planner, build, id)); }} />
     {:else if picker?.kind === 'favour'}
@@ -478,6 +540,10 @@
   .vehicle-text > .vehicle-traits {
     color: var(--color-muted);
     font: italic 500 14px var(--font-label);
+
+    .sep {
+      margin: 0 0.35em;
+    }
   }
 
   .vehicle > .vehicle-art {
@@ -497,6 +563,11 @@
   .abilities {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); // wide enough for a long ability name beside its badge
+    gap: var(--space-2);
+  }
+
+  .favorites {
+    display: grid;
     gap: var(--space-2);
   }
 

@@ -44,7 +44,7 @@
         },
         {
           "name": "Drift",
-          "desc": "Use  to drift sharply while maintaining speed."
+          "desc": "Use Advanced Maneuver to drift sharply while maintaining speed."
         }
       ],
       "icon": "T_UI_Vehicle_Car",
@@ -1468,7 +1468,7 @@
         },
         {
           "name": "Kinetic Burst",
-          "desc": "Use  for tight cornering, release for a burst of speed."
+          "desc": "Use Advanced Maneuver for tight cornering, release for a burst of speed."
         }
       ],
       "icon": "T_UI_Vehicle_Bike",
@@ -2758,7 +2758,7 @@
         },
         {
           "name": "Knife Edge",
-          "desc": "Use  to roll onto a Knife Edge for tighter cornering."
+          "desc": "Use Advanced Maneuver to roll onto a Knife Edge for tighter cornering."
         }
       ],
       "icon": "T_UI_Vehicle_Skimmer",

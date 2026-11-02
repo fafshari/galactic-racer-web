@@ -6,9 +6,12 @@
   import ChoiceCard from '~/components/ChoiceCard/ChoiceCard.svelte';
   import Drawer from '~/components/Drawer/Drawer.svelte';
   import GameIcon from '~/components/GameIcon/GameIcon.svelte';
+  import HoverTip from '~/components/HoverTip/HoverTip.svelte';
   import InfoTip from '~/components/InfoTip/InfoTip.svelte';
   import KeywordText from '~/components/KeywordText/KeywordText.svelte';
   import FavourRow from '~/components/FavourRow/FavourRow.svelte';
+  import FavoriteRow from '~/components/FavoriteRow/FavoriteRow.svelte';
+  import { addFavorite, summarize } from '~/lib/planner/favorites.ts';
   import ModeSwitch from '~/components/ModeSwitch/ModeSwitch.svelte';
   import Panel from '~/components/Panel/Panel.svelte';
   import PartCard from '~/components/PartCard/PartCard.svelte';
@@ -109,6 +112,10 @@
       </div>
     </article>
     <article class="specimen">
+      <h3 class="name">HoverTip</h3>
+      <p class="row">{#each planner.vehicles[2]?.traits ?? [] as t, i (t.name)}{#if i}&nbsp;·&nbsp;{/if}<HoverTip text={t.name}>{t.desc}</HoverTip>{/each}</p>
+    </article>
+    <article class="specimen">
       <h3 class="name">KeywordText · InfoTip</h3>
       {#if part}<p class="row"><KeywordText text={part.desc} keywords={part.hl} /><InfoTip label="keywords"><p>The game sets mechanic names in its keyword style.</p></InfoTip></p>{/if}
     </article>
@@ -160,6 +167,13 @@
     <Panel title="Installed parts" count="1 / 10">
       {#snippet actions()}<Button size="sm" variant="primary">Add part</Button>{/snippet}
       {#if part}<PartRow {part} onremove={noop} />{/if}
+    </Panel>
+    <Panel title="FavoriteRow">
+      <div class="stack">
+        {#each addFavorite(planner, [], decodeBuild('gr2-m106475806'), 'Clean Racer on a bike', 0, 'sc') as f (f.id)}
+          <FavoriteRow name={f.name} summary={summarize(planner, f)} onopen={noop} onrename={noop} onremove={noop} oncopy={() => Promise.resolve(true)} />
+        {/each}
+      </div>
     </Panel>
     <Panel title="Favours" count="2">
       <div class="stack">

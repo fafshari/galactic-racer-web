@@ -192,6 +192,7 @@ src/
   lib/tour/           tour simulation: seeded RNG, the tourAction reducer, offer fit labels, saved-run restore
   data/               imported game data (see "Game data")
   assets/icons/       game icons (WebP)
+public/               favicon.svg (served as is)
 scripts/              import-data.ts (runs on Node's built-in TypeScript support)
 tests/e2e/            Playwright specs
 tests/legacy/         verbatim legacy engine.js / synergy.js, reference for parity tests only
@@ -209,11 +210,11 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 
 | Group | Components |
 |---|---|
-| Basics | `Button` (default, primary, quiet; small), `ModeSwitch` (generic pill group), `Tag`, `GameIcon` (tints white glyphs, shows colour art as-is), `KeywordText` (the game's gold keywords), `InfoTip` (native popover), `ThemeSwitch` (in the site header) |
+| Basics | `Button` (default, primary, quiet; small), `ModeSwitch` (generic pill group), `Tag`, `GameIcon` (tints white glyphs, shows colour art as-is), `KeywordText` (the game's gold keywords), `InfoTip` (native popover), `HoverTip` (explains a word on hover, focus or tap), `ThemeSwitch` (in the site header) |
 | Overview | `StatRow` + `StatPips`, `SpeedPanel`, `StylePanel`, `AbilitySlot`, `PartRow` |
 | Pickers | `Drawer` (native modal `<dialog>`; bottom sheet on phones), `PartCard`, `RarityToggle`, `ChoiceCard`, `SearchField` |
 | Readout | `SituationalEffect` (on/off or a 0–50 trigger count), `ChangeRow` (renders a `RowView` from `src/lib/format`), `CurveChart` (before/after line chart) |
-| Layout | `Panel` (a titled overview panel with a count and actions), `FavourRow` |
+| Layout | `Panel` (a titled overview panel with a count and actions), `FavourRow`, `FavoriteRow` (a saved build: icons, ability diamond, name, best boost) |
 | Pages | `BuildPlanner/` (the planner island, its pickers and the screenshot import), `PlannerNotes.astro` |
 
 - **Logic in `src/lib`, not components.** Formatting and anything else testable without a DOM belongs in `src/lib/format` (or `lib/engine`). Components take the result as props.
@@ -237,6 +238,7 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
   - A `#gr2-…` link wins.
   - Otherwise the last build is restored from `localStorage` (`swgr-build`, the legacy key), validated by `restoreBuild`.
 - **Stale links:** once the build stops matching the link it was opened from, the hash is removed, so a reload keeps the user's edits.
+- **Favourites** (`lib/planner/favorites.ts`): saved in `localStorage` under `swgr-favorites` as build codes plus a name, newest first, at most 100. Saving the same build again moves it to the top. The row's speed is the faster of Afterburner and Ramjet with every on/off situational effect triggered (`allTriggered`); counted effects (per trigger, per second, per opponent) stay at zero.
 - **Copy build link** writes the hash and copies the URL. If the clipboard is blocked, the code is left in the box to copy by hand.
 - **Readout:** "What changes" always lists the Afterburner and Ramjet top-speed bonuses (`PINNED` in `readout.ts`).
 - **Situational effects** show the game's own description. A short plain "when" line (`situationalWhen`) appears only where that isn't enough: an ability's while-active effect, or one trait with several rules. Numbers belong in "What changes", not here.
