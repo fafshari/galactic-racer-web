@@ -184,6 +184,7 @@ src/
   lib/data/           schema, types, references and label checks, build-code order, loader (index.ts)
   lib/engine/         evaluate (tuned values), build codes, speeds, the Build type (index.ts re-exports)
   lib/synergy/        the tour recommender (createSynergy)
+  lib/theme.ts        the visitor's saved colour theme (auto / light / dark)
   lib/tour/           tour simulation: seeded RNG, the tourAction reducer, offer fit labels, saved-run restore
   data/               imported game data (see "Game data")
   assets/icons/       game icons (WebP)
@@ -195,6 +196,7 @@ docs/adr/             architecture decisions
 
 - Import from `src` with the `~/` alias (`~/components/Tag/Tag.svelte`).
 - Fonts are self-hosted through Astro's `fonts` config (Unbounded, Barlow, Barlow Semi Condensed, IBM Plex Mono) and exposed as `--font-display`, `--font-label`, `--font-body` and `--font-mono`.
+- **Theme:** tokens follow `prefers-color-scheme` unless `<html data-theme>` says otherwise. `ThemeSwitch` in the header sets it and saves the choice (`swgr-theme`; "auto" removes both). An inline script in `BaseLayout` applies the saved theme before first paint, so there's no flash.
 - Svelte components use runes (`$props`, `$state`, `$derived`) and typed `Props` interfaces. Variants are union-typed props mapped to RSCSS `-variant` classes (see `Tag.svelte`).
 
 ## Components
@@ -203,7 +205,7 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 
 | Group | Components |
 |---|---|
-| Basics | `Button` (default, primary, quiet; small), `ModeSwitch` (generic pill group), `Tag`, `GameIcon` (tints white glyphs, shows colour art as-is), `KeywordText` (the game's gold keywords), `InfoTip` (native popover) |
+| Basics | `Button` (default, primary, quiet; small), `ModeSwitch` (generic pill group), `Tag`, `GameIcon` (tints white glyphs, shows colour art as-is), `KeywordText` (the game's gold keywords), `InfoTip` (native popover), `ThemeSwitch` (in the site header) |
 | Overview | `StatRow` + `StatPips`, `SpeedPanel`, `StylePanel`, `AbilitySlot`, `PartRow` |
 | Pickers | `Drawer` (native modal `<dialog>`; bottom sheet on phones), `PartCard`, `RarityToggle`, `ChoiceCard`, `SearchField` |
 | Readout | `SituationalEffect` (on/off or a 0–50 trigger count), `ChangeRow` (renders a `RowView` from `src/lib/format`) |

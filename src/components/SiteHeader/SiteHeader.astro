@@ -1,4 +1,6 @@
 ---
+import ThemeSwitch from '../ThemeSwitch/ThemeSwitch.svelte';
+
 interface Props {
   title: string;
   eyebrow?: string;
@@ -17,9 +19,12 @@ const links = [
     {eyebrow && <p class="eyebrow">{eyebrow}</p>}
     <h1 class="title">{title}</h1>
   </div>
-  <nav class="nav" aria-label="Site">
-    {links.map((l) => <a class="link" href={l.href} aria-current={l.current ? 'page' : undefined}>{l.label}</a>)}
-  </nav>
+  <div class="tools">
+    <nav class="nav" aria-label="Site">
+      {links.map((l) => <a class="link" href={l.href} aria-current={l.current ? 'page' : undefined}>{l.label}</a>)}
+    </nav>
+    <ThemeSwitch client:load />
+  </div>
 </header>
 
 <style lang="scss">
@@ -53,7 +58,14 @@ const links = [
     text-wrap: balance;
   }
 
-  .site-header > .nav {
+  .site-header > .tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    align-items: center;
+  }
+
+  .tools > .nav {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-1);

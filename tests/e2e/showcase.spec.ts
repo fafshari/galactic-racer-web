@@ -20,7 +20,7 @@ test.beforeEach(async ({ page }) => {
 test('renders in both themes without errors or sideways scrolling', async ({ page }) => {
   const errors = errorsOf(page);
   for (const theme of ['Dark', 'Light']) {
-    await page.getByRole('group', { name: 'Theme' }).getByRole('button', { name: theme }).click();
+    await page.getByRole('group', { name: 'Theme', exact: true }).getByRole('button', { name: theme }).click();
     await expect(page.locator('.showcase')).toHaveAttribute('data-theme', theme.toLowerCase());
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(0);
