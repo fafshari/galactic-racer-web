@@ -28,6 +28,7 @@ Each file records one decision: the context, what we chose, and what follows fro
 | [0013](0013-testing.md) | Vitest and Playwright | Accepted |
 | [0014](0014-data-and-asset-delivery.md) | Data and icons as separate cached files | Accepted |
 | [0015](0015-publishing-and-legal-constraints.md) | Publishing and legal constraints | Accepted |
+| [0016](0016-screenshot-import.md) | Import a build from a screenshot | Accepted |
 
 ## Template
 

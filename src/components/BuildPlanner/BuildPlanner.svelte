@@ -24,14 +24,16 @@
   import FavourPicker from './FavourPicker.svelte';
   import PartPicker from './PartPicker.svelte';
   import PlannerReadout from './PlannerReadout.svelte';
+  import ScreenshotImport from './ScreenshotImport.svelte';
 
-  type Picker = { kind: 'vehicle' } | { kind: 'style' } | { kind: 'ability'; slot: number } | { kind: 'part' } | { kind: 'favour' };
+  type Picker = { kind: 'vehicle' } | { kind: 'style' } | { kind: 'ability'; slot: number } | { kind: 'part' } | { kind: 'favour' } | { kind: 'import' };
   const PICKER_TITLE: Record<Picker['kind'], string> = {
     vehicle: 'Choose a vehicle',
     style: 'Choose a racer style',
     ability: 'Choose an ability',
     part: 'Add a part',
     favour: 'Add a favour',
+    import: 'Import from a screenshot',
   };
   const MODES = (Object.entries(planner.meta.modes) as [GameMode, { name: string }][]).map(([value, m]) => ({ value, label: m.name }));
 
@@ -40,6 +42,8 @@
   let picker = $state<Picker | null>(null);
   let status = $state('');
   let codeInput = $state('');
+  /** An image pasted or dropped onto the page, handed to the import drawer. */
+  let screenshot = $state<Blob | null>(null);
   let statusTimer: ReturnType<typeof setTimeout> | undefined;
 
   const result = $derived(evaluate(planner, build));
@@ -90,8 +94,19 @@
     const onHash = (): void => {
       if (location.hash.startsWith('#gr2-')) loadCode(location.hash.slice(1), 'the link');
     };
+    // Pasting an image anywhere on the page imports it; pasted text still goes wherever it was going.
+    const onPaste = (e: ClipboardEvent): void => {
+      const image = imageFrom(e.clipboardData);
+      if (!image) return;
+      e.preventDefault();
+      importScreenshot(image);
+    };
     addEventListener('hashchange', onHash);
-    return () => { removeEventListener('hashchange', onHash); };
+    addEventListener('paste', onPaste);
+    return () => {
+      removeEventListener('hashchange', onHash);
+      removeEventListener('paste', onPaste);
+    };
   });
 
   $effect(() => {
@@ -122,6 +137,22 @@
     }
   }
 
+  function imageFrom(data: DataTransfer | null): File | null {
+    return [...(data?.files ?? [])].find((f) => f.type.startsWith('image/')) ?? null;
+  }
+
+  function importScreenshot(image: Blob): void {
+    screenshot = image;
+    picker = { kind: 'import' };
+  }
+
+  function dropOnPage(e: DragEvent): void {
+    const image = imageFrom(e.dataTransfer);
+    if (!image) return;
+    e.preventDefault();
+    importScreenshot(image);
+  }
+
   function newBuild(): void {
     build = freshBuild(build.mode);
     codeInput = '';
@@ -130,10 +161,17 @@
   }
 </script>
 
-<div class="build-planner">
+<!-- Dropping an image anywhere on the planner imports it, like pasting; the toolbar button is the keyboard route. -->
+<div
+  class="build-planner"
+  role="presentation"
+  ondragover={(e) => { if (e.dataTransfer?.types.includes('Files')) e.preventDefault(); }}
+  ondrop={dropOnPage}
+>
   <div class="toolbar">
     <ModeSwitch label="Game mode" options={MODES} value={build.mode} onchange={(m: GameMode) => { update(A.setMode(planner, build, m)); }} />
     <div class="actions">
+      <Button onclick={() => { screenshot = null; picker = { kind: 'import' }; }}>Import screenshot</Button>
       <Button onclick={newBuild}>New build</Button>
       <Button variant="primary" onclick={copyLink}>Copy build link</Button>
     </div>
@@ -255,7 +293,7 @@
     </aside>
   </div>
 
-  <Drawer open={picker !== null} title={picker ? PICKER_TITLE[picker.kind] : ''} onclose={() => (picker = null)}>
+  <Drawer open={picker !== null} title={picker ? PICKER_TITLE[picker.kind] : ''} onclose={() => { picker = null; screenshot = null; }}>
     {#if picker?.kind === 'vehicle'}
       <div class="choices">
         {#each planner.vehicles.filter((v) => planner.meta.modes[build.mode].vehicles.includes(v.id)) as v (v.id)}
@@ -281,6 +319,15 @@
       <PartPicker {build} onadd={(id: PartId) => { pick(A.addPart(planner, build, id)); }} />
     {:else if picker?.kind === 'favour'}
       <FavourPicker {build} onadd={(id: FavourId) => { pick(A.addFavour(planner, build, id)); }} />
+    {:else if picker?.kind === 'import'}
+      <ScreenshotImport
+        file={screenshot}
+        onapply={(b: Build) => {
+          pick(b);
+          screenshot = null;
+          say('Build imported from the screenshot.');
+        }}
+      />
     {/if}
   </Drawer>
 </div>
