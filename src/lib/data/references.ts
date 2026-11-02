@@ -58,6 +58,7 @@ export function checkReferences(data: PlannerData, icons: IconIndex): string[] {
     icon(a.icon, `ability ${a.id}`);
     for (const u of a.upgradesTo) has(abilities, u, `ability ${a.id} upgradesTo`);
     for (const t of a.tunesets) has(tunesets, t, `ability ${a.id}`);
+    if (a.activation !== null) has(tunesets, a.activation, `ability ${a.id} activation`);
   }
   for (const p of data.affixes) {
     icon(p.icon, `part ${p.id}`);

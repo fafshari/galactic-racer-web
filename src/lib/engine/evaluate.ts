@@ -10,14 +10,19 @@ export interface Conditional {
   /** Display name of what grants it, e.g. "Calibrating Landings I" or "In the Zone (trait)". */
   owner: string;
   desc?: string;
-  /** rule: a whole rule's tunesets; effect: one effect inside a rule; ability: an ability's own tunesets. */
-  kind: 'rule' | 'effect' | 'ability';
+  /**
+   * rule: a whole rule's tunesets; effect: one effect inside a rule; ability: an ability's own tunesets;
+   * active: what an ability does to your vehicle while it's active; victims: a blast's Power per opponent hit.
+   */
+  kind: 'rule' | 'effect' | 'ability' | 'active' | 'victims';
   requires?: readonly Requirement[];
   effect?: Effect;
   /** Counted per trigger (a number) rather than on/off. */
   repeatable: boolean;
   /** Counted in seconds of something (e.g. "airborne"): it stacks once per second spent doing it. */
   perSecond?: string;
+  /** Power it adds each time it's counted, when it isn't in a tuneset (a blast's Power per opponent hit). */
+  power?: number;
 }
 
 /** What a "time spent doing X" requirement times, e.g. "airborne" from `...TrackedVehicleAirborneRequirementConfig_0`. */
@@ -131,6 +136,20 @@ export function collect(data: PlannerData, build: Build): Collected {
       conditionals.push({ key, owner: ab.name, desc: ab.desc, kind: 'ability', repeatable: true });
       addTuneset(t, 1, ab.name, key, times(key));
     });
+    // Not in the legacy planner (ADR 0009): what the ability does to your own vehicle while it's active, and a
+    // blast's Power per opponent hit. Both only count when ticked, so an untouched build is unchanged.
+    if (ab.activation !== null) {
+      const key = `${id}#active`;
+      conditionals.push({ key, owner: ab.name, desc: ab.desc, kind: 'active', repeatable: false });
+      addTuneset(ab.activation, 1, `${ab.name} (active)`, key, times(key));
+    }
+    const perVictim = ab.config.PowerIncreasePerVictim;
+    if (typeof perVictim === 'number' && perVictim > 0) {
+      const key = `${id}#victims`;
+      conditionals.push({ key, owner: ab.name, desc: ab.desc, kind: 'victims', repeatable: true, power: perVictim });
+      const op: TuneOp = { op: 'IntAdd', cfg: 'VehicleGameplayConfig', field: 'Power', f: 0, i: perVictim, v2: [0, 0], v3: [0, 0, 0], pri: 0 };
+      for (let k = 0; k < times(key); k++) ops.push({ op, steps: 1, source: `${ab.name} (opponents hit)`, cond: key });
+    }
   }
 
   // "Increase Speed" effects raise the Power stat, and every Power point is a step of the power tuneset (top speed),

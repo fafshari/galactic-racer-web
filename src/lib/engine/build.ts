@@ -12,6 +12,7 @@ export interface Build {
   /** Upgrade level per slot, 0-10. Missing slots are level 0. */
   levels: Partial<Record<SlotId, number>>;
   parts: PartId[];
+  /** Up to `meta.abilitySlots` regular abilities, then at most one crash ability (its own slot); see fitAbilities. */
   abilities: AbilityId[];
   /** Campaign only. */
   favours: FavourId[];
@@ -29,6 +30,22 @@ export const partAllowed = (p: Part, mode: GameMode): boolean => has(p[mode]) &&
 
 export const abilityAllowed = (a: Ability, mode: GameMode): boolean => has(a[mode]);
 
+/** Crash abilities (the Blasts) go off when you crash and have their own slot; the game gives them a crash class. */
+export const isCrashAbility = (a: Ability): boolean => typeof a.config.VehicleCrashClass === 'string';
+
+/**
+ * A valid ability list: the first `meta.abilitySlots` regular abilities, then the first crash ability. Older builds
+ * and links may have a crash ability among the regular four; it moves to the crash slot.
+ */
+export function fitAbilities(data: PlannerData, ids: readonly AbilityId[]): AbilityId[] {
+  const crash = (id: AbilityId): boolean => {
+    const a = data.abilities.find((x) => x.id === id);
+    return a !== undefined && isCrashAbility(a);
+  };
+  const unique = [...new Set(ids)];
+  return [...unique.filter((id) => !crash(id)).slice(0, data.meta.abilitySlots), ...unique.filter(crash).slice(0, 1)];
+}
+
 export const stylesFor = (mode: GameMode, data: PlannerData = planner) => data.styles.filter((s) => s.mode === mode);
 
 /** A new build for a mode: the first style, its starting abilities, every slot at 0. */
@@ -41,7 +58,7 @@ export function freshBuild(mode: GameMode = 'mp', data: PlannerData = planner): 
     style: style.id,
     levels: Object.fromEntries(data.slots.map((s) => [s.id, 0])),
     parts: [],
-    abilities: [...style.abilities],
+    abilities: fitAbilities(data, style.abilities),
     favours: [],
     active: {},
   };

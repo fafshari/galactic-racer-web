@@ -2,7 +2,7 @@
 // Saved data is untrusted (older versions, other tabs, hand edits), so it's validated and cleaned before use.
 import { z } from 'zod';
 import type { AbilityId, FavourId, PartId, PlannerData, SlotId } from '../data/types.ts';
-import { freshBuild, MAX_LEVEL, type Build } from '../engine/build.ts';
+import { fitAbilities, freshBuild, MAX_LEVEL, type Build } from '../engine/build.ts';
 
 export const STORAGE_KEY = 'swgr-build';
 
@@ -37,7 +37,7 @@ export function restoreBuild(data: PlannerData, raw: unknown): Build | null {
     style: style.id,
     levels,
     parts: pick<PartId>(s.parts, data.affixes).slice(0, data.meta.partSlots.max),
-    abilities: pick<AbilityId>(s.abilities, data.abilities).slice(0, data.meta.abilitySlots),
+    abilities: fitAbilities(data, pick<AbilityId>(s.abilities, data.abilities)),
     favours: mode === 'campaign' ? pick<FavourId>(s.favours, data.favours) : [],
     active: s.active ?? {},
   };

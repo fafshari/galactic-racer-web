@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/svelte';
 import SituationalEffect from './SituationalEffect.svelte';
 
-const base = { owner: 'Reload Surge', detail: 'Tracked Vehicle Condition: Surging', desc: 'While Surging, abilities reload faster.' };
+const base = { owner: 'Reload Surge', desc: 'While Surging, abilities reload faster.' };
 
 describe('SituationalEffect', () => {
   it('toggles an on/off effect', async () => {
@@ -27,17 +27,21 @@ describe('SituationalEffect', () => {
     expect(onchange).toHaveBeenLastCalledWith(undefined);
   });
 
-  it('describes what sets it off', () => {
-    render(SituationalEffect, { ...base, repeatable: true, value: undefined, onchange: vi.fn() });
-    expect(screen.getByText(/Stacks each time it triggers\. Tracked Vehicle Condition: Surging — While Surging/)).toBeTruthy();
+  it('shows the game description, plus a plain "when" line only when given one', () => {
+    const { unmount } = render(SituationalEffect, { ...base, repeatable: true, value: undefined, onchange: vi.fn() });
+    expect(screen.getByText('Stacks each time it triggers. While Surging, abilities reload faster.')).toBeTruthy();
+    expect(document.querySelector('.when')).toBeNull();
+    unmount();
+    render(SituationalEffect, { ...base, repeatable: false, when: 'Burning + Ramjet ready', value: undefined, onchange: vi.fn() });
+    expect(screen.getByRole('checkbox', { name: 'Reload Surge' }).getAttribute('aria-describedby')).toMatch(/-when .*-detail$/);
+    expect(screen.getByText('Burning + Ramjet ready')).toBeTruthy();
   });
 
   it('counts a time-based effect in seconds', async () => {
     const onchange = vi.fn();
-    render(SituationalEffect, { owner: 'Potential Energy (trait)', detail: 'Each second airborne', repeatable: false, perSecond: 'airborne', value: undefined, onchange });
+    render(SituationalEffect, { owner: 'Potential Energy (trait)', repeatable: false, perSecond: 'airborne', value: undefined, onchange });
     const input = screen.getByRole('spinbutton', { name: 'Potential Energy (trait) seconds airborne' });
     await fireEvent.input(input, { target: { value: '4' } });
     expect(onchange).toHaveBeenLastCalledWith(4);
-    expect(screen.getByText(/^Each second airborne/)).toBeTruthy();
   });
 });

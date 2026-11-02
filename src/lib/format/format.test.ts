@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { labels, planner } from '../data/index.ts';
 import type { PartId } from '../data/types.ts';
-import { decodeBuild, evaluate, type Conditional, type Row } from '../engine/index.ts';
-import { conditionLabel, describeRow, fieldInfo, fmt, formatValue, groupInfo, highlight, human, unitSuffix } from './format.ts';
+import { decodeBuild, evaluate, freshBuild, type Conditional, type Row } from '../engine/index.ts';
+import { conditionText, describeRow, fieldInfo, fmt, formatValue, groupInfo, highlight, human, unitSuffix } from './format.ts';
 
 describe('number and text helpers', () => {
   it('formats numbers like the legacy planner', () => {
@@ -38,12 +38,12 @@ describe('formatValue', () => {
 describe('describeRow', () => {
   const rowsFor = (parts: string[]): Row[] => evaluate(planner, { ...decodeBuild('gr2-m106475806'), parts: parts as PartId[] }).rows;
 
-  it('uses the hand-written label, unit and tip, plus the game name', () => {
+  it('uses the hand-written label, unit and tip, and nothing else in the tip', () => {
     const top = rowsFor([]).find((r) => r.field === 'HighSpeedStep');
     if (!top) throw new Error('no top speed row');
     const v = describeRow(labels, top);
     expect(v.label).toBe(fieldInfo(labels, top.cfg, top.field).label);
-    expect(v.tip.at(-1)).toBe('Game name: VehicleThrustConfig.HighSpeedStep');
+    expect(v.tip).toEqual([fieldInfo(labels, top.cfg, top.field).tip]);
     expect(v.display.kind).toBe('parts');
   });
 
@@ -60,11 +60,25 @@ describe('describeRow', () => {
   });
 });
 
-describe('conditionLabel', () => {
-  it('describes what sets an effect off', () => {
-    const c: Conditional = { key: 'x#0', owner: 'X', kind: 'rule', repeatable: false, requires: [{ type: 'TrackedVehicleCondition', props: { Condition: 'Vehicle.Condition.Surging' } }] };
-    expect(conditionLabel(c)).toBe('Tracked Vehicle Condition: Surging');
-    expect(conditionLabel({ key: 'a#t0', owner: 'A', kind: 'ability', repeatable: true })).toBe('Ability bonus (e.g. per overtake)');
+describe('conditionText', () => {
+  const rule = (requires: Conditional['requires']): Conditional => ({ key: 'x#0', owner: 'X', kind: 'rule', repeatable: false, ...(requires ? { requires } : {}) });
+
+  it('says when an effect applies in plain words', () => {
+    expect(conditionText(rule([{ type: 'TrackedVehicleCondition', props: { Condition: 'Vehicle.Condition.Malfunction' } }]))).toBe('System Malfunction');
+    expect(conditionText(rule([{ type: 'TrackedRamjetState', props: { ActiveRamjetStates: ['CriticalWarning'] } }]))).toBe('Redlining');
+    expect(conditionText(rule([{ type: 'Takedown', props: { NumberOfTakedownsNeeded: 3 } }]))).toBe('3 Takedowns');
+    expect(conditionText({ key: 'a#active', owner: 'A', kind: 'active', repeatable: false })).toBe('While the ability is active');
+  });
+
+  it('leaves out requirements players would not recognise instead of showing internal names', () => {
+    expect(conditionText(rule([{ type: 'VehicleLanding', props: {} }, { type: 'AfterburnerState', props: { AfterburnerEnergyThreshold: 0 } }]))).toBe('Landing');
+  });
+
+  it('tells apart the two rules of Heat Recycler', () => {
+    const firebug = planner.styles.find((s) => s.mode === 'mp' && s.name === 'Firebug');
+    if (!firebug) throw new Error('no Firebug style');
+    const heat = evaluate(planner, { ...freshBuild('mp'), style: firebug.id, abilities: [] }).conditionals.filter((c) => c.owner === 'Heat Recycler (trait)');
+    expect(heat.map(conditionText)).toEqual(['Burning', 'Burning + Ramjet ready']);
   });
 });
 
@@ -86,5 +100,19 @@ describe('highlight', () => {
 
   it('leaves text alone without keywords', () => {
     expect(highlight('plain', [])).toEqual([{ text: 'plain', keyword: false }]);
+  });
+});
+
+describe('curves', () => {
+  it('say in plain sentences what moved, with a before/after chart', () => {
+    const b = { ...decodeBuild('gr2-m106475806') };
+    const views = evaluate(planner, b).rows.map((r) => describeRow(labels, r));
+    const grip = views.find((v) => v.label === 'Grip curve')?.display;
+    const ramjet = views.find((v) => v.label === 'Turning penalty with Ramjet')?.display;
+    if (grip?.kind !== 'curve' || ramjet?.kind !== 'curve') throw new Error('no curves');
+    expect(grip.changes[0]).toMatch(/^Grip blend reaches 0 at [\d.]+ km\/h \(was [\d.]+ km\/h\)$/);
+    expect(ramjet.changes[0]).toMatch(/^At [\d.]+ km\/h: extra turn radius 25 → [\d.]+ m$/);
+    expect(grip.chart.base).toHaveLength(grip.chart.value.length);
+    expect(grip.explain).toContain('low-speed grip');
   });
 });

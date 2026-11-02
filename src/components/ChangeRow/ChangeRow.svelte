@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { FormattedValue, RowView } from '~/lib/format/format.ts';
+  import CurveChart from '../CurveChart/CurveChart.svelte';
   import InfoTip from '../InfoTip/InfoTip.svelte';
   import Tag from '../Tag/Tag.svelte';
 
@@ -27,7 +28,7 @@
 <div class="change-row">
 <div class="line">
   <span class="field">
-    {view.label}<InfoTip label={view.label}>{#each view.tip as line, i (i)}<p>{line}</p>{/each}</InfoTip>
+    {view.label}{#if view.tip.length}<InfoTip label={view.label}>{#each view.tip as line, i (i)}<p>{line}</p>{/each}</InfoTip>{/if}
   </span>
   <span class={['value', view.display.kind === 'parts' && '-parts']}>
     {#if view.display.kind === 'single' && pinnedNote && view.display.value.kind === 'number'}
@@ -52,21 +53,15 @@
     {/if}
   </span>
   {#if view.display.kind === 'curve'}
-    {@const [inName, outName] = view.display.axes}
+    {@const d = view.display}
     <details class="curve">
       <summary>Show curve</summary>
-      <div class="scroll">
-        <table class="points">
-          <thead><tr><th>{inName}</th><th>{outName}</th><th>New {inName.toLowerCase()}</th><th>New {outName.toLowerCase()}</th></tr></thead>
-          <tbody>
-            {#each view.display.points as p, i (i)}
-              <tr>
-                <td>{p.base[0]}</td><td>{p.base[1]}</td>
-                <td class={[p.changed[0] && '-changed']}>{p.value[0]}</td><td class={[p.changed[1] && '-changed']}>{p.value[1]}</td>
-              </tr>
-            {/each}
-          </tbody>
-        </table>
+      <div class="body">
+        {#if d.explain}<p class="explain">{d.explain}</p>{/if}
+        <CurveChart chart={d.chart} axes={d.axes} label={`${view.label}: ${d.changes.join('; ')}`} />
+        {#if d.changes.length}
+          <ul class="changes">{#each d.changes as c, i (i)}<li>{c}</li>{/each}</ul>
+        {/if}
       </div>
     </details>
   {/if}
@@ -165,30 +160,22 @@
       cursor: pointer;
     }
 
-    .scroll {
-      overflow-x: auto;
-    }
-
-    .points {
+    .body {
+      display: grid;
+      gap: var(--space-2);
       margin-top: 6px;
-      border-collapse: collapse;
-      font: 12px/1.4 var(--font-mono);
-      font-variant-numeric: tabular-nums;
     }
 
-    th,
-    td {
-      padding: 3px 10px 3px 0;
-      text-align: right;
-    }
-
-    th {
+    .explain {
+      margin: 0;
       color: var(--color-muted);
-      font-weight: 500;
+      font-size: 13px;
     }
 
-    td.-changed {
-      font-weight: 700;
+    .changes {
+      margin: 0;
+      padding-left: 1.2em;
+      font-size: 13px;
     }
   }
 </style>

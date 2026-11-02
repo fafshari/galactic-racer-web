@@ -25,7 +25,7 @@
   import { labels, planner } from '~/lib/data/index.ts';
   import type { GameMode, OfferRarity, Part, SlotId, VehicleId } from '~/lib/data/types.ts';
   import { decodeBuild, evaluate, speeds, type ActiveCount, type Build } from '~/lib/engine/index.ts';
-  import { conditionLabel, describeRow } from '~/lib/format/format.ts';
+  import { conditionText, describeRow } from '~/lib/format/format.ts';
 
   // demo buttons that need a handler but have nothing to do here
   const noop = (): void => undefined;
@@ -205,7 +205,7 @@
         {#each result.conditionals.slice(0, 3) as c (c.key)}
           <SituationalEffect
             owner={c.owner}
-            detail={conditionLabel(c)}
+            when={conditionText(c)}
             {...c.desc ? { desc: c.desc } : {}}
             repeatable={c.repeatable}
             {...c.perSecond ? { perSecond: c.perSecond } : {}}

@@ -8,7 +8,7 @@
 import { buildOrder as defaultOrder, planner } from '../data/index.ts';
 import type { BuildOrder, OrderKind } from '../data/order.ts';
 import type { PlannerData } from '../data/types.ts';
-import { MAX_LEVEL, freshBuild, type Build } from './build.ts';
+import { MAX_LEVEL, fitAbilities, freshBuild, type Build } from './build.ts';
 
 const CODE_RX = /^gr2-([mc])(\d)([0-9a-z]{2})([0-9a-z]{6})(?:\.([0-9a-z]*))?(?:\.([0-9a-z]*))?(?:\.([0-9a-z]*))?\.*$/;
 
@@ -64,7 +64,7 @@ export function decodeBuild(code: string, data: PlannerData = planner, order: Bu
     b.levels[s.id] = Math.min(MAX_LEVEL, parseInt(levels[i] ?? '0', 36));
   });
   b.parts = resolve('parts', data.affixes, pairs(parts)).slice(0, data.meta.partSlots.max);
-  b.abilities = resolve('abilities', data.abilities, pairs(abilities)).slice(0, data.meta.abilitySlots);
+  b.abilities = fitAbilities(data, resolve('abilities', data.abilities, pairs(abilities)));
   b.favours = b.mode === 'campaign' ? resolve('favours', data.favours, pairs(favours)) : [];
   return b;
 }

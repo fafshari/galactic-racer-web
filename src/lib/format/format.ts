@@ -1,7 +1,7 @@
 // Turns engine output into display-ready values (no HTML), so components stay thin and this stays testable.
 // Ported from the legacy planner's readout helpers.
 import { labelKey } from '../data/references.ts';
-import type { Labels } from '../data/types.ts';
+import type { Labels, Requirement } from '../data/types.ts';
 import type { Conditional, Row } from '../engine/evaluate.ts';
 import { isFloatCurve, isModifier, type CellValue } from '../engine/ops.ts';
 
@@ -97,11 +97,27 @@ export interface CurvePoint {
   changed: readonly [boolean, boolean];
 }
 
+/** A curve as numbers in display units, before and with the build, for drawing. */
+export interface CurveChart {
+  base: readonly (readonly [number, number])[];
+  value: readonly (readonly [number, number])[];
+}
+
 /** How a changed field is shown. */
 export type RowDisplay =
   | { kind: 'single'; value: FormattedValue }
   | { kind: 'parts'; items: { name: string; value: FormattedValue }[] }
-  | { kind: 'curve'; changedPoints: number; axes: readonly [string, string]; points: CurvePoint[] }
+  | {
+      kind: 'curve';
+      changedPoints: number;
+      axes: readonly [string, string];
+      points: CurvePoint[];
+      chart: CurveChart;
+      /** What changed, one plain sentence per changed point. */
+      changes: string[];
+      /** What the curve means, shown with it. */
+      explain: string;
+    }
   /** e.g. a curve kept in a separate curve asset: the change applies, but there's no base to show it against. */
   | { kind: 'no-base' };
 
@@ -113,21 +129,17 @@ export interface RowView {
   sources: Row['sources'];
 }
 
-const CONFIDENCE_NOTE: Record<Confidence, string> = {
-  name: "Meaning taken from the game's own field name.",
-  inferred: 'Meaning worked out from how the values behave; not confirmed by game code.',
-  measured: 'Value measured in game; it is not in the game data.',
-};
+/** "Speed (km/h)" -> ["Speed", "km/h"]; "Grip blend" -> ["Grip blend", ""]. */
+function axisParts(axis: string): [string, string] {
+  const m = /^(.*?)\s*\(([^)]*)\)\s*$/.exec(axis);
+  return m ? [m[1] ?? axis, m[2] ?? ''] : [axis, ''];
+}
 
 export function describeRow(labels: Labels, r: Row): RowView {
   const info = fieldInfo(labels, r.cfg, r.field);
   const partName = (i: string): string => info.parts[Number(i)] ?? 'XYZ'[Number(i)] ?? i;
-  const tip = [
-    ...(info.tip ? [info.tip] : []),
-    ...(r.known ? [] : ['Base value is a code default, so only the change is shown.']),
-    CONFIDENCE_NOTE[info.sure],
-    `Game name: ${r.cfg}.${r.field}`,
-  ];
+  // the tooltip explains what the value is; where its meaning came from stays in labels.json ("sure")
+  const tip = info.tip ? [info.tip] : [];
   const base = { label: info.label, tip, sources: r.sources };
   const curveCells = r.cells.filter((c) => /k\d+\./.test(c.cell));
   if (!r.cells.length) return { ...base, display: { kind: 'no-base' } };
@@ -146,11 +158,15 @@ export function describeRow(labels: Labels, r: Row): RowView {
   const keys = isFloatCurve(r.base) ? r.base.curve : [];
   const [sx, sy] = info.axisScale;
   const conv = (x: number, f: number): number => (f === 1 ? x : round1(x * f));
+  const base2: [number, number][] = [];
+  const value2: [number, number][] = [];
   const points: CurvePoint[] = keys.map((k, ki) => {
     const t = r.cells.find((c) => c.cell === `k${ki}.t`);
     const v = r.cells.find((c) => c.cell === `k${ki}.v`);
     const nt = t && typeof t.value === 'number' ? t.value : k[0];
     const nv = v && typeof v.value === 'number' ? v.value : k[1];
+    base2.push([conv(k[0], sx), conv(k[1], sy)]);
+    value2.push([conv(nt, sx), conv(nv, sy)]);
     return {
       component: '',
       base: [fmt(conv(k[0], sx)), fmt(conv(k[1], sy))],
@@ -159,19 +175,69 @@ export function describeRow(labels: Labels, r: Row): RowView {
     };
   });
   const changedPoints = new Set(curveCells.map((c) => c.cell.replace(/\.[tv]$/, ''))).size;
-  return { ...base, display: { kind: 'curve', changedPoints, axes: info.axes, points } };
+  const [, xUnit] = axisParts(info.axes[0]);
+  const [yName, yUnit] = axisParts(info.axes[1]);
+  const at = (x: string): string => (xUnit ? `${x} ${xUnit}` : x);
+  const of = (y: string): string => (yUnit ? `${y} ${yUnit}` : y);
+  const changes = points.flatMap((p) => {
+    const [bx, by] = p.base;
+    const [nx, ny] = p.value;
+    if (bx === nx && by === ny) return [];
+    if (by === ny) return [`${yName} reaches ${of(by)} at ${at(nx)} (was ${at(bx)})`];
+    if (bx === nx) return [`At ${at(bx)}: ${yName.toLowerCase()} ${by} → ${of(ny)}`];
+    return [`${yName} ${of(by)} at ${at(bx)} → ${of(ny)} at ${at(nx)}`];
+  });
+  return {
+    ...base,
+    display: { kind: 'curve', changedPoints, axes: info.axes, points, chart: { base: base2, value: value2 }, changes, explain: info.tip },
+  };
 }
 
-/** One line describing what sets off a situational effect. */
-export function conditionLabel(c: Conditional): string {
-  if (c.kind === 'ability') return 'Ability bonus (e.g. per overtake)';
-  const req = (c.requires ?? []).map((r) => {
-    if (r.type === 'TimeSpendPerformingNested' && c.perSecond) return `Each second ${c.perSecond}`;
-    const v = Object.values(r.props).find((x): x is string => typeof x === 'string' && x.includes('.'));
-    return human(r.type) + (v ? `: ${v.split('.').pop() ?? v}` : '');
-  });
-  const eff = c.effect ? `${c.effect.tracked ? 'Tracked' : 'Triggered'} effect: ${human(c.effect.type)}` : '';
-  return [...req, eff].filter(Boolean).join(' · ');
+// The game's names for conditions and Ramjet states, as players see them in game text.
+const CONDITION_NAMES: Record<string, string> = { Malfunction: 'System Malfunction', Overclocked: 'Overcharged' };
+const RAMJET_STATES: Record<string, string> = { Ready: 'Ramjet ready', Active: 'Ramjet active', CriticalWarning: 'Redlining', Overheated: 'Overheated' };
+
+const lastPart = (v: unknown): string => (typeof v === 'string' ? (v.split('.').pop() ?? v) : '');
+const condition = (v: unknown): string => CONDITION_NAMES[lastPart(v)] ?? lastPart(v);
+const ramjet = (v: unknown): string => (Array.isArray(v) ? v.map((x) => RAMJET_STATES[String(x)] ?? '').filter(Boolean).join(' or ') : '');
+const num = (v: unknown): number | null => (typeof v === 'number' ? v : null);
+
+/** One requirement in plain words, or '' when it adds nothing a player would recognise. */
+function requirementText(r: Requirement, c: Conditional): string {
+  const p = r.props;
+  switch (r.type) {
+    case 'TrackedVehicleCondition': return condition(p.Condition);
+    case 'VehicleCondition':
+      return p.ConditionStarted ? `${condition(p.ConditionStarted)} starts` : p.ConditionEnded ? `${condition(p.ConditionEnded)} ends` : condition(p.Condition);
+    case 'TrackedRamjetState': return ramjet(p.ActiveRamjetStates);
+    case 'RamjetState': return p.NewRamjetStates ? `${ramjet(p.NewRamjetStates)} starts` : p.PreviousRamjetStates ? `after ${ramjet(p.PreviousRamjetStates)}` : '';
+    case 'TimeSpendPerformingNested': return c.perSecond ? `each second ${c.perSecond}` : '';
+    case 'TrackedVehicleAirborne': return 'Airborne';
+    case 'TrackedVehicleDrafting': return num(p.MinTimeDrafting) ? `Slipstreaming ${String(p.MinTimeDrafting)}s` : 'Slipstreaming';
+    case 'VehicleLanding': return 'Landing';
+    case 'VehiclePerfectStart': return 'Perfect start';
+    case 'Takedown': return num(p.NumberOfTakedownsNeeded) ? `${String(p.NumberOfTakedownsNeeded)} Takedowns` : 'Takedown';
+    case 'Overtake': return num(p.NumberOfOvertakesNeeded) ? `${String(p.NumberOfOvertakesNeeded)} overtakes` : 'Overtake';
+    case 'Crashed': return 'Crash';
+    case 'Contact': return 'Collision';
+    case 'Timer': return num(p.TimerThreshold) ? `after ${String(p.TimerThreshold)}s` : '';
+    case 'ActivateAbility': return 'Ability used';
+    case 'TrackedEnergyLevel': return num(p.EnergyLevelRequired) ? `${String(p.EnergyLevelRequired)}+ Energy` : '';
+    case 'VehicleSpeed': return num(p.VehicleSpeedThreshold) ? `speed ${String(p.VehicleSpeedThreshold)}+` : '';
+    default: return '';
+  }
+}
+
+/**
+ * When a situational effect applies, in a player's words: "Burning + Ramjet ready", "While the ability is active".
+ * Requirements a player wouldn't recognise are left out rather than shown by their internal names.
+ */
+export function conditionText(c: Conditional): string {
+  if (c.kind === 'active') return 'While the ability is active';
+  if (c.kind === 'victims') return 'Each opponent the blast hits';
+  if (c.kind === 'ability') return 'Each time it triggers';
+  const parts = (c.requires ?? []).map((r) => requirementText(r, c)).filter(Boolean);
+  return [...new Set(parts)].join(' + ');
 }
 
 /** Splits text into plain and highlighted runs for the game's keyword phrases (whole words, longest first). */

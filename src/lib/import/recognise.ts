@@ -4,8 +4,8 @@
 // player to check the doubtful ones.
 import { planner } from '../data/index.ts';
 import type { AbilityId, Part, PartId, PlannerData, SlotId, Style, StyleId, VehicleId } from '../data/types.ts';
-import { abilityAllowed, evaluate, freshBuild, partAllowed, speeds, toKmh, type Build } from '../engine/index.ts';
-import { addPart, familyKey, familyName, maxAbilities } from '../planner/actions.ts';
+import { abilityAllowed, evaluate, fitAbilities, freshBuild, partAllowed, speeds, toKmh, type Build } from '../engine/index.ts';
+import { addPart, familyKey, familyName } from '../planner/actions.ts';
 import { detectLayout, place, type Layout, type PanelName } from './layout.ts';
 import { confidenceOf, normalise, rank, similarity, type Scored } from './match.ts';
 import { lumaAt, lumaStats, textCrop, textLine, type Box, type Raster } from './raster.ts';
@@ -313,7 +313,7 @@ export function assembleBuild(readings: readonly Reading[], data: PlannerData = 
     ...build,
     vehicle: vehicle !== undefined && vehicle !== null && allowedVehicles.includes(vehicle) ? vehicle : build.vehicle,
     style: style?.id ?? build.style,
-    abilities: abilityIds.slice(0, maxAbilities(data)),
+    abilities: fitAbilities(data, abilityIds),
     levels: { ...build.levels, ...Object.fromEntries(pick('level').map((r) => [r.slot, r.level])) },
   };
   for (const r of pick('part')) if (r.id !== null) build = addPart(data, build, r.id);

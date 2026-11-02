@@ -10,17 +10,22 @@
     onselect: () => void;
     /** Shows a remove button on a filled slot. */
     onremove?: () => void;
+    /** What an empty slot takes, e.g. "crash ability". */
+    takes?: string;
+    /** The installed ability's reload time with this build, e.g. "Reload 7.5 s (was 15 s)". */
+    cooldown?: string;
   }
 
-  const { ability, label, onselect, onremove }: Props = $props();
+  const { ability, label, onselect, onremove, takes = 'ability', cooldown }: Props = $props();
 </script>
 
 <div class={['ability-slot', ability === null && '-empty']}>
-  <button type="button" class="pick" onclick={onselect} aria-label={ability ? `${label}: ${ability.name}. Change` : `${label}: empty. Add an ability`}>
+  <button type="button" class="pick" onclick={onselect} aria-label={ability ? `${label}: ${ability.name}${cooldown ? `, ${cooldown}` : ''}. Change` : `${label}: empty. Add ${/^[aeiou]/.test(takes) ? 'an' : 'a'} ${takes}`}>
     <span class="badge">{#if ability}<GameIcon name={ability.icon} size="lg" />{/if}</span>
     <span class="text">
-      <span class="name">{ability ? ability.name : 'Add ability'}</span>
+      <span class="name">{ability ? ability.name : `Add ${takes}`}</span>
       <span class="slot">{label}</span>
+      {#if ability && cooldown}<span class="cooldown">{cooldown}</span>{/if}
     </span>
   </button>
   {#if ability && onremove}
@@ -79,6 +84,10 @@
   .text > .slot {
     color: var(--color-muted);
     font: italic 500 13.5px var(--font-label);
+  }
+
+  .text > .cooldown {
+    font: 600 13px var(--font-label);
   }
 
   .ability-slot.-empty > .pick {

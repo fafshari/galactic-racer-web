@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { labels, planner } from '../data/index.ts';
 import type { AbilityId, FavourId, Part, PartId, StyleId, VehicleId } from '../data/types.ts';
-import { decodeBuild, evaluate, freshBuild } from '../engine/index.ts';
+import { decodeBuild, encodeBuild, evaluate, freshBuild } from '../engine/index.ts';
 import * as A from './actions.ts';
-import { changeGroups, slotImproves } from './readout.ts';
+import { abilityCooldowns, changeGroups, cooldownText, situationalWhen, slotImproves } from './readout.ts';
 import { restoreBuild } from './storage.ts';
 
 const part = (name: string): Part => {
@@ -142,5 +142,103 @@ describe('restoreBuild', () => {
 
   it('ignores anything unusable', () => {
     for (const bad of [null, 'x', 42, {}, { vehicle: 'Bike', style: 'nope' }]) expect(restoreBuild(planner, bad)).toBeNull();
+  });
+});
+
+describe('situational effect "when" lines', () => {
+  const abilityId = (name: string): AbilityId => {
+    const a = planner.abilities.find((x) => x.name === name);
+    if (!a) throw new Error(`no ability ${name}`);
+    return a.id;
+  };
+
+  it('mark the while-active effect of an ability, and tell apart the rules of one trait', () => {
+    const firebug = planner.styles.find((s) => s.mode === 'mp' && s.name === 'Firebug');
+    if (!firebug) throw new Error('no Firebug style');
+    const b = { ...freshBuild('mp'), style: firebug.id, abilities: [abilityId('Surging Autopilot II')] };
+    const r = evaluate(planner, b);
+    const whens = situationalWhen(r);
+    expect(whens.get(`${abilityId('Surging Autopilot II')}#active`)).toBe('While the ability is active');
+    const heat = r.conditionals.filter((c) => c.owner === 'Heat Recycler (trait)').map((c) => whens.get(c.key));
+    expect(heat).toEqual(['Burning', 'Burning + Ramjet ready']);
+  });
+
+  it('leave an effect its own description explains alone', () => {
+    const b = { ...freshBuild('mp'), style: 'none' as StyleId, abilities: [] };
+    const r = evaluate(planner, { ...b, parts: [planner.affixes.find((p) => p.name === 'Calibrating Landings I')?.id ?? ('' as PartId)] });
+    expect(situationalWhen(r).size).toBe(0);
+  });
+});
+
+describe('crash ability slot', () => {
+  const byName = (name: string): AbilityId => {
+    const a = planner.abilities.find((x) => x.name === name);
+    if (!a) throw new Error(`no ability ${name}`);
+    return a.id;
+  };
+  const crashIds = planner.abilities.filter((a) => typeof a.config.VehicleCrashClass === 'string').map((a) => a.name);
+
+  it('the crash abilities are the four Blasts', () => {
+    expect(crashIds.sort()).toEqual(['Charging Blast', 'Cooling Blast', 'Ion Blast', 'Shielding Blast']);
+  });
+
+  it('a crash ability takes its own slot beside four regular ones, and replaces the crash ability there', () => {
+    const regular = planner.abilities.filter((a) => !crashIds.includes(a.name) && a.mp).slice(0, 4).map((a) => a.id);
+    let b = { ...freshBuild('mp'), abilities: regular };
+    b = A.placeAbility(planner, b, byName('Ion Blast'), 0);
+    expect(A.regularAbilities(planner, b)).toEqual(regular);
+    expect(A.crashAbility(planner, b)).toBe(byName('Ion Blast'));
+    b = A.placeAbility(planner, b, byName('Cooling Blast'), 2);
+    expect(A.crashAbility(planner, b)).toBe(byName('Cooling Blast'));
+    expect(b.abilities).toHaveLength(5);
+    expect(A.crashAbility(planner, A.removeAbility(b, byName('Cooling Blast')))).toBeUndefined();
+  });
+
+  it('regular slots offer only regular abilities, the crash slot only crash abilities', () => {
+    expect(A.abilityChoices(planner, 'mp', 'crash', 'all', '').map((a) => a.name).sort()).toEqual(crashIds.sort());
+    expect(A.abilityChoices(planner, 'mp', 'regular', 'all', '').some((a) => crashIds.includes(a.name))).toBe(false);
+  });
+
+  it('a link or saved build with a crash ability among the regular four moves it to the crash slot', () => {
+    const regular = planner.abilities.filter((a) => !crashIds.includes(a.name) && a.mp).slice(0, 4).map((a) => a.id);
+    const old = { ...freshBuild('mp'), abilities: [regular[0], byName('Ion Blast'), regular[1], regular[2]] as AbilityId[] };
+    const back = decodeBuild(encodeBuild(old));
+    expect(A.regularAbilities(planner, back)).toEqual(regular.slice(0, 3));
+    expect(A.crashAbility(planner, back)).toBe(byName('Ion Blast'));
+    const saved = restoreBuild(planner, JSON.parse(JSON.stringify({ ...old, abilities: [...regular, byName('Ion Blast')] })));
+    expect(saved?.abilities).toHaveLength(5);
+  });
+});
+
+describe('ability cooldowns', () => {
+  const partId = (name: string): PartId => {
+    const p = planner.affixes.find((x) => x.name === name);
+    if (!p) throw new Error(`no part ${name}`);
+    return p.id;
+  };
+  const surge = planner.abilities.find((a) => a.name === 'Surge');
+  const blast = planner.abilities.find((a) => a.name === 'Ion Blast');
+  if (!surge || !blast) throw new Error('no Surge or Ion Blast');
+  const base = { ...freshBuild('mp'), style: 'none' as StyleId, abilities: [surge.id, blast.id] };
+  const text = (b: typeof base): string[] => {
+    const c = abilityCooldowns(planner, b.abilities, evaluate(planner, b));
+    return b.abilities.map((id) => {
+      const x = c.get(id);
+      return x ? cooldownText(x) : '';
+    });
+  };
+
+  it('show the game’s reload time, and crash abilities as going off on a crash', () => {
+    expect(text(base)).toEqual(['Reload 15 s', 'Goes off when you crash']);
+  });
+
+  it('apply reload changes, including counted situational ones', () => {
+    const faster = { ...base, parts: [partId('Faster Attachments II')] };
+    expect(text(faster)[0]).toBe('Reload 7.5 s (was 15 s)');
+    const withSurge = { ...faster, parts: [...faster.parts, partId('Reload Surge')] };
+    const key = evaluate(planner, withSurge).conditionals.find((c) => c.owner === 'Reload Surge')?.key;
+    if (!key) throw new Error('no Reload Surge effect');
+    expect(text({ ...withSurge, active: { [key]: true } })[0]).toMatch(/^Reload [\d.]+ s \(was 15 s\)$/);
+    expect(text({ ...withSurge, active: { [key]: true } })[0]).not.toBe('Reload 7.5 s (was 15 s)');
   });
 });

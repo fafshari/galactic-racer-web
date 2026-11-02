@@ -32,13 +32,17 @@ const comparable = (r: Pick<Evaluation, 'rows' | 'power' | 'powerBonus'> & { con
   conditionals: r.conditionals.map((c) => ({ key: c.key, owner: c.owner, kind: c.kind, repeatable: c.repeatable })),
 });
 
-/** Evaluates with both engines, first plainly and then with every situational effect counted `times` times. */
+/** Situational effects the legacy planner never had (ability activation, blast Power per opponent; ADR 0009). */
+const isNew = (c: { kind: string }): boolean => c.kind === 'active' || c.kind === 'victims';
+const legacyOnly = (r: Evaluation): Evaluation => ({ ...r, conditionals: r.conditionals.filter((c) => !isNew(c)) });
+
+/** Evaluates with both engines, first plainly and then with every legacy situational effect counted `times` times. */
 function expectSame(build: Build, times: true | number): void {
-  const plain = evaluate(planner, build);
+  const plain = legacyOnly(evaluate(planner, build));
   expect(comparable(plain)).toEqual(comparable(legacyEngine.evaluate(planner, build)));
   const active = Object.fromEntries(plain.conditionals.map((c) => [c.key, c.repeatable ? times : true] as const));
   const counted = { ...build, active };
-  expect(comparable(evaluate(planner, counted))).toEqual(comparable(legacyEngine.evaluate(planner, counted)));
+  expect(comparable(legacyOnly(evaluate(planner, counted)))).toEqual(comparable(legacyEngine.evaluate(planner, counted)));
 }
 
 const vehicles = planner.vehicles.map((v) => v.id);

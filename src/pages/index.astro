@@ -2,12 +2,10 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import BuildPlanner from '~/components/BuildPlanner/BuildPlanner.svelte';
 import PlannerNotes from '~/components/PlannerNotes/PlannerNotes.astro';
-import { manifest } from '~/lib/data/index.ts';
 ---
 
 <BaseLayout
   title="Galactic Racer Build Planner"
-  eyebrow={`Multiplayer Tour · Campaign · game build ${manifest.gameBuild}`}
   description="Theorycraft STAR WARS: Galactic Racer builds for Multiplayer Tour and Campaign, using values from the game files."
 >
   <BuildPlanner client:load />
