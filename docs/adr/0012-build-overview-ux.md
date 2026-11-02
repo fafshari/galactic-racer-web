@@ -35,6 +35,20 @@ Everything is visible at once.
 - **The drawer closes after every selection** (vehicle, style, ability, part), returning to the overview so the change is visible in context. Changing a part's rarity happens on its card in the overview, so it doesn't need the drawer.
 - **Accessibility:** the drawer is a proper dialog. It traps focus, closes on Escape, returns focus to the slot that opened it, and has a visible close button.
 
+## Implementation (2026-11-01)
+
+- **The overview.** It uses `Panel`s for:
+  - Vehicle stats: vehicle, art, traits and the six `StatRow`s with power.
+  - Racer style: `StylePanel`, with a rank switch in Campaign.
+  - Abilities: four `AbilitySlot`s.
+  - Installed parts: `PartRow`s with rarity chips.
+  - Favours, in Campaign.
+- **The readout column** holds the speed panel, situational effects and What changes. It's sticky on wide screens; everything stacks below 900 px.
+- **One `Drawer`** swaps its content by picker: vehicle, style, ability (for a given slot), part, favour. It closes after each pick.
+- **Rules:** every rule is a pure function in `src/lib/planner/`, and the Svelte island only holds state.
+- **Narrow layouts:** rows that sit in narrow panels (`ChangeRow`, `PartRow`, `FavourRow`) were made to adapt to their own width rather than the screen's. `ChangeRow` uses a container query. Part and favour rows always put their tags and controls on a second line, so nothing overflows a narrow panel on any screen.
+- **One improvement over the legacy page:** once the build no longer matches the link it was opened from, the hash is dropped. In the legacy page, a reload after editing a linked build silently reverted the edits.
+
 ## Consequences
 
 - Most of the component library (ADR 0006) is driven by this layout: overview panels, slots, drawer, picker contents.

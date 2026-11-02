@@ -8,7 +8,9 @@
   import GameIcon from '~/components/GameIcon/GameIcon.svelte';
   import InfoTip from '~/components/InfoTip/InfoTip.svelte';
   import KeywordText from '~/components/KeywordText/KeywordText.svelte';
+  import FavourRow from '~/components/FavourRow/FavourRow.svelte';
   import ModeSwitch from '~/components/ModeSwitch/ModeSwitch.svelte';
+  import Panel from '~/components/Panel/Panel.svelte';
   import PartCard from '~/components/PartCard/PartCard.svelte';
   import PartRow from '~/components/PartRow/PartRow.svelte';
   import RarityToggle from '~/components/RarityToggle/RarityToggle.svelte';
@@ -146,6 +148,21 @@
         {#if landings}<PartRow part={landings} situational />{/if}
       </div>
     </article>
+  </section>
+
+  <section class="group" aria-labelledby="sc-panels">
+    <h2 id="sc-panels" class="heading">Panels</h2>
+    <Panel title="Installed parts" count="1 / 10">
+      {#snippet actions()}<Button size="sm" variant="primary">Add part</Button>{/snippet}
+      {#if part}<PartRow {part} onremove={noop} />{/if}
+    </Panel>
+    <Panel title="Favours" count="2">
+      <div class="stack">
+        {#each planner.favours.filter((f) => f.negative).slice(0, 1).concat(planner.favours.filter((f) => !f.negative).slice(0, 1)) as f (f.id)}
+          <FavourRow favour={f} onremove={noop} />
+        {/each}
+      </div>
+    </Panel>
   </section>
 
   <section class="group" aria-labelledby="sc-pickers">

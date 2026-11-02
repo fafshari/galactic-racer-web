@@ -1,0 +1,7 @@
+# LF everywhere, whatever editor or script on Windows touches a file (git converts on commit).
+* text=auto eol=lf
+
+# binary game assets
+*.webp binary
+*.png binary
+*.jpg binary

@@ -25,11 +25,14 @@
 {/snippet}
 
 <div class="change-row">
+<div class="line">
   <span class="field">
     {view.label}<InfoTip label={view.label}>{#each view.tip as line, i (i)}<p>{line}</p>{/each}</InfoTip>
   </span>
   <span class="value">
-    {#if view.display.kind === 'single'}
+    {#if view.display.kind === 'single' && pinnedNote && view.display.value.kind === 'number'}
+      <span class="reading">{view.display.value.value}</span>
+    {:else if view.display.kind === 'single'}
       {@render value(view.display.value)}
     {:else if view.display.kind === 'parts'}
       {#each view.display.items as item (item.name)}
@@ -68,30 +71,46 @@
     </details>
   {/if}
 </div>
+</div>
 
 <style lang="scss">
+  // A container, so the row can stack its value under the label wherever it's placed narrowly.
   .change-row {
+    container-type: inline-size;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .change-row > .line {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 2px 12px;
     padding: 7px 0;
-    border-top: 1px solid var(--color-line);
   }
 
-  .change-row > .field {
+  @container (max-width: 400px) {
+    .change-row > .line {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .line > .value {
+      justify-items: start;
+      text-align: left;
+    }
+  }
+
+  .line > .field {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     overflow-wrap: anywhere;
   }
 
-  .change-row > .value {
+  .line > .value {
     display: grid;
     justify-items: end;
     font: 13px var(--font-mono);
     font-variant-numeric: tabular-nums;
     text-align: right;
-    white-space: nowrap;
 
     .old,
     .part-name {
@@ -107,14 +126,14 @@
     }
   }
 
-  .change-row > .sources {
+  .line > .sources {
     display: flex;
     flex-wrap: wrap;
     grid-column: 1 / -1;
     gap: 4px;
   }
 
-  .change-row > .curve {
+  .line > .curve {
     grid-column: 1 / -1;
 
     summary {

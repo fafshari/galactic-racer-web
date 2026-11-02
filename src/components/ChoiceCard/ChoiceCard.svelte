@@ -9,15 +9,18 @@
     subtitle?: string;
     pressed: boolean;
     onclick: () => void;
+    disabled?: boolean;
+    /** A short note at the end of the title line, e.g. "Lv 2" or "In build". */
+    note?: string;
   }
 
-  const { icon, title, subtitle, pressed, onclick }: Props = $props();
+  const { icon, title, subtitle, pressed, onclick, disabled = false, note }: Props = $props();
 </script>
 
-<button type="button" class="choice-card" aria-pressed={pressed} {onclick}>
+<button type="button" class="choice-card" aria-pressed={pressed} {disabled} {onclick}>
   <GameIcon name={icon} size="lg" />
   <span class="text">
-    <span class="title">{title}</span>
+    <span class="title">{title}{#if note}<span class="note">{note}</span>{/if}</span>
     {#if subtitle}<span class="subtitle">{subtitle}</span>{/if}
   </span>
 </button>
@@ -49,6 +52,15 @@
       background: var(--color-accent-soft);
       color: var(--color-fg);
     }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+
+      &:hover {
+        border-color: var(--color-line);
+      }
+    }
   }
 
   .choice-card > .text {
@@ -67,6 +79,14 @@
       font: 700 15px/1.2 var(--font-label);
       letter-spacing: 0.03em;
     }
+  }
+
+  .title > .note {
+    margin-left: var(--space-2);
+    color: var(--color-muted);
+    font: italic 600 13px var(--font-label);
+    letter-spacing: 0;
+    text-transform: none;
   }
 
   .text > .subtitle {
