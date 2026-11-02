@@ -125,3 +125,19 @@ test('no sideways scrolling, in either theme', async ({ page }) => {
     expect(overflow).toBeLessThanOrEqual(0);
   }
 });
+
+test('What changes keeps labels readable next to long values', async ({ page }) => {
+  // Ability Catalyst adds "Refill time (empty to full): 5 s → …", which once squeezed its label to a letter per line
+  await page.goto(`/#${SHARED}`);
+  await ready(page);
+  await page.getByRole('button', { name: 'Add part' }).click();
+  const drawer = page.getByRole('dialog', { name: 'Add a part' });
+  await drawer.getByRole('searchbox', { name: 'Search parts' }).fill('Ability Catalyst');
+  await drawer.getByRole('button', { name: 'Add Ability Catalyst', exact: true }).click();
+  await page.getByRole('spinbutton', { name: /Ability Catalyst/ }).fill('2');
+  await expect(page.locator('.change-row').filter({ hasText: 'Refill time' })).toBeVisible();
+  const narrowest = await page.locator('.change-row .field').evaluateAll((els) => Math.min(...els.map((e) => e.getBoundingClientRect().width)));
+  expect(narrowest).toBeGreaterThan(120);
+  const overflowing = await page.locator('.change-row').evaluateAll((els) => els.filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => `${e.querySelector('.field')?.textContent.trim().slice(0, 40) ?? ''} ${String(e.scrollWidth)}/${String(e.clientWidth)}`));
+  expect(overflowing).toEqual([]);
+});

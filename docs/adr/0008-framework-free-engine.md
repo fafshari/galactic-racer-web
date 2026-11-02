@@ -44,7 +44,10 @@ The planner and tour simulator both use them, and so does Node (`test-engine.js`
   - real shared links
   - the live planner's top speeds
 - **Enforcement:** ESLint fails any import of `svelte`, `astro` or `astro:*`, and any use of DOM globals, under `src/lib/`.
-- **Tour simulation: moved to its own PR.** It is a state machine written against the legacy page's UI state, and its API should be designed together with the new tour UI (ADR 0012). The part-family rule (ADR 0009) and the seeded RNG still apply when it's ported.
+- **Tour simulation: ported in its own PR (2026-11-01).** `src/lib/tour/` holds it:
+  - `tourAction(data, state, action)` is a pure reducer over plain-JSON state, replacing the legacy page's UI-state machine.
+  - Randomness comes from the legacy mulberry32 RNG, seeded per roll, so a seed plus the actions replays a run exactly.
+  - The part-family rule (ADR 0009) is enforced and tested.
 
 ## Consequences
 
