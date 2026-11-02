@@ -142,11 +142,11 @@ test('What changes keeps labels readable next to long values', async ({ page }) 
   expect(overflowing).toEqual([]);
 });
 
-test('every stat pip stays clickable and clear of the level, however narrow the row', async ({ page }) => {
+test('stat pips stay on one line, clickable and clear of the level, however narrow the row', async ({ page }) => {
   await page.goto(`/#${SHARED}`);
   await ready(page);
   const row = page.locator('.stat-row').first();
-  for (const width of [620, 440, 439, 360, 300]) {
+  for (const width of [620, 440, 399, 340, 300, 280]) {
     await row.evaluate((el, w) => { el.style.width = `${String(w)}px`; }, width);
     // Playwright refuses to click a pip that something else (the level) covers
     await row.getByRole('button', { name: 'Level 10' }).click();
@@ -157,7 +157,8 @@ test('every stat pip stays clickable and clear of the level, however narrow the 
       if (!pips || !level) return false;
       const a = pips.getBoundingClientRect();
       const b = level.getBoundingClientRect();
-      return pips.scrollWidth <= Math.ceil(a.width) && (a.right <= b.left || a.top >= b.bottom);
+      const sameLine = Math.abs(a.top + a.height / 2 - (b.top + b.height / 2)) < 6;
+      return pips.scrollWidth <= Math.ceil(a.width) && a.right <= b.left && sameLine;
     });
     expect(clear, `row at ${String(width)}px`).toBe(true);
     await row.getByRole('button', { name: 'Level 3' }).click();
