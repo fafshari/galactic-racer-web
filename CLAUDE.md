@@ -160,6 +160,7 @@ npm run import-data [-- <path to swgr-datamine>]   # re-import game data after t
 - **Imported files:** everything except `labels.json` and `build-order.json` is written only by `npm run import-data`. Don't edit them by hand.
 - **`labels.json`** is hand-written and owned here. Add a label when the import reports a field without one.
 - **`build-order.json`** fixes every id's permanent build-code position (ADR 0010). The import only appends new ids; never reorder or delete entries by hand, or shared links will load the wrong build.
+- **Text placeholders:** the export leaves the game's `{perc}` in some trait descriptions. `src/lib/data/text.ts` fills them when the data loads, from each trait's own rules (its tuneset's percentage, or a refill amount). Favour descriptions and unlock texts still have `{perc}` / `{Target}`: their numbers aren't in the export.
 - **Reading data:** go through `src/lib/data/index.ts`, which exports `planner`, `labels`, `buildOrder`, `manifest`, `iconUrl()` and `isGlyph()`. Never import the JSON files directly elsewhere.
 - **Where the shape is defined:** the schema (`src/lib/data/schema.ts`) is the contract with the datamine, and the types (`types.ts`) are derived from it.
   - The schema uses strict objects, so a new or renamed field fails the import. Update the schema in the same change.

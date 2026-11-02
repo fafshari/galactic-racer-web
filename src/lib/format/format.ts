@@ -166,6 +166,7 @@ export function describeRow(labels: Labels, r: Row): RowView {
 export function conditionLabel(c: Conditional): string {
   if (c.kind === 'ability') return 'Ability bonus (e.g. per overtake)';
   const req = (c.requires ?? []).map((r) => {
+    if (r.type === 'TimeSpendPerformingNested' && c.perSecond) return `Each second ${c.perSecond}`;
     const v = Object.values(r.props).find((x): x is string => typeof x === 'string' && x.includes('.'));
     return human(r.type) + (v ? `: ${v.split('.').pop() ?? v}` : '');
   });

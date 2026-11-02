@@ -16,6 +16,19 @@ export interface Conditional {
   effect?: Effect;
   /** Counted per trigger (a number) rather than on/off. */
   repeatable: boolean;
+  /** Counted in seconds of something (e.g. "airborne"): it stacks once per second spent doing it. */
+  perSecond?: string;
+}
+
+/** What a "time spent doing X" requirement times, e.g. "airborne" from `...TrackedVehicleAirborneRequirementConfig_0`. */
+function timedActivity(requires: readonly Requirement[]): string | undefined {
+  for (const q of requires) {
+    if (q.type !== 'TimeSpendPerformingNested') continue;
+    const nested = q.props.NestedRequirement;
+    const m = typeof nested === 'string' ? /TrackedVehicle(\w+?)RequirementConfig/.exec(nested) : null;
+    return m?.[1]?.toLowerCase() ?? 'performing it';
+  }
+  return undefined;
 }
 
 export interface SourcedOp {
@@ -71,7 +84,8 @@ export function collect(data: PlannerData, build: Build): Collected {
       if (r.tunesets.length) {
         if (always) r.tunesets.forEach((t) => { addTuneset(t, 1, ownerLabel, null); });
         else {
-          conditionals.push({ key, owner: ownerLabel, desc, requires: r.requires, kind: 'rule', repeatable });
+          const timed = r.once ? undefined : timedActivity(r.requires);
+          conditionals.push({ key, owner: ownerLabel, desc, requires: r.requires, kind: 'rule', repeatable, ...(timed ? { perSecond: timed } : {}) });
           r.tunesets.forEach((t) => { addTuneset(t, 1, ownerLabel, key, times(key)); });
         }
       }
