@@ -11,9 +11,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Fixed
 
-- Importing a screenshot reads your abilities again when your racer style has fewer than four traits, and now reads the crash ability too.
-- Importing a screenshot reads the top speed reliably, instead of sometimes dropping a digit.
-- Arcade cards in a row have headers of the same height, so medal times and names line up.
+- Importing a screenshot reads your abilities again when your racer style has fewer than four traits, and now reads the crash ability too. ([#26](https://github.com/fafshari/galactic-racer-web/pull/26))
+- Importing a screenshot reads the top speed reliably, instead of sometimes dropping a digit. ([#26](https://github.com/fafshari/galactic-racer-web/pull/26))
+- Arcade cards in a row have headers of the same height, so medal times and names line up. ([#26](https://github.com/fafshari/galactic-racer-web/pull/26))
 
 ## [1.1.0] - 2026-11-02
 
