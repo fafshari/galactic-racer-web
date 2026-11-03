@@ -63,7 +63,11 @@
   .arcade-card {
     position: relative; // holds its visually hidden labels, so they can't stretch a scrolling row
     display: grid;
-    grid-template-rows: auto 1fr;
+    // in a row of cards (a grid with two rows), header and body share the row's tracks, so every header in the row is
+    // as tall as the tallest; on its own the card falls back to auto rows
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    row-gap: 0;
     overflow: hidden;
     border: 1px solid var(--color-line);
     border-radius: var(--radius-lg);
@@ -73,6 +77,7 @@
   .arcade-card > .head {
     display: grid;
     gap: var(--space-1);
+    align-content: start;
     padding: var(--space-4);
     background: linear-gradient(rgb(0 0 0 / 18%), rgb(0 0 0 / 38%)), var(--card);
     color: var(--color-on-teal);
