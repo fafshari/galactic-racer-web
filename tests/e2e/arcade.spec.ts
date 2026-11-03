@@ -19,6 +19,15 @@ test('shows the events as on the game screen, with medal times and locks', async
   await expect(page.locator('.site-footer')).toContainText(/not affiliated/i);
 });
 
+test('every card header in a row is the same height', async ({ page }) => {
+  await page.goto('/arcade.html');
+  const heights = await page.locator('.cards').evaluateAll((rows) =>
+    rows.map((row) => new Set([...row.querySelectorAll('.arcade-card > .head')].map((h) => Math.round(h.getBoundingClientRect().height))).size),
+  );
+  expect(heights.length).toBeGreaterThan(0);
+  for (const distinct of heights) expect(distinct).toBe(1);
+});
+
 test('opens an event vehicle in the planner with no racer style and its levels', async ({ page }) => {
   await page.goto('/arcade.html');
   await card(page, 'Landspeeder Ace').getByRole('link', { name: 'Open in the planner' }).click();

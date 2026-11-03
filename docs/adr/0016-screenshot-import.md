@@ -8,7 +8,7 @@
 Players want to bring the build they're running in the game into the planner without re-entering every slot. The game's **Build** screen (opened from the race menu) shows the whole build on one screen:
 - **Vehicle stats:** the vehicle name, the top speed in km/h, and a row of ten pips per stat.
 - **Racer style:** the style name and its traits by name.
-- **Abilities:** four slots, plus a crash ability. The import reads the four regular slots. The planner has had a crash-ability slot since 2026-11-02 (ADR 0009), but the import doesn't read it yet.
+- **Abilities:** four slots, plus a crash ability. The import reads all five, the crash slot only matching crash abilities.
 - **Installed parts:** a count ("4/4"), and a card per part with its name, description, icon and a row of rarity dots under the icon.
 
 The site is static (ADR 0003, 0011): there's no server to send an image to, and screenshots must not leave the player's device anyway.
@@ -28,9 +28,12 @@ But every slot on the screen is labelled with a name, and the names in our data 
 - **Layout from the panels, not from fixed coordinates.**
   - The three columns of dark teal panels are found by colour. Every other position is measured from them in reference coordinates (a 2000×1125 capture).
   - So any resolution, aspect ratio, letterboxing or crop works as long as the panels are whole.
+  - The style panel's height follows the style's number of traits. That moves the abilities panel and stretches its slot rows, so the abilities panel is found as its own block, and the slots are laid out from its measured height (added 2026-11-02, after abilities weren't read for a three-trait style).
+  - Captures differ in colour (some are darker and less saturated), so the panel colour test only asks for blue and green clearly above red.
 - **Text lines from the pixels.**
   - Within each generous box, the first line of bright text is located, binarised (Otsu) and scaled to about 26 px before OCR.
   - Tesseract reads this bold display font well at 22–32 px and often returns nothing above about 40 px, so an empty read is retried at another size.
+  - Numbers (top speed, part count) are read at five sizes and the most common reading wins, since one size can drop a digit ("322" read as "22").
 - **Styles** are matched by name plus their traits. Campaign ranks and the Multiplayer version share a name, so the traits decide the rank, and the style decides the mode.
 - **Parts:**
   - The family comes from the name.

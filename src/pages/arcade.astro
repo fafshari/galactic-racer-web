@@ -93,6 +93,7 @@ const tabs = arcadeTabs(planner).map((t) => ({ ...t, cards: t.events.map((e) => 
 
   .arcade-row > .cards {
     display: grid;
+    grid-template-rows: auto 1fr; // each card's header, then its body (ArcadeCard spans both as a subgrid)
     grid-auto-columns: minmax(280px, 320px);
     grid-auto-flow: column;
     gap: var(--space-3);

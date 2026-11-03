@@ -4,7 +4,7 @@
   import { planner } from '~/lib/data/index.ts';
   import type { GameMode } from '~/lib/data/types.ts';
   import { abilityAllowed, partAllowed, type Build } from '~/lib/engine/index.ts';
-  import { assembleBuild, CONFIDENT, ScreenshotError, topSpeedKmh, type Reading, type ScreenshotReading } from '~/lib/import/index.ts';
+  import { assembleBuild, CONFIDENT, CRASH_SLOT, ScreenshotError, topSpeedKmh, type Reading, type ScreenshotReading } from '~/lib/import/index.ts';
   import Button from '../Button/Button.svelte';
   import Tag from '../Tag/Tag.svelte';
 
@@ -96,7 +96,7 @@
       case 'style':
         return 'Racer style';
       case 'ability':
-        return `Ability ${String(r.index + 1)}`;
+        return r.index === CRASH_SLOT ? 'Crash ability' : `Ability ${String(r.index + 1)}`;
       case 'part':
         return `Part ${String(r.index + 1)}`;
       case 'level':
