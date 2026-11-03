@@ -7,6 +7,14 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - **minor** for new features and new game content
 - **patch** for fixes and corrections
 
+## [1.1.1] - 2026-11-02
+
+### Fixed
+
+- Importing a screenshot reads your abilities again when your racer style has fewer than four traits, and now reads the crash ability too.
+- Importing a screenshot reads the top speed reliably, instead of sometimes dropping a digit.
+- Arcade cards in a row have headers of the same height, so medal times and names line up.
+
 ## [1.1.0] - 2026-11-02
 
 ### Added
@@ -63,6 +71,7 @@ First versioned release: the site rebuilt on Astro and Svelte and moved to Verce
 - Game data and icons datamined from the game files, with the fan-made, not-affiliated notice on every page.
 - Open source under the MIT license.
 
+[1.1.1]: https://github.com/fafshari/galactic-racer-web/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/fafshari/galactic-racer-web/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/fafshari/galactic-racer-web/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/fafshari/galactic-racer-web/releases/tag/v1.0.0
