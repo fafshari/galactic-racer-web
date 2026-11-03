@@ -11,8 +11,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Added
 
-- An **Arcade** page: every Arcade event's pre-made vehicle, row by row as in the game, with planet, track, gold, silver and bronze times, what unlocks it, and the vehicle's levels, speeds, parts and abilities. Each one opens in the planner.
-- "No racer style" in the planner's style picker, for copying Arcade vehicles, which have none. Clearing the style drops its starting abilities and keeps your levels, parts and other abilities. Builds without a style save, share as links and go in favourites like any other.
+- An **Arcade** page: every Arcade event's pre-made vehicle, row by row as in the game, with planet, track, gold, silver and bronze times, what unlocks it, and the vehicle's levels, speeds, parts and abilities. Each one opens in the planner. ([#25](https://github.com/fafshari/galactic-racer-web/pull/25))
+- "No racer style" in the planner's style picker, for copying Arcade vehicles, which have none. Clearing the style drops its starting abilities and keeps your levels, parts and other abilities. Builds without a style save, share as links and go in favourites like any other. ([#25](https://github.com/fafshari/galactic-racer-web/pull/25))
 
 ## [1.0.1] - 2026-11-02
 
