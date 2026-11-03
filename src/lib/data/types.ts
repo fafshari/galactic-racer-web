@@ -24,6 +24,7 @@ export type PartId = z.output<typeof S.PartId>;
 export type FavourId = z.output<typeof S.FavourId>;
 export type TunesetId = z.output<typeof S.TunesetId>;
 export type IconName = z.output<typeof S.IconName>;
+export type ArcadeEventId = z.output<typeof S.ArcadeEventId>;
 
 export type GameMode = z.output<typeof S.GameMode>;
 export type PartRarity = z.output<typeof S.PartRarity>;
@@ -47,6 +48,8 @@ export type Ability = Data<typeof S.Ability>;
 export type Part = Data<typeof S.Part>;
 export type Favour = Data<typeof S.Favour>;
 export type Tour = Data<typeof S.Tour>;
+export type ArcadeEvent = Data<typeof S.ArcadeEvent>;
+export type ArcadeEventType = z.output<typeof S.ArcadeEventType>;
 
 export type PlannerData = Data<typeof S.PlannerData>;
 export type IconIndex = Data<typeof S.IconIndex>;

@@ -37,10 +37,17 @@ describe('favourites', () => {
     if (!f) throw new Error('not saved');
     const s = summarize(planner, f);
     expect(s.vehicle.name).toBe('Speeder Bike');
-    expect(s.style.name).toBe('Clean Racer');
+    expect(s.style?.name).toBe('Clean Racer');
     // Clean Racer's In the Zone (on/off) raises top speed, so the best boost beats the plain build's 597 km/h
     expect(s.boost.kind).toBe('ramjet');
     expect(s.boost.kmh).toBeGreaterThan(597);
+  });
+
+  it('save and summarise a build with no racer style', () => {
+    const [f] = addFavorite(planner, [], { ...shared, style: null }, '', 1, 'a');
+    if (!f) throw new Error('not saved');
+    expect(f.name).toBe('No racer style · Speeder Bike');
+    expect(summarize(planner, f).style).toBeNull();
   });
 
   it('trigger every on/off situational effect for the speed, but leave counted ones at zero', () => {

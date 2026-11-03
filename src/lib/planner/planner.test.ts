@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { labels, planner } from '../data/index.ts';
-import type { AbilityId, FavourId, Part, PartId, StyleId, VehicleId } from '../data/types.ts';
-import { decodeBuild, encodeBuild, evaluate, freshBuild } from '../engine/index.ts';
+import type { AbilityId, FavourId, Part, PartId, VehicleId } from '../data/types.ts';
+import { decodeBuild, encodeBuild, evaluate, fitAbilities, freshBuild, isCrashAbility } from '../engine/index.ts';
 import { describeRow } from '../format/format.ts';
 import * as A from './actions.ts';
 import { abilityCooldowns, changeGroups, cooldownText, situationalWhen, slotImproves } from './readout.ts';
@@ -86,6 +86,28 @@ describe('mode and style', () => {
     expect(A.ranksOf(planner, b).map((s) => s.rank)).toEqual([...A.ranksOf(planner, b).map((s) => s.rank)].sort());
   });
 
+  it('clearing the style drops its starting abilities and keeps everything else', () => {
+    const style = planner.styles.find((s) => s.mode === 'mp' && s.abilities.length > 0);
+    const extra = planner.abilities.find((a) => a.mp.length > 0 && !style?.abilities.includes(a.id) && !isCrashAbility(a));
+    const part = planner.affixes.find((p) => p.mp.length > 0 && p.rarity !== 'Faulty');
+    if (!style || !extra || !part) throw new Error('fixtures missing');
+    const before = { ...A.setStyle(planner, freshBuild('mp'), style.id), parts: [part.id], levels: { ...freshBuild('mp').levels, Boost: 7 } };
+    const withExtra = A.placeAbility(planner, before, extra.id, 3);
+    const b = A.setStyle(planner, withExtra, null);
+    expect(b.style).toBeNull();
+    expect(b.abilities).toEqual([extra.id]);
+    expect([b.parts, b.levels, b.vehicle]).toEqual([withExtra.parts, withExtra.levels, withExtra.vehicle]);
+    expect(A.ranksOf(planner, b)).toEqual([]);
+    // picking a style again brings its starting abilities back alongside the kept one
+    expect(A.setStyle(planner, b, style.id).abilities).toEqual(fitAbilities(planner, [...style.abilities, extra.id]));
+  });
+
+  it('a build with no racer style keeps having none across mode switches', () => {
+    const b = A.setMode(planner, { ...freshBuild('mp'), style: null, abilities: [] }, 'campaign');
+    expect([b.mode, b.style, b.abilities]).toEqual(['campaign', null, []]);
+    expect(A.setMode(planner, b, 'mp').style).toBeNull();
+  });
+
   it('a favour replaces another rank of the same favour, and only in Campaign', () => {
     const group = planner.favours.find((f) => planner.favours.filter((g) => g.group === f.group).length > 1)?.group;
     const [r1, r2] = planner.favours.filter((f) => f.group === group);
@@ -108,7 +130,7 @@ describe('mode and style', () => {
 
 describe('readout', () => {
   it('always lists the Afterburner and Ramjet top-speed bonuses, grouped and sorted', () => {
-    const b = { ...freshBuild('mp'), abilities: [] as AbilityId[], style: 'none' as StyleId };
+    const b = { ...freshBuild('mp'), abilities: [] as AbilityId[], style: null };
     const groups = changeGroups(planner, labels, b.vehicle, evaluate(planner, b));
     const pinned = groups.flatMap((g) => g.rows).filter((r) => r.pinned).map((r) => r.key);
     expect(pinned).toEqual(['VehicleAfterburnerConfig.TopSpeedIncreaseMph', 'VehicleRamjetConfig.TopSpeedIncreaseMph']);
@@ -130,7 +152,7 @@ describe('readout', () => {
     const worse: string[] = [];
     for (const v of planner.vehicles) {
       for (const s of planner.slots) {
-        const b = { ...freshBuild('mp'), vehicle: v.id, abilities: [] as AbilityId[], style: 'none' as StyleId };
+        const b = { ...freshBuild('mp'), vehicle: v.id, abilities: [] as AbilityId[], style: null };
         const rows = evaluate(planner, { ...b, levels: { ...b.levels, [s.id]: 10 } }).rows.filter((r) => r.sources.some((x) => x.source.startsWith(s.name)));
         for (const r of rows) {
           const d = describeRow(labels, r).display;
@@ -157,6 +179,12 @@ describe('restoreBuild', () => {
     expect(Object.entries(b?.levels ?? {})).toContainEqual(['Cornering', 10]);
   });
 
+  it('restores a build with no racer style', () => {
+    const b = restoreBuild(planner, JSON.parse(JSON.stringify({ ...freshBuild('campaign'), style: null, abilities: [] })));
+    expect([b?.mode, b?.style, b?.abilities]).toEqual(['campaign', null, []]);
+    expect(restoreBuild(planner, { vehicle: 'Bike', style: null })?.mode).toBe('mp');
+  });
+
   it('ignores anything unusable', () => {
     for (const bad of [null, 'x', 42, {}, { vehicle: 'Bike', style: 'nope' }]) expect(restoreBuild(planner, bad)).toBeNull();
   });
@@ -181,7 +209,7 @@ describe('situational effect "when" lines', () => {
   });
 
   it('leave an effect its own description explains alone', () => {
-    const b = { ...freshBuild('mp'), style: 'none' as StyleId, abilities: [] };
+    const b = { ...freshBuild('mp'), style: null, abilities: [] };
     const r = evaluate(planner, { ...b, parts: [planner.affixes.find((p) => p.name === 'Calibrating Landings I')?.id ?? ('' as PartId)] });
     expect(situationalWhen(r).size).toBe(0);
   });
@@ -236,7 +264,7 @@ describe('ability cooldowns', () => {
   const surge = planner.abilities.find((a) => a.name === 'Surge');
   const blast = planner.abilities.find((a) => a.name === 'Ion Blast');
   if (!surge || !blast) throw new Error('no Surge or Ion Blast');
-  const base = { ...freshBuild('mp'), style: 'none' as StyleId, abilities: [surge.id, blast.id] };
+  const base = { ...freshBuild('mp'), style: null, abilities: [surge.id, blast.id] };
   const text = (b: typeof base): string[] => {
     const c = abilityCooldowns(planner, b.abilities, evaluate(planner, b));
     return b.abilities.map((id) => {

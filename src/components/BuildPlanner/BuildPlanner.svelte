@@ -298,11 +298,10 @@
 
         <div class="stack -side">
           <Panel title="Racer style" collapseKey="planner.style">
-            {#if style}
-              <StylePanel name={style.name} icon={style.icon} rank={style.rank} {traits} onchange={() => (picker = { kind: 'style' })} />
-            {/if}
-            {#if ranks.length > 1}
-              <ModeSwitch label="Style rank" options={ranks.map((r) => ({ value: r.id, label: `Rank ${String(r.rank)}` }))} value={build.style} onchange={(id: StyleId) => { update(A.setRank(build, id)); }} />
+            <!-- one panel either way, so focus can return to its Change button after a pick -->
+            <StylePanel name={style?.name ?? 'No racer style'} icon={style?.icon ?? null} rank={style?.rank ?? null} {traits} onchange={() => (picker = { kind: 'style' })} />
+            {#if style && ranks.length > 1}
+              <ModeSwitch label="Style rank" options={ranks.map((r) => ({ value: r.id, label: `Rank ${String(r.rank)}` }))} value={style.id} onchange={(id: StyleId) => { update(A.setRank(build, id)); }} />
             {/if}
           </Panel>
 
@@ -377,6 +376,7 @@
             onclick={() => { pick(A.setStyle(planner, build, s.id)); }}
           />
         {/each}
+        <ChoiceCard icon={null} title="No racer style" subtitle="No traits or starting abilities, like some Arcade vehicles" pressed={build.style === null} onclick={() => { pick(A.setStyle(planner, build, null)); }} />
       </div>
     {:else if picker?.kind === 'ability'}
       {@const slot = picker.slot}

@@ -35627,5 +35627,1860 @@
         "skippable": true
       }
     }
-  }
+  },
+  "arcade": [
+    {
+      "id": "EVT_ARC_TT_CAR_MAS_A_SHORT_02",
+      "name": "Landspeeder Ace",
+      "desc": "Set a record time.",
+      "category": "FieldTest",
+      "type": "TimeTrial",
+      "vehicle": "Car",
+      "planet": "Jakku",
+      "track": "Fallen Empire",
+      "laps": 4,
+      "colour": "C8763F",
+      "lock": null,
+      "lockedBy": null,
+      "medals": [
+        79,
+        88,
+        164
+      ],
+      "levels": {
+        "Cornering": 2,
+        "Acceleration": 1,
+        "Resilience": 5,
+        "Boost": 2,
+        "AbilityUsage": 0,
+        "Advanced": 2
+      },
+      "parts": [
+        "AFX_Ramjet_CoolsFaster_v4"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_BIKE_DAL_A_SHORT_01",
+      "name": "Speeder Bike Ace",
+      "desc": "Set a record time.",
+      "category": "FieldTest",
+      "type": "TimeTrial",
+      "vehicle": "Bike",
+      "planet": "Lantaana",
+      "track": "The Pyroducts",
+      "laps": 4,
+      "colour": "71A373",
+      "lock": "Earn Bronze on Landspeeder Ace.",
+      "lockedBy": "EVT_ARC_TT_CAR_MAS_A_SHORT_02",
+      "medals": [
+        82,
+        91,
+        110
+      ],
+      "levels": {
+        "Cornering": 1,
+        "Acceleration": 3,
+        "Resilience": 7,
+        "Boost": 3,
+        "AbilityUsage": 0,
+        "Advanced": 6
+      },
+      "parts": [],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_BIKE_COR_P2P_REV",
+      "name": "Speeder Bike Champion",
+      "desc": "Set a record time.",
+      "category": "FieldTest",
+      "type": "TimeTrial",
+      "vehicle": "Bike",
+      "planet": "Ando Prime",
+      "track": "Dai Bendu Ascension",
+      "laps": 1,
+      "colour": "101E34",
+      "lock": "Earn Bronze on Speeder Bike Ace.",
+      "lockedBy": "EVT_ARC_TT_BIKE_DAL_A_SHORT_01",
+      "medals": [
+        109,
+        114,
+        140
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 4,
+        "Resilience": 10,
+        "Boost": 10,
+        "AbilityUsage": 4,
+        "Advanced": 6
+      },
+      "parts": [
+        "AFX_Cooled_PowerfulRamjet_v3"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_SKIMMER_COR_P2P_SHORT_05",
+      "name": "Skim Speeder Pilot",
+      "desc": "Set a record time.",
+      "category": "FieldTest",
+      "type": "TimeTrial",
+      "vehicle": "Skimmer",
+      "planet": "Ando Prime",
+      "track": "Andobi Edge",
+      "laps": null,
+      "colour": "101E34",
+      "lock": "Earn Bronze on Speeder Bike Champion.",
+      "lockedBy": "EVT_ARC_TT_BIKE_COR_P2P_REV",
+      "medals": [
+        73,
+        79,
+        90
+      ],
+      "levels": {
+        "Cornering": 3,
+        "Acceleration": 6,
+        "Resilience": 4,
+        "Boost": 8,
+        "AbilityUsage": 4,
+        "Advanced": 7
+      },
+      "parts": [],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_SKIMMER_HSK_B_REV",
+      "name": "Skim Speeder Ace",
+      "desc": "Set a record time.",
+      "category": "FieldTest",
+      "type": "TimeTrial",
+      "vehicle": "Skimmer",
+      "planet": "Sentinel I",
+      "track": "Caustic Fields",
+      "laps": 2,
+      "colour": "D1C371",
+      "lock": "Earn Bronze on Skim Speeder Pilot.",
+      "lockedBy": "EVT_ARC_TT_SKIMMER_COR_P2P_SHORT_05",
+      "medals": [
+        94,
+        101,
+        113
+      ],
+      "levels": {
+        "Cornering": 9,
+        "Acceleration": 10,
+        "Resilience": 6,
+        "Boost": 5,
+        "AbilityUsage": 0,
+        "Advanced": 8
+      },
+      "parts": [
+        "AFX_Afterburner_IncreasedTopSpeed_v4",
+        "AFX_Afterburner_MoreDuration_v3"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_SKIMMER_SPA_B_P2P",
+      "name": "Skim Speeder Champion",
+      "desc": "Set a record time.",
+      "category": "FieldTest",
+      "type": "TimeTrial",
+      "vehicle": "Skimmer",
+      "planet": "Crait",
+      "track": "Rhodochrosite Run",
+      "laps": 1,
+      "colour": "CE454C",
+      "lock": "Earn Bronze on Skim Speeder Ace.",
+      "lockedBy": "EVT_ARC_TT_SKIMMER_HSK_B_REV",
+      "medals": [
+        72,
+        77,
+        105
+      ],
+      "levels": {
+        "Cornering": 9,
+        "Acceleration": 6,
+        "Resilience": 10,
+        "Boost": 8,
+        "AbilityUsage": 0,
+        "Advanced": 9
+      },
+      "parts": [
+        "AFX_Afterburner_IncreasedTopSpeed_v2",
+        "AFX_Ramjet_MorePower_v4",
+        "AFX_Ramjet_HeatReduction_v3"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TMR_PLANE_BGL_PLANE_FWD",
+      "name": "King of the Racers",
+      "desc": "Set a record time as Sebulba.",
+      "category": "Plane",
+      "type": "TeamRace",
+      "vehicle": "Plane",
+      "planet": "Tatooine",
+      "track": "Mos Espa Speedway",
+      "laps": null,
+      "colour": "C8763F",
+      "lock": null,
+      "lockedBy": null,
+      "medals": [
+        151,
+        189,
+        210
+      ],
+      "levels": {
+        "Cornering": 0,
+        "Acceleration": 2,
+        "Resilience": 1,
+        "Boost": 0,
+        "AbilityUsage": 2,
+        "Advanced": 0
+      },
+      "parts": [],
+      "abilities": [
+        "BP_Ability_Vent_Flame"
+      ],
+      "ramjet": false,
+      "authoredStats": true
+    },
+    {
+      "id": "EVT_ARC_TMR_PLANE_DAL_PLANE_FWD",
+      "name": "Six-Limbed Fury",
+      "desc": "Set a record time as Gasgano.",
+      "category": "Plane",
+      "type": "TeamRace",
+      "vehicle": "Plane",
+      "planet": "Lantaana",
+      "track": "Holdfast's Folly",
+      "laps": null,
+      "colour": "71A373",
+      "lock": "Earn Bronze on King of the Racers.",
+      "lockedBy": "EVT_ARC_TMR_PLANE_BGL_PLANE_FWD",
+      "medals": [
+        145,
+        178,
+        210
+      ],
+      "levels": {
+        "Cornering": 0,
+        "Acceleration": 2,
+        "Resilience": 1,
+        "Boost": 0,
+        "AbilityUsage": 0,
+        "Advanced": 0
+      },
+      "parts": [],
+      "abilities": [],
+      "ramjet": false,
+      "authoredStats": true
+    },
+    {
+      "id": "EVT_ARC_TMR_PLANE_COR_PLANE_FWD",
+      "name": "Veknoid's Charm",
+      "desc": "Set a record time as Teemto Pagalies.",
+      "category": "Plane",
+      "type": "TeamRace",
+      "vehicle": "Plane",
+      "planet": "Ando Prime",
+      "track": "Mawhonic Speedway",
+      "laps": null,
+      "colour": "101E34",
+      "lock": "Earn Bronze on Six-Limbed Fury.",
+      "lockedBy": "EVT_ARC_TMR_PLANE_DAL_PLANE_FWD",
+      "medals": [
+        142,
+        160,
+        190
+      ],
+      "levels": {
+        "Cornering": 0,
+        "Acceleration": 2,
+        "Resilience": 1,
+        "Boost": 0,
+        "AbilityUsage": 0,
+        "Advanced": 0
+      },
+      "parts": [],
+      "abilities": [],
+      "ramjet": false,
+      "authoredStats": true
+    },
+    {
+      "id": "EVT_ARC_TMR_PLANE_DAL_Plane_REV",
+      "name": "Assassin's Ploy",
+      "desc": "Set a record time as Dud Bolt.",
+      "category": "Plane",
+      "type": "TeamRace",
+      "vehicle": "Plane",
+      "planet": "Lantaana",
+      "track": "Holdfast's Folly",
+      "laps": 2,
+      "colour": "71A373",
+      "lock": "Earn Bronze on Veknoid's Charm.",
+      "lockedBy": "EVT_ARC_TMR_PLANE_COR_PLANE_FWD",
+      "medals": [
+        106,
+        123,
+        132
+      ],
+      "levels": {
+        "Cornering": 0,
+        "Acceleration": 2,
+        "Resilience": 1,
+        "Boost": 0,
+        "AbilityUsage": 0,
+        "Advanced": 0
+      },
+      "parts": [],
+      "abilities": [],
+      "ramjet": false,
+      "authoredStats": true
+    },
+    {
+      "id": "EVT_ARC_TMR_PLANE_COR_Plane_REV",
+      "name": "Er'kit Ambition",
+      "desc": "Set a record time as Ody Mandrell.",
+      "category": "Plane",
+      "type": "TeamRace",
+      "vehicle": "Plane",
+      "planet": "Ando Prime",
+      "track": "Mawhonic Speedway",
+      "laps": 2,
+      "colour": "101E34",
+      "lock": "Earn Bronze on Assassin's Ploy.",
+      "lockedBy": "EVT_ARC_TMR_PLANE_DAL_Plane_REV",
+      "medals": [
+        102,
+        124,
+        145
+      ],
+      "levels": {
+        "Cornering": 0,
+        "Acceleration": 2,
+        "Resilience": 1,
+        "Boost": 0,
+        "AbilityUsage": 0,
+        "Advanced": 0
+      },
+      "parts": [],
+      "abilities": [],
+      "ramjet": false,
+      "authoredStats": true
+    },
+    {
+      "id": "EVT_ARC_TMR_PLANE_SPA_PLANE_FWD",
+      "name": "Hope of the Toong",
+      "desc": "Set a record time as Ben Quadinaros.",
+      "category": "Plane",
+      "type": "TeamRace",
+      "vehicle": "Plane",
+      "planet": "Crait",
+      "track": "Quadinaros' Revenge",
+      "laps": 2,
+      "colour": "CE454C",
+      "lock": "Earn Bronze on Er'kit Ambition.",
+      "lockedBy": "EVT_ARC_TMR_PLANE_COR_Plane_REV",
+      "medals": [
+        148,
+        182,
+        220
+      ],
+      "levels": {
+        "Cornering": 0,
+        "Acceleration": 2,
+        "Resilience": 1,
+        "Boost": 0,
+        "AbilityUsage": 0,
+        "Advanced": 0
+      },
+      "parts": [],
+      "abilities": [],
+      "ramjet": false,
+      "authoredStats": true
+    },
+    {
+      "id": "EVT_ARC_TT_PLANE_MAS_B_PLANE",
+      "name": "Scrapper's Run",
+      "desc": "Set a record time.",
+      "category": "Plane",
+      "type": "TimeTrial",
+      "vehicle": "Plane",
+      "planet": "Jakku",
+      "track": "Sebulba's Challenge",
+      "laps": null,
+      "colour": "C8763F",
+      "lock": "Progress further in the Campaign.",
+      "lockedBy": null,
+      "medals": [
+        114,
+        127,
+        160
+      ],
+      "levels": {
+        "Cornering": 3,
+        "Acceleration": 1,
+        "Resilience": 3,
+        "Boost": 2,
+        "AbilityUsage": 1,
+        "Advanced": 1
+      },
+      "parts": [
+        "AFX_Cooled_GainWhileAirborne",
+        "AFX_Conditions_CooledLastsLonger_v3",
+        "AFX_Ramjet_HeatReduction_v2",
+        "AFX_Conditions_Cooled_IncreasedPotency_v2"
+      ],
+      "abilities": [
+        "BP_Ability_Vent"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_PLANE_BGL_PLANE_FWD",
+      "name": "Twin Sun Flight",
+      "desc": "Set a record time.",
+      "category": "Plane",
+      "type": "TimeTrial",
+      "vehicle": "Plane",
+      "planet": "Tatooine",
+      "track": "Mos Espa Speedway",
+      "laps": 2,
+      "colour": "C8763F",
+      "lock": "Earn Bronze on Scrapper's Run.",
+      "lockedBy": "EVT_ARC_TT_PLANE_MAS_B_PLANE",
+      "medals": [
+        92,
+        98,
+        152
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 7,
+        "Resilience": 4,
+        "Boost": 9,
+        "AbilityUsage": 4,
+        "Advanced": 6
+      },
+      "parts": [
+        "AFX_Landing_PerfectBoost_v2",
+        "AFX_Cooled_GainOnLanding_v3",
+        "AFX_Afterburner_OverheatingStacksFuel",
+        "AFX_Afterburner_OverheatingIncreasesPowerOnce_v3"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_PLANE_DAL_PLANE_REV",
+      "name": "Volcanic Velocity",
+      "desc": "Set a record time.",
+      "category": "Plane",
+      "type": "TimeTrial",
+      "vehicle": "Plane",
+      "planet": "Lantaana",
+      "track": "Holdfast's Folly",
+      "laps": 2,
+      "colour": "71A373",
+      "lock": "Earn Bronze on Twin Sun Flight.",
+      "lockedBy": "EVT_ARC_TT_PLANE_BGL_PLANE_FWD",
+      "medals": [
+        121,
+        134,
+        153
+      ],
+      "levels": {
+        "Cornering": 4,
+        "Acceleration": 1,
+        "Resilience": 4,
+        "Boost": 5,
+        "AbilityUsage": 2,
+        "Advanced": 1
+      },
+      "parts": [
+        "AFX_Ramjet_OverheatingReleaseResetsHeat",
+        "AFX_Cooled_PowerfulRamjet_v3",
+        "AFX_Conditions_Cooled_IncreasedPotency_v2"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_PLANE_COR_PLANE_REV",
+      "name": "Avalanche Engines",
+      "desc": "Set a record time.",
+      "category": "Plane",
+      "type": "TimeTrial",
+      "vehicle": "Plane",
+      "planet": "Ando Prime",
+      "track": "Mawhonic Speedway",
+      "laps": 2,
+      "colour": "101E34",
+      "lock": "Progress further in the Campaign.",
+      "lockedBy": null,
+      "medals": [
+        115,
+        124,
+        170
+      ],
+      "levels": {
+        "Cornering": 6,
+        "Acceleration": 8,
+        "Resilience": 3,
+        "Boost": 2,
+        "AbilityUsage": 4,
+        "Advanced": 5
+      },
+      "parts": [
+        "AFX_Afterburner_FullFuelIncreasesPower_v3",
+        "AFX_Afterburner_MoreDuration_v2"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_PLANE_SPA_PLANE_FWD",
+      "name": "The Red and the White",
+      "desc": "Set a record time.",
+      "category": "Plane",
+      "type": "TimeTrial",
+      "vehicle": "Plane",
+      "planet": "Crait",
+      "track": "Quadinaros' Revenge",
+      "laps": 2,
+      "colour": "CE454C",
+      "lock": "Earn Bronze on Avalanche Engines.",
+      "lockedBy": "EVT_ARC_TT_PLANE_COR_PLANE_REV",
+      "medals": [
+        149,
+        162,
+        191
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 9,
+        "Resilience": 6,
+        "Boost": 9,
+        "AbilityUsage": 0,
+        "Advanced": 7
+      },
+      "parts": [
+        "AFX_Afterburner_MoreDuration_v1",
+        "AFX_Afterburner_RamjetCharge",
+        "AFX_Ramjet_HeatReduction_v1",
+        "AFX_Ramjet_CoolsFaster_v1"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_PLANE_WHP_PLANE_FWD",
+      "name": "Stadium Spectacular",
+      "desc": "Set a record time.",
+      "category": "Plane",
+      "type": "TimeTrial",
+      "vehicle": "Plane",
+      "planet": "Derven Acos",
+      "track": "The Galactic League Championship",
+      "laps": 1,
+      "colour": "584D4D",
+      "lock": "Earn Bronze on The Red and the White.",
+      "lockedBy": "EVT_ARC_TT_PLANE_SPA_PLANE_FWD",
+      "medals": [
+        134,
+        142,
+        181
+      ],
+      "levels": {
+        "Cornering": 7,
+        "Acceleration": 9,
+        "Resilience": 6,
+        "Boost": 10,
+        "AbilityUsage": 2,
+        "Advanced": 9
+      },
+      "parts": [
+        "AFX_Ramjet_HeatReduction_v3",
+        "AFX_Surge_SurgeToCooled",
+        "AFX_Ability_FasterCooldown_v2"
+      ],
+      "abilities": [
+        "BP_Ability_Surge"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_CAR_HSK_SPECIAL_SHORT_02",
+      "name": "Acid Ringer",
+      "desc": "Avoid acid to maintain Ramjet.",
+      "category": "Quick",
+      "type": "TimeTrial",
+      "vehicle": "Car",
+      "planet": "Sentinel I",
+      "track": "The Acid Ring",
+      "laps": 5,
+      "colour": "D1C371",
+      "lock": null,
+      "lockedBy": null,
+      "medals": [
+        60,
+        63,
+        75
+      ],
+      "levels": {
+        "Cornering": 10,
+        "Acceleration": 4,
+        "Resilience": 0,
+        "Boost": 10,
+        "AbilityUsage": 0,
+        "Advanced": 0
+      },
+      "parts": [
+        "AFX_Ramjet_CoolsFaster_v4",
+        "AFX_Ramjet_HeatReduction_v4"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_SKIMMER_COR_A_SHORT_02",
+      "name": "Pipeline Express",
+      "desc": "Manage Frozen to benefit from Cooled.",
+      "category": "Quick",
+      "type": "TimeTrial",
+      "vehicle": "Skimmer",
+      "planet": "Ando Prime",
+      "track": "Vonium Pipeline",
+      "laps": null,
+      "colour": "101E34",
+      "lock": "Earn Bronze on Acid Ringer.",
+      "lockedBy": "EVT_ARC_TT_CAR_HSK_SPECIAL_SHORT_02",
+      "medals": [
+        62,
+        75,
+        156
+      ],
+      "levels": {
+        "Cornering": 10,
+        "Acceleration": 7,
+        "Resilience": 0,
+        "Boost": 8,
+        "AbilityUsage": 0,
+        "Advanced": 10
+      },
+      "parts": [
+        "AFX_Conditions_CooledLastsLonger_v2",
+        "AFX_Conditions_Cooled_IncreasedPotency_v1"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_BIKE_DAL_P2P_SHORT_05",
+      "name": "Little Ahlren",
+      "desc": "Utilize water to maintain Cooled.",
+      "category": "Quick",
+      "type": "TimeTrial",
+      "vehicle": "Bike",
+      "planet": "Lantaana",
+      "track": "Ahlren Jungle Speedway",
+      "laps": null,
+      "colour": "71A373",
+      "lock": "Earn Bronze on Pipeline Express.",
+      "lockedBy": "EVT_ARC_TT_SKIMMER_COR_A_SHORT_02",
+      "medals": [
+        63,
+        66,
+        80
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 0,
+        "Resilience": 8,
+        "Boost": 4,
+        "AbilityUsage": 0,
+        "Advanced": 8
+      },
+      "parts": [
+        "AFX_Conditions_CooledLastsLonger_v2",
+        "AFX_Conditions_Cooled_IncreasedPotency_v2"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_BIKE_SPA_A_SHORT_01",
+      "name": "Salty Sprint",
+      "desc": "Efficiently alternate between Afterburner and Ramjet.",
+      "category": "Quick",
+      "type": "TimeTrial",
+      "vehicle": "Bike",
+      "planet": "Crait",
+      "track": "Salt Circle",
+      "laps": 6,
+      "colour": "CE454C",
+      "lock": "Earn Bronze on Little Ahlren.",
+      "lockedBy": "EVT_ARC_TT_BIKE_DAL_P2P_SHORT_05",
+      "medals": [
+        66,
+        69,
+        76
+      ],
+      "levels": {
+        "Cornering": 10,
+        "Acceleration": 7,
+        "Resilience": 10,
+        "Boost": 9,
+        "AbilityUsage": 2,
+        "Advanced": 10
+      },
+      "parts": [
+        "AFX_Afterburner_FullFuelIncreasesPower_v4",
+        "AFX_Afterburner_OverheatingIncreasesPowerOnce_v3",
+        "AFX_Afterburner_RamjetCharge",
+        "AFX_Ramjet_CoolsFaster_v1",
+        "AFX_Ramjet_ImprovedCooldown_v3"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_PRE_BIKE_MAS_A_FWD",
+      "name": "Scrap Cycler",
+      "desc": "Fly through gates to save time.",
+      "category": "Precision",
+      "type": "Precision",
+      "vehicle": "Bike",
+      "planet": "Jakku",
+      "track": "The War Fields",
+      "laps": 2,
+      "colour": "C8763F",
+      "lock": null,
+      "lockedBy": null,
+      "medals": [
+        67,
+        76,
+        137
+      ],
+      "levels": {
+        "Cornering": 2,
+        "Acceleration": 2,
+        "Resilience": 1,
+        "Boost": 2,
+        "AbilityUsage": 0,
+        "Advanced": 2
+      },
+      "parts": [],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_PRE_BIKE_DAL_B_FWD",
+      "name": "Jungle Flow",
+      "desc": "Fly through gates to save time.",
+      "category": "Precision",
+      "type": "Precision",
+      "vehicle": "Bike",
+      "planet": "Lantaana",
+      "track": "Moro Kehn Tunnels",
+      "laps": 2,
+      "colour": "71A373",
+      "lock": "Earn Bronze on Scrap Cycler.",
+      "lockedBy": "EVT_ARC_PRE_BIKE_MAS_A_FWD",
+      "medals": [
+        76,
+        86,
+        169
+      ],
+      "levels": {
+        "Cornering": 4,
+        "Acceleration": 4,
+        "Resilience": 1,
+        "Boost": 3,
+        "AbilityUsage": 0,
+        "Advanced": 3
+      },
+      "parts": [],
+      "abilities": [
+        "BP_Ability_Vent"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_PRE_SKIMMER_MAS_A_REV",
+      "name": "Iron Weaver",
+      "desc": "Fly through gates to save time.",
+      "category": "Precision",
+      "type": "Precision",
+      "vehicle": "Skimmer",
+      "planet": "Jakku",
+      "track": "The War Fields",
+      "laps": null,
+      "colour": "C8763F",
+      "lock": "Earn Bronze on Jungle Flow.",
+      "lockedBy": "EVT_ARC_PRE_BIKE_DAL_B_FWD",
+      "medals": [
+        102,
+        113,
+        136
+      ],
+      "levels": {
+        "Cornering": 3,
+        "Acceleration": 3,
+        "Resilience": 1,
+        "Boost": 2,
+        "AbilityUsage": 0,
+        "Advanced": 3
+      },
+      "parts": [
+        "AFX_Ramjet_OverheatIncreasesPowerUntilCrash_v2",
+        "AFX_Ramjet_ImprovedCooldown_v2"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_PRE_BIKE_COR_A_FWD",
+      "name": "Ice Needle",
+      "desc": "Fly through gates to save time.",
+      "category": "Precision",
+      "type": "Precision",
+      "vehicle": "Bike",
+      "planet": "Ando Prime",
+      "track": "Ice Field Circuit",
+      "laps": 2,
+      "colour": "101E34",
+      "lock": "Earn Bronze on Iron Weaver.",
+      "lockedBy": "EVT_ARC_PRE_SKIMMER_MAS_A_REV",
+      "medals": [
+        88,
+        104,
+        146
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 6,
+        "Resilience": 3,
+        "Boost": 8,
+        "AbilityUsage": 0,
+        "Advanced": 5
+      },
+      "parts": [
+        "AFX_Ability_FasterCooldown_v2",
+        "AFX_Ramjet_ResetHeatOnLanding_v2"
+      ],
+      "abilities": [
+        "BP_Ability_Repair"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_PRE_CAR_DAL_A_FWD",
+      "name": "Magma Bend",
+      "desc": "Fly through gates to save time.",
+      "category": "Precision",
+      "type": "Precision",
+      "vehicle": "Car",
+      "planet": "Lantaana",
+      "track": "Griffin's Flight",
+      "laps": 2,
+      "colour": "71A373",
+      "lock": "Earn Bronze on Ice Needle.",
+      "lockedBy": "EVT_ARC_PRE_BIKE_COR_A_FWD",
+      "medals": [
+        107,
+        124,
+        160
+      ],
+      "levels": {
+        "Cornering": 7,
+        "Acceleration": 5,
+        "Resilience": 1,
+        "Boost": 0,
+        "AbilityUsage": 0,
+        "Advanced": 0
+      },
+      "parts": [],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_PRE_SKIMMER_HSK_A_FWD",
+      "name": "Wasteland Looper",
+      "desc": "Fly through gates to save time.",
+      "category": "Precision",
+      "type": "Precision",
+      "vehicle": "Skimmer",
+      "planet": "Sentinel I",
+      "track": "Sentinel Lakes",
+      "laps": 2,
+      "colour": "D1C371",
+      "lock": "Earn Bronze on Magma Bend.",
+      "lockedBy": "EVT_ARC_PRE_CAR_DAL_A_FWD",
+      "medals": [
+        64,
+        73,
+        95
+      ],
+      "levels": {
+        "Cornering": 6,
+        "Acceleration": 6,
+        "Resilience": 2,
+        "Boost": 3,
+        "AbilityUsage": 0,
+        "Advanced": 4
+      },
+      "parts": [
+        "AFX_SysMalf_PowerfulAfterburner",
+        "AFX_Afterburner_MoreDuration_v2",
+        "AFX_Afterburner_FasterRecharge_v2",
+        "AFX_Afterburner_RefillOnLanding_V3"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_PRE_CAR_SPA_A_FWD",
+      "name": "Crimson Ribbon",
+      "desc": "Fly through gates to save time.",
+      "category": "Precision",
+      "type": "Precision",
+      "vehicle": "Car",
+      "planet": "Crait",
+      "track": "Crystal Caverns",
+      "laps": 2,
+      "colour": "CE454C",
+      "lock": "Earn Bronze on Wasteland Looper.",
+      "lockedBy": "EVT_ARC_PRE_SKIMMER_HSK_A_FWD",
+      "medals": [
+        78,
+        90,
+        160
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 6,
+        "Resilience": 4,
+        "Boost": 8,
+        "AbilityUsage": 0,
+        "Advanced": 6
+      },
+      "parts": [],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_PRE_CAR_COR_A_REV",
+      "name": "Blizzard Piercer",
+      "desc": "Fly through gates to save time.",
+      "category": "Precision",
+      "type": "Precision",
+      "vehicle": "Car",
+      "planet": "Ando Prime",
+      "track": "Ice Field Circuit",
+      "laps": 2,
+      "colour": "101E34",
+      "lock": "Earn Bronze on Crimson Ribbon.",
+      "lockedBy": "EVT_ARC_PRE_CAR_SPA_A_FWD",
+      "medals": [
+        91,
+        100,
+        120
+      ],
+      "levels": {
+        "Cornering": 9,
+        "Acceleration": 8,
+        "Resilience": 3,
+        "Boost": 6,
+        "AbilityUsage": 2,
+        "Advanced": 5
+      },
+      "parts": [
+        "AFX_Conditions_Cooled_IncreasedPotency_v3"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_PRE_BIKE_HSK_P2P_REV",
+      "name": "River Runner",
+      "desc": "Fly through gates to save time.",
+      "category": "Precision",
+      "type": "Precision",
+      "vehicle": "Bike",
+      "planet": "Sentinel I",
+      "track": "Bool River Run",
+      "laps": 1,
+      "colour": "D1C371",
+      "lock": "Earn Bronze on Blizzard Piercer.",
+      "lockedBy": "EVT_ARC_PRE_CAR_COR_A_REV",
+      "medals": [
+        60,
+        70,
+        114
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 2,
+        "Resilience": 2,
+        "Boost": 4,
+        "AbilityUsage": 0,
+        "Advanced": 2
+      },
+      "parts": [
+        "AFX_Corrode_NoLongerChokes_v1",
+        "AFX_Ramjet_HeatReduction_v4",
+        "AFX_SysMalf_PowerfulRamjet"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_PRE_CAR_SPA_B_SHORT_02",
+      "name": "Cavern Drift",
+      "desc": "Fly through gates to save time.",
+      "category": "Precision",
+      "type": "Precision",
+      "vehicle": "Car",
+      "planet": "Crait",
+      "track": "Crystal Caverns",
+      "laps": 5,
+      "colour": "CE454C",
+      "lock": "Earn Bronze on River Runner.",
+      "lockedBy": "EVT_ARC_PRE_BIKE_HSK_P2P_REV",
+      "medals": [
+        45,
+        56,
+        78
+      ],
+      "levels": {
+        "Cornering": 9,
+        "Acceleration": 9,
+        "Resilience": 4,
+        "Boost": 9,
+        "AbilityUsage": 2,
+        "Advanced": 6
+      },
+      "parts": [
+        "AFX_Conditions_Cooled_IncreasedPotency_v2",
+        "AFX_Afterburner_RamjetCharge",
+        "AFX_Afterburner_IncreasedTopSpeed_v2",
+        "AFX_Cooled_PowerfulRamjet_v2"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_PRE_BIKE_WHP_A_FWD",
+      "name": "Breakneck Arena",
+      "desc": "Fly through gates to save time.",
+      "category": "Precision",
+      "type": "Precision",
+      "vehicle": "Bike",
+      "planet": "Derven Acos",
+      "track": "The Galactic Gauntlet",
+      "laps": 1,
+      "colour": "584D4D",
+      "lock": "Progress further in the Campaign.",
+      "lockedBy": null,
+      "medals": [
+        85,
+        91,
+        110
+      ],
+      "levels": {
+        "Cornering": 4,
+        "Acceleration": 7,
+        "Resilience": 5,
+        "Boost": 8,
+        "AbilityUsage": 0,
+        "Advanced": 6
+      },
+      "parts": [
+        "AFX_Ramjet_CoolsFaster_v4"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_BIKE_HSK_A_REV",
+      "name": "Shield Smart",
+      "desc": "Utilize Shield to cut across acid.",
+      "category": "Acid",
+      "type": "TimeTrial",
+      "vehicle": "Bike",
+      "planet": "Sentinel I",
+      "track": "Sentinel Lakes",
+      "laps": 2,
+      "colour": "D1C371",
+      "lock": null,
+      "lockedBy": null,
+      "medals": [
+        96,
+        105,
+        170
+      ],
+      "levels": {
+        "Cornering": 6,
+        "Acceleration": 4,
+        "Resilience": 3,
+        "Boost": 6,
+        "AbilityUsage": 0,
+        "Advanced": 8
+      },
+      "parts": [
+        "AFX_Ability_FasterCooldown_v3",
+        "AFX_Ramjet_HeatReduction_v3"
+      ],
+      "abilities": [
+        "BP_Ability_Shield"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_SKIMMER_HSK_SPECIAL_SHORT_01",
+      "name": "Caustic Flood",
+      "desc": "Utilize an acid-proof Ramjet.",
+      "category": "Acid",
+      "type": "TimeTrial",
+      "vehicle": "Skimmer",
+      "planet": "Sentinel I",
+      "track": "Mineral Loop",
+      "laps": 5,
+      "colour": "D1C371",
+      "lock": "Earn Bronze on Shield Smart.",
+      "lockedBy": "EVT_ARC_TT_BIKE_HSK_A_REV",
+      "medals": [
+        74,
+        90,
+        165
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 3,
+        "Resilience": 3,
+        "Boost": 3,
+        "AbilityUsage": 0,
+        "Advanced": 8
+      },
+      "parts": [
+        "AFX_Corrode_NoLongerChokes_v1",
+        "AFX_Ramjet_CoolsFaster_v4",
+        "AFX_Ramjet_HeatReduction_v2",
+        "AFX_Faulty_Conditions_CorrodeVulnerability"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_CAR_HSK_P2P_FWD",
+      "name": "Total Hangtime",
+      "desc": "Utilize airtime to maintain Ramjet.",
+      "category": "Acid",
+      "type": "TimeTrial",
+      "vehicle": "Car",
+      "planet": "Sentinel I",
+      "track": "Bool River Run",
+      "laps": 1,
+      "colour": "D1C371",
+      "lock": "Earn Bronze on Caustic Flood.",
+      "lockedBy": "EVT_ARC_TT_SKIMMER_HSK_SPECIAL_SHORT_01",
+      "medals": [
+        103,
+        110,
+        170
+      ],
+      "levels": {
+        "Cornering": 4,
+        "Acceleration": 3,
+        "Resilience": 2,
+        "Boost": 6,
+        "AbilityUsage": 0,
+        "Advanced": 6
+      },
+      "parts": [
+        "AFX_Cooled_GainWhileAirborne",
+        "AFX_Cooled_GainOnLanding_v2",
+        "AFX_Ramjet_TempCanDropWhileBoosting",
+        "AFX_Conditions_Cooled_IncreasedPotency_v3"
+      ],
+      "abilities": [
+        "BP_Ability_Repair"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_CAR_HSK_A_FWD_MINES",
+      "name": "Hazard Eater",
+      "desc": "Utilize hazards to benefit from System Malfunction.",
+      "category": "Acid",
+      "type": "TimeTrial",
+      "vehicle": "Car",
+      "planet": "Sentinel I",
+      "track": "Sentinel Lakes",
+      "laps": 2,
+      "colour": "D1C371",
+      "lock": "Earn Bronze on Total Hangtime.",
+      "lockedBy": "EVT_ARC_TT_CAR_HSK_P2P_FWD",
+      "medals": [
+        107,
+        121,
+        178
+      ],
+      "levels": {
+        "Cornering": 5,
+        "Acceleration": 4,
+        "Resilience": 8,
+        "Boost": 3,
+        "AbilityUsage": 0,
+        "Advanced": 2
+      },
+      "parts": [
+        "AFX_Concussion_ClearQuicklyAndGainSpeed_v1",
+        "AFX_Faulty_SysMalf_TripleDuration",
+        "AFX_SysMalf_GainSurge",
+        "AFX_SysMalf_PowerfulRamjet",
+        "AFX_SysMalf_GainCooled",
+        "AFX_Conditions_Cooled_IncreasedPotency_v2"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_CAR_DAL_B_FWD",
+      "name": "Lethal Lava",
+      "desc": "Navigate extra-hazardous lava.",
+      "category": "FireIce",
+      "type": "TimeTrial",
+      "vehicle": "Car",
+      "planet": "Lantaana",
+      "track": "Moro Kehn Tunnels",
+      "laps": 2,
+      "colour": "71A373",
+      "lock": null,
+      "lockedBy": null,
+      "medals": [
+        116,
+        135,
+        180
+      ],
+      "levels": {
+        "Cornering": 2,
+        "Acceleration": 1,
+        "Resilience": 5,
+        "Boost": 8,
+        "AbilityUsage": 0,
+        "Advanced": 3
+      },
+      "parts": [
+        "AFX_Cooled_PowerfulRamjet_v3",
+        "AFX_Conditions_CooledLastsLonger_v3",
+        "AFX_Conditions_Cooled_IncreasedPotency_v3",
+        "AFX_Ramjet_TempCanDropWhileBoosting",
+        "AFX_Faulty_Conditions_ExplosiveBurning"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_SKIMMER_DAL_P2P_FWD",
+      "name": "Cool Runnings",
+      "desc": "Utilize water to maintain Cooled.",
+      "category": "FireIce",
+      "type": "TimeTrial",
+      "vehicle": "Skimmer",
+      "planet": "Lantaana",
+      "track": "Geothermal Tour",
+      "laps": 1,
+      "colour": "71A373",
+      "lock": "Earn Bronze on Lethal Lava.",
+      "lockedBy": "EVT_ARC_TT_CAR_DAL_B_FWD",
+      "medals": [
+        123,
+        128,
+        170
+      ],
+      "levels": {
+        "Cornering": 2,
+        "Acceleration": 1,
+        "Resilience": 0,
+        "Boost": 2,
+        "AbilityUsage": 0,
+        "Advanced": 1
+      },
+      "parts": [
+        "AFX_Conditions_CooledLastsLonger_v3",
+        "AFX_Conditions_Cooled_IncreasedPotency_v3",
+        "AFX_Ramjet_TempCanDropWhileBoosting",
+        "AFX_Ramjet_ImprovedCooldown_v1"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_CAR_COR_A_FWD",
+      "name": "Brain Freeze",
+      "desc": "Utilize Frozen.",
+      "category": "FireIce",
+      "type": "TimeTrial",
+      "vehicle": "Car",
+      "planet": "Ando Prime",
+      "track": "Ice Field Circuit",
+      "laps": 2,
+      "colour": "101E34",
+      "lock": "Earn Bronze on Cool Runnings.",
+      "lockedBy": "EVT_ARC_TT_SKIMMER_DAL_P2P_FWD",
+      "medals": [
+        162,
+        173,
+        205
+      ],
+      "levels": {
+        "Cornering": 5,
+        "Acceleration": 0,
+        "Resilience": 3,
+        "Boost": 6,
+        "AbilityUsage": 3,
+        "Advanced": 1
+      },
+      "parts": [
+        "AFX_Frozen_PowerfulRamjet",
+        "AFX_Frozen_MoreCooling",
+        "AFX_Frozen_IncreaseSpeed",
+        "AFX_Ramjet_HeatReduction_v1",
+        "AFX_Faulty_Frozen_LastsLonger"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_SKIMMER_COR_B_FWD",
+      "name": "Night Flight",
+      "desc": "Brave the extra-cold night.",
+      "category": "FireIce",
+      "type": "TimeTrial",
+      "vehicle": "Skimmer",
+      "planet": "Ando Prime",
+      "track": "Monastery Mountains",
+      "laps": 2,
+      "colour": "101E34",
+      "lock": "Earn Bronze on Brain Freeze.",
+      "lockedBy": "EVT_ARC_TT_CAR_COR_A_FWD",
+      "medals": [
+        129,
+        143,
+        180
+      ],
+      "levels": {
+        "Cornering": 5,
+        "Acceleration": 0,
+        "Resilience": 3,
+        "Boost": 6,
+        "AbilityUsage": 3,
+        "Advanced": 1
+      },
+      "parts": [
+        "AFX_Ramjet_CoolsFaster_v1",
+        "AFX_Ramjet_HeatReduction_v1",
+        "AFX_Ramjet_TempCanDropWhileBoosting",
+        "AFX_Faulty_FreezeVulnerability_v2"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_CAR_DAL_A_FWD",
+      "name": "Fuel Frenzy",
+      "desc": "Utilize Perfect Landings and a powerful Afterburner.",
+      "category": "FireIce",
+      "type": "TimeTrial",
+      "vehicle": "Car",
+      "planet": "Lantaana",
+      "track": "Griffin's Flight",
+      "laps": 1,
+      "colour": "71A373",
+      "lock": "Earn Bronze on Night Flight.",
+      "lockedBy": "EVT_ARC_TT_SKIMMER_COR_B_FWD",
+      "medals": [
+        85,
+        97,
+        160
+      ],
+      "levels": {
+        "Cornering": 1,
+        "Acceleration": 6,
+        "Resilience": 2,
+        "Boost": 0,
+        "AbilityUsage": 0,
+        "Advanced": 1
+      },
+      "parts": [
+        "AFX_Afterburner_RefillOnLanding_V2",
+        "AFX_Afterburner_FullFuelIncreasesPower_v4",
+        "AFX_Afterburner_MoreDuration_v3",
+        "AFX_Faulty_Ramjet_HeatIncrease_v2"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_SKIMMER_DAL_A_SHORT_06",
+      "name": "Risky Rider",
+      "desc": "Use Redlining to reset Ramjet.",
+      "category": "FireIce",
+      "type": "TimeTrial",
+      "vehicle": "Skimmer",
+      "planet": "Lantaana",
+      "track": "Overflow Rally",
+      "laps": 4,
+      "colour": "71A373",
+      "lock": "Earn Bronze on Fuel Frenzy.",
+      "lockedBy": "EVT_ARC_TT_CAR_DAL_A_FWD",
+      "medals": [
+        123,
+        128,
+        138
+      ],
+      "levels": {
+        "Cornering": 1,
+        "Acceleration": 0,
+        "Resilience": 1,
+        "Boost": 3,
+        "AbilityUsage": 0,
+        "Advanced": 1
+      },
+      "parts": [
+        "AFX_Ramjet_OverheatingReleaseResetsHeat",
+        "AFX_Ramjet_MorePower_v4",
+        "AFX_Ramjet_OverheatIncreasesPowerUntilCrash_v3",
+        "AFX_Faulty_Ramjet_ReducedAlarm"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_CAR_MAS_A_REV",
+      "name": "Venting Machine",
+      "desc": "Utilize Vent to maintain Ramjet.",
+      "category": "Advanced",
+      "type": "TimeTrial",
+      "vehicle": "Car",
+      "planet": "Jakku",
+      "track": "The War Fields",
+      "laps": 2,
+      "colour": "C8763F",
+      "lock": null,
+      "lockedBy": null,
+      "medals": [
+        96,
+        104,
+        130
+      ],
+      "levels": {
+        "Cornering": 6,
+        "Acceleration": 3,
+        "Resilience": 4,
+        "Boost": 10,
+        "AbilityUsage": 4,
+        "Advanced": 6
+      },
+      "parts": [
+        "AFX_Ability_FasterCooldown_v3",
+        "AFX_Ramjet_CoolsFaster_v1"
+      ],
+      "abilities": [
+        "BP_Ability_Vent"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_BIKE_MAS_B_SHORT_01",
+      "name": "Super Surge",
+      "desc": "Utilize Surging.",
+      "category": "Advanced",
+      "type": "TimeTrial",
+      "vehicle": "Bike",
+      "planet": "Jakku",
+      "track": "Scrap Spiral",
+      "laps": 6,
+      "colour": "C8763F",
+      "lock": "Earn Bronze on Venting Machine.",
+      "lockedBy": "EVT_ARC_TT_CAR_MAS_A_REV",
+      "medals": [
+        76,
+        84,
+        98
+      ],
+      "levels": {
+        "Cornering": 9,
+        "Acceleration": 4,
+        "Resilience": 0,
+        "Boost": 4,
+        "AbilityUsage": 0,
+        "Advanced": 0
+      },
+      "parts": [
+        "AFX_Ability_FasterCooldown_v4",
+        "AFX_Surge_SurgeToCooled",
+        "AFX_Ramjet_GainSurgingWhenCritical_v2",
+        "AFX_Surging_ResetRamjet",
+        "AFX_Condition_Surging_IncreasedPotency_v3",
+        "AFX_Surging_AfterburnerMorePowerful"
+      ],
+      "abilities": [
+        "BP_Ability_Surge"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_BIKE_SPA_B_FWD",
+      "name": "Red-Eye Rush",
+      "desc": "Redline repeatedly.",
+      "category": "Advanced",
+      "type": "TimeTrial",
+      "vehicle": "Bike",
+      "planet": "Crait",
+      "track": "Forgil Canyon",
+      "laps": 2,
+      "colour": "CE454C",
+      "lock": "Earn Bronze on Super Surge.",
+      "lockedBy": "EVT_ARC_TT_BIKE_MAS_B_SHORT_01",
+      "medals": [
+        129,
+        137,
+        152
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 10,
+        "Resilience": 6,
+        "Boost": 3,
+        "AbilityUsage": 1,
+        "Advanced": 6
+      },
+      "parts": [
+        "AFX_Afterburner_OverheatIncreasesPowerUntilCrash_v3",
+        "AFX_Ramjet_OverheatIncreasesPowerUntilCrash_v3",
+        "AFX_Afterburner_OverheatingStacksFuel",
+        "AFX_Afterburner_FasterRecharge_v3",
+        "AFX_Faulty_Afterburner_becomeFrozen"
+      ],
+      "abilities": [
+        "BP_Ability_Vent"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_BIKE_MAS_P2P_FWD",
+      "name": "Ramjet Run",
+      "desc": "Utilize an endless Ramjet.",
+      "category": "Advanced",
+      "type": "TimeTrial",
+      "vehicle": "Bike",
+      "planet": "Jakku",
+      "track": "The Giants' Graveyard",
+      "laps": 1,
+      "colour": "C8763F",
+      "lock": "Earn Bronze on Red-Eye Rush.",
+      "lockedBy": "EVT_ARC_TT_BIKE_SPA_B_FWD",
+      "medals": [
+        80,
+        85,
+        110
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 6,
+        "Resilience": 6,
+        "Boost": 10,
+        "AbilityUsage": 4,
+        "Advanced": 5
+      },
+      "parts": [
+        "AFX_Ramjet_HeatReduction_v3",
+        "AFX_Ramjet_CoolsFaster_v4",
+        "AFX_Ramjet_MorePower_v3",
+        "AFX_Faulty_Concussed_OnImpact"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_SKIMMER_SPA_B_FWD_MINES",
+      "name": "Salt Mines",
+      "desc": "Navigate concussion mines.",
+      "category": "Advanced",
+      "type": "TimeTrial",
+      "vehicle": "Skimmer",
+      "planet": "Crait",
+      "track": "Forgil Canyon",
+      "laps": 2,
+      "colour": "CE454C",
+      "lock": "Earn Bronze on Ramjet Run.",
+      "lockedBy": "EVT_ARC_TT_BIKE_MAS_P2P_FWD",
+      "medals": [
+        123,
+        130,
+        150
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 10,
+        "Resilience": 6,
+        "Boost": 7,
+        "AbilityUsage": 4,
+        "Advanced": 9
+      },
+      "parts": [
+        "AFX_Afterburner_IncreasedTopSpeed_v4",
+        "AFX_Afterburner_RefillOnLanding_V3",
+        "AFX_Ramjet_MorePower_v2"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_SKIMMER_WHP_A_FWD",
+      "name": "Coliseum Blitz",
+      "desc": "Utilize a versatile Skim Speeder.",
+      "category": "Advanced",
+      "type": "TimeTrial",
+      "vehicle": "Skimmer",
+      "planet": "Derven Acos",
+      "track": "The Galactic Gauntlet",
+      "laps": 1,
+      "colour": "584D4D",
+      "lock": "Progress further in the Campaign.",
+      "lockedBy": null,
+      "medals": [
+        143,
+        149,
+        157
+      ],
+      "levels": {
+        "Cornering": 7,
+        "Acceleration": 8,
+        "Resilience": 5,
+        "Boost": 9,
+        "AbilityUsage": 3,
+        "Advanced": 7
+      },
+      "parts": [
+        "AFX_Afterburner_RefillOnLanding_V2",
+        "AFX_Afterburner_FullFuelIncreasesPower_v4",
+        "AFX_Cooled_PowerfulRamjet_v3"
+      ],
+      "abilities": [
+        "BP_Ability_Vent",
+        "BP_Ability_Shield",
+        "BP_Ability_Surge"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_CAR_WHP_A_FWD",
+      "name": "The Experiment",
+      "desc": "Brave a powerful but unwieldy Landspeeder.",
+      "category": "Advanced",
+      "type": "TimeTrial",
+      "vehicle": "Car",
+      "planet": "Derven Acos",
+      "track": "The Galactic Gauntlet",
+      "laps": 1,
+      "colour": "584D4D",
+      "lock": "Earn Bronze on Coliseum Blitz.",
+      "lockedBy": "EVT_ARC_TT_SKIMMER_WHP_A_FWD",
+      "medals": [
+        129,
+        134,
+        150
+      ],
+      "levels": {
+        "Cornering": 10,
+        "Acceleration": 8,
+        "Resilience": 8,
+        "Boost": 10,
+        "AbilityUsage": 6,
+        "Advanced": 10
+      },
+      "parts": [
+        "AFX_Ramjet_CoolsFaster_v4",
+        "AFX_Ramjet_MorePower_v4",
+        "AFX_Faulty_StuckSteering",
+        "AFX_Faulty_FreezeVulnerability_v2",
+        "AFX_Faulty_Burning_GainBurningOnImpact",
+        "AFX_Faulty_Frozen_IncreasedSteeringPenalty"
+      ],
+      "abilities": [
+        "BP_Ability_VentV2"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_CAR_DAL_B_REV",
+      "name": "DARC X Landspeeder",
+      "desc": "Set a record time.",
+      "category": "Deluxe",
+      "type": "TimeTrial",
+      "vehicle": "Car",
+      "planet": "Lantaana",
+      "track": "Moro Kehn Tunnels",
+      "laps": 2,
+      "colour": "71A373",
+      "lock": "Upgrade to the STAR WARS: Galactic Racer™ Deluxe Edition.",
+      "lockedBy": null,
+      "medals": [
+        93,
+        101,
+        115
+      ],
+      "levels": {
+        "Cornering": 6,
+        "Acceleration": 10,
+        "Resilience": 10,
+        "Boost": 0,
+        "AbilityUsage": 0,
+        "Advanced": 4
+      },
+      "parts": [
+        "AFX_Afterburner_CooledSavesFuel_v4",
+        "AFX_Afterburner_gainCooledWhile",
+        "AFX_Afterburner_MoreDuration_v2",
+        "AFX_Afterburner_RefillOnLanding_V3",
+        "AFX_Afterburner_IncreasedTopSpeed_v4"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_SKIMMER_MAS_P2P_FWD",
+      "name": "RAK S Skim Speeder",
+      "desc": "Set a record time.",
+      "category": "Deluxe",
+      "type": "TimeTrial",
+      "vehicle": "Skimmer",
+      "planet": "Jakku",
+      "track": "The Giants' Graveyard",
+      "laps": 1,
+      "colour": "C8763F",
+      "lock": "Upgrade to the STAR WARS: Galactic Racer™ Deluxe Edition.",
+      "lockedBy": null,
+      "medals": [
+        84,
+        91,
+        100
+      ],
+      "levels": {
+        "Cornering": 7,
+        "Acceleration": 1,
+        "Resilience": 10,
+        "Boost": 8,
+        "AbilityUsage": 7,
+        "Advanced": 5
+      },
+      "parts": [
+        "AFX_Overcharged_GainUponLanding_v2",
+        "AFX_Ability_FasterCooldown_v4",
+        "AFX_Condition_Surging_IncreasedPotency_v3"
+      ],
+      "abilities": [
+        "BP_Ability_VentV2",
+        "BP_Ability_Surge"
+      ],
+      "ramjet": true,
+      "authoredStats": false
+    },
+    {
+      "id": "EVT_ARC_TT_BIKE_SPA_A_FWD",
+      "name": "CIZA T Speeder Bike",
+      "desc": "Set a record time.",
+      "category": "Deluxe",
+      "type": "TimeTrial",
+      "vehicle": "Bike",
+      "planet": "Crait",
+      "track": "Crimson Mines",
+      "laps": 2,
+      "colour": "CE454C",
+      "lock": "Upgrade to the STAR WARS: Galactic Racer™ Deluxe Edition.",
+      "lockedBy": null,
+      "medals": [
+        124,
+        133,
+        150
+      ],
+      "levels": {
+        "Cornering": 8,
+        "Acceleration": 9,
+        "Resilience": 7,
+        "Boost": 1,
+        "AbilityUsage": 0,
+        "Advanced": 7
+      },
+      "parts": [
+        "AFX_Afterburner_OverheatingStacksFuel",
+        "AFX_Afterburner_OverheatingIncreasesPowerOnce_v3",
+        "AFX_Afterburner_FasterRecharge_v4",
+        "AFX_Afterburner_FullFuelIncreasesPower_v4",
+        "AFX_Afterburner_RamjetCharge",
+        "AFX_Faulty_Ramjet_HeatIncrease_v2"
+      ],
+      "abilities": [],
+      "ramjet": true,
+      "authoredStats": false
+    }
+  ]
 }

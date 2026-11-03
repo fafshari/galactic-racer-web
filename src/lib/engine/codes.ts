@@ -4,7 +4,7 @@
 //
 // Every list is 2-character base-36 positions taken from src/data/build-order.json, never from the data arrays,
 // so codes keep meaning the same thing after game patches. Empty trailing sections are dropped because chat apps
-// strip trailing dots from links.
+// strip trailing dots from links. The style `zz` means no racer style; no style can take that position (ORDER_CAPACITY).
 import { buildOrder as defaultOrder, planner } from '../data/index.ts';
 import type { BuildOrder, OrderKind } from '../data/order.ts';
 import type { PlannerData } from '../data/types.ts';
@@ -18,6 +18,9 @@ export class BuildCodeError extends Error {
 
 const b36 = (n: number, width: number): string => n.toString(36).padStart(width, '0');
 
+/** The style digits of a build with no racer style. */
+export const NO_STYLE = 'zz';
+
 function positionsOf(order: BuildOrder, kind: OrderKind): Map<string, number> {
   return new Map(order[kind].map((id, i) => [id, i]));
 }
@@ -30,7 +33,7 @@ export function encodeBuild(build: Build, order: BuildOrder = defaultOrder): str
     return b36(i, width);
   };
   const v = pos('vehicles', build.vehicle, 1);
-  const st = pos('styles', build.style, 2);
+  const st = build.style === null ? NO_STYLE : pos('styles', build.style, 2);
   const levels = new Map<string, number | undefined>(Object.entries(build.levels));
   const lv = order.slots.map((s) => b36(Math.min(MAX_LEVEL, levels.get(s) ?? 0), 1)).join('');
   const pt = build.parts.map((id) => pos('parts', id, 2)).join('');
@@ -58,7 +61,8 @@ export function decodeBuild(code: string, data: PlannerData = planner, order: Bu
   const [vehicleId] = resolve('vehicles', data.vehicles, [Number(vehicle)]);
   b.vehicle = vehicleId ?? resolve('vehicles', data.vehicles, [0])[0] ?? b.vehicle;
   const st = data.styles.find((s) => s.id === order.styles[parseInt(style ?? '', 36)]);
-  if (st?.mode === b.mode) b.style = st.id;
+  if (style === NO_STYLE) b.style = null;
+  else if (st?.mode === b.mode) b.style = st.id;
   data.slots.forEach((s) => {
     const i = order.slots.indexOf(s.id);
     b.levels[s.id] = Math.min(MAX_LEVEL, parseInt(levels[i] ?? '0', 36));

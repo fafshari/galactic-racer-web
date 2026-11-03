@@ -1,0 +1,113 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ArcadeCard from '~/components/ArcadeCard/ArcadeCard.svelte';
+import { arcadeCard, arcadeTabs } from '~/lib/arcade/arcade.ts';
+import { planner } from '~/lib/data/index.ts';
+
+const tabs = arcadeTabs(planner).map((t) => ({ ...t, cards: t.events.map((e) => arcadeCard(planner, e)) }));
+---
+
+<BaseLayout
+  title="Galactic Racer Arcade Vehicles"
+  description="Every STAR WARS: Galactic Racer Arcade event's pre-made vehicle, with medal times, ready to open in the build planner."
+>
+  <p class="arcade-intro">
+    Every Arcade event hands you a pre-made vehicle with no racer style. Here are their levels, parts, abilities and medal times.
+    Open one in the build planner to see what it does, or start your own from it.
+  </p>
+  <nav class="arcade-tabs" aria-label="Arcade tabs">
+    {tabs.map((t) => <a class="tab" href={`#tab-${t.id}`}>{t.name}<span class="count">{t.events.length}</span></a>)}
+  </nav>
+  {
+    tabs.map((t) => (
+      <section class="arcade-row" id={`tab-${t.id}`} aria-labelledby={`tab-${t.id}-title`}>
+        <h2 class="title" id={`tab-${t.id}-title`}>{t.name}</h2>
+        <div class="cards" role="region" aria-label={`${t.name} events`} tabindex="0">
+          {t.cards.map((card) => <ArcadeCard card={card} />)}
+        </div>
+      </section>
+    ))
+  }
+  <p class="arcade-note">
+    Tab names are ours; the game shows them as icons. Medal times are the game's own gold, silver and bronze targets.
+  </p>
+</BaseLayout>
+
+<style lang="scss">
+  // The game's Arcade screen: a row of event tiles per tab, scrolled sideways.
+  .arcade-intro,
+  .arcade-note {
+    max-width: 70ch;
+    margin: 0 0 var(--space-4);
+    color: var(--color-muted);
+  }
+
+  .arcade-note {
+    margin-top: var(--space-5);
+    font-size: 14px;
+  }
+
+  .arcade-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+  }
+
+  .arcade-tabs > .tab {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    padding: 7px 14px;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    color: var(--color-fg);
+    font: 800 12px/1 var(--font-display);
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      border-color: var(--color-accent);
+    }
+
+    .count {
+      color: var(--color-muted);
+      font: 600 12px/1 var(--font-label);
+    }
+  }
+
+  .arcade-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr); // keeps the card row's scrolling inside it
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+    scroll-margin-top: var(--space-4);
+  }
+
+  .arcade-row > .title {
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .arcade-row > .cards {
+    display: grid;
+    grid-auto-columns: minmax(280px, 320px);
+    grid-auto-flow: column;
+    gap: var(--space-3);
+    overflow-x: auto;
+    padding-bottom: var(--space-3);
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+
+    > :global(*) {
+      scroll-snap-align: start;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 4px;
+    }
+  }
+</style>

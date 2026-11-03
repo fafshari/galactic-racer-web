@@ -38,3 +38,10 @@ The export sorts parts and abilities alphabetically by asset name, so a part add
 - The build-code encoder and decoder (engine port, ADR 0008) must index through this file, never through the data arrays.
 
 This keeps the `gr2` format unchanged; switching to hashed ids in a `gr3` format wasn't needed.
+
+## No racer style (added 2026-11-02)
+
+Some pre-made Arcade vehicles have no racer style, so the planner allows a build without one. The style digits **`zz`** (position 1,295) mean "no racer style":
+- No style can ever take that position: styles' capacity is 1,295 (`ORDER_CAPACITY`), and the import refuses to go past it. Only 55 positions are used, so no existing link has `zz`, and every one decodes as before.
+- Before this, a decoder treated `zz` as an unknown style and fell back to the mode's default. Only links made after this change contain it, so that never happened to a real link.
+- This stays inside `gr2`; no new prefix was needed.

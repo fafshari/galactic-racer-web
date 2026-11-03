@@ -72,6 +72,15 @@ export function checkReferences(data: PlannerData, icons: IconIndex): string[] {
   for (const [group, ids] of Object.entries(data.tour.partGroups)) for (const id of ids) has(parts, id, `tour.partGroups.${group}`);
   for (const [level, ids] of Object.entries(data.tour.abilityGroups)) for (const id of ids) has(abilities, id, `tour.abilityGroups.${level}`);
   for (const b of data.tour.backers) icon(b.icon, `backer ${b.id}`);
+  const slots = new Set(data.slots.map((s) => s.id));
+  const events = new Set(data.arcade.map((e) => e.id));
+  for (const e of data.arcade) {
+    has(vehicles, e.vehicle, `arcade ${e.id}`);
+    for (const s of Object.keys(e.levels) as (keyof typeof e.levels)[]) has(slots, s, `arcade ${e.id} levels`);
+    for (const id of e.parts) has(parts, id, `arcade ${e.id}`);
+    for (const id of e.abilities) has(abilities, id, `arcade ${e.id}`);
+    if (e.lockedBy !== null) has(events, e.lockedBy, `arcade ${e.id} lockedBy`);
+  }
   return problems;
 }
 

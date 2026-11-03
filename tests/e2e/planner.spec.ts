@@ -137,6 +137,38 @@ test('choosing a style brings its starting abilities; abilities fill and empty s
   await expect(page.getByRole('button', { name: 'Ability 1: empty. Add an ability' })).toBeVisible();
 });
 
+test('no racer style: clearing the style drops its abilities, keeps levels, and survives a link and a reload', async ({ page }) => {
+  await page.goto(`/#${SHARED}`);
+  await ready(page);
+  const styleName = page.locator('.style-panel .titles .name');
+  const change = page.getByRole('button', { name: 'Change', exact: true });
+  await change.click();
+  await page.getByRole('dialog', { name: 'Choose a racer style' }).getByRole('button').filter({ hasText: 'Brawler' }).click();
+  await expect(page.getByRole('button', { name: /^Ability 1: Ion Bolt/ })).toBeVisible();
+
+  await change.click();
+  const drawer = page.getByRole('dialog', { name: 'Choose a racer style' });
+  await drawer.getByRole('button').filter({ hasText: 'No racer style' }).click();
+  await expect(drawer).not.toBeVisible();
+  await expect(change).toBeFocused();
+  await expect(styleName).toHaveText('No racer style');
+  await expect(page.locator('.style-panel .traits')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Ability 1: empty. Add an ability' })).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Boost level' }).getByRole('button', { name: 'Level 8' })).toHaveAttribute('aria-pressed', 'true');
+
+  await page.reload();
+  await ready(page);
+  await expect(styleName).toHaveText('No racer style');
+
+  // the same build as a link: the style digits are zz
+  await page.goto('/#gr2-m1zz475806');
+  await ready(page);
+  await expect(statusLine(page)).toHaveText('Build loaded from the link.');
+  await expect(page.locator('.vehicle-name')).toHaveText('Speeder Bike');
+  await expect(styleName).toHaveText('No racer style');
+  await expect(page.getByRole('group', { name: 'Boost level' }).getByRole('button', { name: 'Level 8' })).toHaveAttribute('aria-pressed', 'true');
+});
+
 test('pasting a bad code explains instead of breaking', async ({ page }) => {
   await page.goto('/');
   await ready(page);

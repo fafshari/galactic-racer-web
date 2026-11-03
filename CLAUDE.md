@@ -1,6 +1,6 @@
 # Galactic Racer Web
 
-Fan-made theorycrafting site for STAR WARS: Galactic Racer: a **build planner** (Multiplayer Tour and Campaign) and a **Multiplayer Tour simulator**, built from values datamined out of the game files.
+Fan-made theorycrafting site for STAR WARS: Galactic Racer: a **build planner** (Multiplayer Tour and Campaign), a **Multiplayer Tour simulator** and the **Arcade vehicles**, built from values datamined out of the game files.
 
 > **Status: migration nearly done.** Done so far:
 > - the Astro scaffold: tooling, design tokens, layout and the first components (`Tag`, `StatPips`)
@@ -94,6 +94,7 @@ From [ADR 0009](docs/adr/0009-game-mechanics-model.md); details and confidence l
 
 - Format: `gr2-{m|c}{vehicle}{style b36×2}{6 levels}.{parts}.{abilities}.{favours}`, stored in the URL hash.
 - Trailing sections may be missing: chat apps strip trailing dots.
+- Style `zz` means no racer style (`NO_STYLE`); no real style may take that position.
 - **Positions come from `src/data/build-order.json`**, never from the order of the data arrays. That file matches the live legacy site, so every existing link decodes the same.
 - **Old links must keep loading.** Any format change needs a new prefix and a decoder for the old one. [ADR 0010](docs/adr/0010-build-codes.md)
 
@@ -202,7 +203,7 @@ npm run import-data [-- <path to swgr-datamine>]   # re-import game data after t
 
 ```
 src/
-  pages/              index.astro, tour.astro, changelog.astro (built as /index.html, /tour.html and /changelog.html)
+  pages/              index.astro, tour.astro, arcade.astro, changelog.astro (built as /index.html, /tour.html, /arcade.html and /changelog.html)
   layouts/            BaseLayout.astro: fonts, global styles, header, footer
   components/<Name>/  one folder per component: Name.svelte|astro and Name.test.ts
   dev/                pages that exist only under `astro dev`: components.astro + Showcase.svelte
@@ -217,6 +218,7 @@ src/
   lib/version.ts      the site version (from package.json) and the "What's new" link
   lib/changelog.ts    CHANGELOG.md parsed into releases for the "What's new" page
   lib/import/         screenshot import: panel layout, OCR text matching, pip counting (ADR 0016)
+  lib/arcade/         Arcade events: tabs, medal times, each event's vehicle as a no-style build, card view (ADR 0019)
   lib/tour/           tour simulation: seeded RNG, the tourAction reducer, offer fit labels, saved-run restore
   data/               imported game data (see "Game data")
   assets/icons/       game icons (WebP)
@@ -243,6 +245,7 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 | Overview | `StatRow` + `StatPips`, `SpeedPanel`, `StylePanel`, `AbilitySlot`, `PartRow` |
 | Pickers | `Drawer` (native modal `<dialog>`; bottom sheet on phones), `PartCard`, `RarityToggle`, `ChoiceCard`, `SearchField` |
 | Readout | `SituationalEffect` (on/off or a 0–50 trigger count), `ChangeRow` (renders a `RowView` from `src/lib/format`), `CurveChart` (before/after line chart) |
+| Arcade | `ArcadeCard` (one Arcade event: planet, medal times, lock, the vehicle's levels, speeds and kit, and a planner link) |
 | Layout | `Panel` (a titled overview panel with a count and actions; with `collapseKey` its title collapses it, remembered under `swgr-collapsed`), `FavourRow`, `FavoriteRow` (a saved build: icons, ability diamond, name, best boost) |
 | Pages | `BuildPlanner/` (the planner island, its pickers and the screenshot import), `PlannerNotes.astro` |
 
@@ -262,7 +265,8 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 - **Style changes:**
   - A new style replaces the old style's starting abilities and keeps other abilities.
   - Campaign keeps the current rank.
-- **Mode switches** keep the same-named style, drop parts the mode doesn't allow, and drop favours when leaving Campaign.
+  - "No racer style" (`style: null`, for Arcade vehicles) drops the old style's starting abilities and keeps levels, parts and other abilities.
+- **Mode switches** keep the same-named style (or no style), drop parts the mode doesn't allow, and drop favours when leaving Campaign.
 - **Start-up:**
   - A `#gr2-…` link wins.
   - Otherwise the last build is restored from `localStorage` (`swgr-build`, the legacy key), validated by `restoreBuild`.
@@ -291,6 +295,15 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
 - **Start-up:** the last run is restored from `localStorage` (`swgr-tour-v2`, `{ version: 1, state }`) through `restoreTour`, which rejects unknown ids. Otherwise a new run starts with a random seed.
 - **Layout:** the tour track and the current phase (`TourStage`) on the left; racer, owned abilities and parts, standings and the run log on the right. "Open this build in the planner" links the current build as a build code.
 - **Testing:** `src/lib/tour/tour.test.ts` plays whole runs and checks the rules; `tests/e2e/tour.spec.ts` plays races through the shop on desktop and phone.
+
+## Arcade page
+
+`src/pages/arcade.astro` is static: one sideways-scrolling row of `ArcadeCard`s per Arcade tab, in the game's order ([ADR 0019](docs/adr/0019-arcade-vehicles.md)).
+- The data is `planner.arcade`, exported from `DA_ArcadeDef` and each event's build and leaderboard. The three medal times are the leaderboard's authored times.
+- Each card links its vehicle into the planner as a no-style build (`arcadeBuild`): Campaign mode where Campaign has the vehicle, Multiplayer Tour for Podracers.
+- Tab names are ours (`CATEGORY_NAMES`); a new tab after a patch needs one.
+- Never show player times or friend names from the game's screens.
+- **Testing:** `src/lib/arcade/arcade.test.ts` round-trips every event's build; `tests/e2e/arcade.spec.ts` checks the cards and the planner link.
 
 ## Engine rules
 

@@ -11,7 +11,7 @@ export type OrderKind = (typeof ORDER_KINDS)[number];
 export const ORDER_CAPACITY: Readonly<Record<OrderKind, number>> = {
   vehicles: 10, // one decimal digit
   slots: 6, // the format has exactly six level digits
-  styles: 36 * 36, // two base-36 digits
+  styles: 36 * 36 - 1, // two base-36 digits; the last one, `zz`, means no racer style
   parts: 36 * 36,
   abilities: 36 * 36,
   favours: 36 * 36,

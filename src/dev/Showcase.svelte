@@ -1,6 +1,8 @@
 <script lang="ts">
   // Every component, in every variant, fed with real game data (ADR 0006). Development only.
   import AbilitySlot from '~/components/AbilitySlot/AbilitySlot.svelte';
+  import ArcadeCard from '~/components/ArcadeCard/ArcadeCard.svelte';
+  import { arcadeCard } from '~/lib/arcade/arcade.ts';
   import Button from '~/components/Button/Button.svelte';
   import ChangeRow from '~/components/ChangeRow/ChangeRow.svelte';
   import ChoiceCard from '~/components/ChoiceCard/ChoiceCard.svelte';
@@ -141,6 +143,7 @@
     <article class="specimen">
       <h3 class="name">StylePanel</h3>
       {#if style}<StylePanel name={style.name} icon={style.icon} rank={style.rank} traits={traits} onchange={() => (drawerOpen = true)} />{/if}
+      <StylePanel name="No racer style" icon={null} traits={[]} onchange={() => (drawerOpen = true)} />
     </article>
     <article class="specimen">
       <h3 class="name">AbilitySlot</h3>
@@ -170,11 +173,19 @@
     </Panel>
     <Panel title="FavoriteRow">
       <div class="stack">
-        {#each addFavorite(planner, [], decodeBuild('gr2-m106475806'), 'Clean Racer on a bike', 0, 'sc') as f (f.id)}
+        {#each addFavorite(planner, addFavorite(planner, [], decodeBuild('gr2-m1zz475806'), 'No style, same bike', 0, 'sc2'), decodeBuild('gr2-m106475806'), 'Clean Racer on a bike', 0, 'sc') as f (f.id)}
           <FavoriteRow name={f.name} summary={summarize(planner, f)} onopen={noop} onrename={noop} onremove={noop} oncopy={() => Promise.resolve(true)} />
         {/each}
       </div>
     </Panel>
+    <article class="specimen">
+      <h3 class="name">ArcadeCard (unlocked, locked)</h3>
+      <div class="grid-2">
+        {#each planner.arcade.slice(0, 2) as e (e.id)}
+          <ArcadeCard card={arcadeCard(planner, e)} />
+        {/each}
+      </div>
+    </article>
     <Panel title="Favours" count="2">
       <div class="stack">
         {#each planner.favours.filter((f) => f.negative).slice(0, 1).concat(planner.favours.filter((f) => !f.negative).slice(0, 1)) as f (f.id)}

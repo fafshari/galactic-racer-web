@@ -7,6 +7,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - **minor** for new features and new game content
 - **patch** for fixes and corrections
 
+## [1.1.0] - 2026-11-02
+
+### Added
+
+- An **Arcade** page: every Arcade event's pre-made vehicle, row by row as in the game, with planet, track, gold, silver and bronze times, what unlocks it, and the vehicle's levels, speeds, parts and abilities. Each one opens in the planner. ([#25](https://github.com/fafshari/galactic-racer-web/pull/25))
+- "No racer style" in the planner's style picker, for copying Arcade vehicles, which have none. Clearing the style drops its starting abilities and keeps your levels, parts and other abilities. Builds without a style save, share as links and go in favourites like any other. ([#25](https://github.com/fafshari/galactic-racer-web/pull/25))
+
 ## [1.0.1] - 2026-11-02
 
 ### Added
@@ -56,5 +63,6 @@ First versioned release: the site rebuilt on Astro and Svelte and moved to Verce
 - Game data and icons datamined from the game files, with the fan-made, not-affiliated notice on every page.
 - Open source under the MIT license.
 
+[1.1.0]: https://github.com/fafshari/galactic-racer-web/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/fafshari/galactic-racer-web/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/fafshari/galactic-racer-web/releases/tag/v1.0.0

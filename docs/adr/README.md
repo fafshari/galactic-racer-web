@@ -31,6 +31,7 @@ Each file records one decision: the context, what we chose, and what follows fro
 | [0016](0016-screenshot-import.md) | Import a build from a screenshot | Accepted |
 | [0017](0017-open-source-mit.md) | Open-source the code under MIT | Accepted |
 | [0018](0018-versioning-and-changelog.md) | Version the site and keep a changelog | Accepted |
+| [0019](0019-arcade-vehicles.md) | Arcade vehicles page | Accepted |
 
 ## Template
 

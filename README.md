@@ -1,6 +1,6 @@
 # Galactic Racer Planner
 
-A fan-made build planner and Multiplayer Tour simulator for STAR WARS: Galactic Racer, built from values datamined from the game files.
+A fan-made build planner, Multiplayer Tour simulator and Arcade vehicle guide for STAR WARS: Galactic Racer, built from values datamined from the game files.
 
 **Site:** https://galactic-racer-planner.vercel.app
 
