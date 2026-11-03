@@ -21,10 +21,13 @@ export interface Layout {
   confidence: number;
 }
 
-/** The panels' dark teal: blue and green well above red. Text, icons and the tooltip don't count. */
+/**
+ * The panels' dark teal: blue and green clearly above red. Text, icons and the tooltip don't count. Captures vary
+ * in saturation (one reads 56,89,98, another 46,67,74), so the margins are kept modest.
+ */
 function isPanel(r: Raster, x: number, y: number): boolean {
   const [red, green, blue] = rgbAt(r, x, y);
-  return blue - red > 25 && green - red > 20 && red < 110;
+  return blue - red > 15 && green - red > 12 && red < 110;
 }
 
 type Run = [start: number, end: number];
@@ -82,30 +85,46 @@ export function detectLayout(r: Raster): Layout | null {
   if (!best || best.error > 0.25) return null;
   const [left, middle, right] = colRuns.slice(best.at, best.at + 3) as [Run, Run, Run];
 
-  // The stats panel is one unbroken block from top to bottom, so it gives the vertical position and the scale.
-  const rows: number[] = [];
-  for (let y = 0; y < r.height; y++) {
-    let n = 0;
-    let total = 0;
-    for (let x = left[0]; x <= left[1]; x += step) {
-      n += isPanel(r, x, y) ? 1 : 0;
-      total++;
+  /** Share of panel colour along each pixel row, across one column. */
+  const rowsOf = ([from, to]: Run): number[] => {
+    const rows: number[] = [];
+    for (let y = 0; y < r.height; y++) {
+      let n = 0;
+      let total = 0;
+      for (let x = from; x <= to; x += step) {
+        n += isPanel(r, x, y) ? 1 : 0;
+        total++;
+      }
+      rows.push(n / total);
     }
-    rows.push(n / total);
-  }
-  const tall = runs(rows, 0.35, Math.round(r.height * 0.012)).sort((a, b) => b[1] - b[0] - (a[1] - a[0]))[0];
+    return rows;
+  };
+  const rowGap = Math.round(r.height * 0.012);
+
+  // The stats panel is one unbroken block from top to bottom, so it gives the vertical position and the scale.
+  const tall = runs(rowsOf(left), 0.35, rowGap).sort((a, b) => b[1] - b[0] - (a[1] - a[0]))[0];
   if (!tall) return null;
   const top = tall[0];
   const scale = (tall[1] - tall[0] + 1) / REF_PANELS.stats.h;
   if (scale <= 0 || (left[1] - left[0] + 1) / scale / REF_PANELS.stats.w < 0.75) return null;
 
   const at = (x: number, ref: Box): Box => ({ x, y: top + (ref.y - REF_PANELS.stats.y) * scale, w: ref.w * scale, h: ref.h * scale });
+
+  // The style panel grows with the style's number of traits, pushing the abilities panel down and squeezing it, so
+  // the abilities panel is found as the last block in the middle column, ending where the stats panel ends.
+  const bottom = tall[1];
+  const lower = runs(rowsOf(middle), 0.35, rowGap)
+    .filter(([a, b]) => Math.abs(b - bottom) <= rowGap && b - a > 0.25 * (bottom - top) && a > top + rowGap)
+    .at(-1);
+  const abilities: Box = lower
+    ? { x: middle[0], y: lower[0], w: REF_PANELS.abilities.w * scale, h: lower[1] - lower[0] + 1 }
+    : at(middle[0], REF_PANELS.abilities);
   return {
     scale,
     panels: {
       stats: at(left[0], REF_PANELS.stats),
       style: at(middle[0], REF_PANELS.style),
-      abilities: at(middle[0], REF_PANELS.abilities),
+      abilities,
       parts: at(right[0], REF_PANELS.parts),
     },
     confidence: Math.max(0, 1 - best.error * 3),

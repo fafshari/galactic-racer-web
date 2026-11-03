@@ -4,9 +4,9 @@
 // player to check the doubtful ones.
 import { planner } from '../data/index.ts';
 import type { AbilityId, Part, PartId, PlannerData, SlotId, Style, StyleId, VehicleId } from '../data/types.ts';
-import { abilityAllowed, evaluate, fitAbilities, freshBuild, partAllowed, speeds, toKmh, type Build } from '../engine/index.ts';
+import { abilityAllowed, evaluate, fitAbilities, freshBuild, isCrashAbility, partAllowed, speeds, toKmh, type Build } from '../engine/index.ts';
 import { addPart, familyKey, familyName } from '../planner/actions.ts';
-import { detectLayout, place, type Layout, type PanelName } from './layout.ts';
+import { detectLayout, place, REF_PANELS, type Layout, type PanelName } from './layout.ts';
 import { confidenceOf, normalise, rank, similarity, type Scored } from './match.ts';
 import { lumaAt, lumaStats, textCrop, textLine, type Box, type Raster } from './raster.ts';
 
@@ -63,12 +63,33 @@ const VEHICLE_NAME: Box = { x: 95, y: 205, w: 335, h: 45 };
 const SPEED: Box = { x: 290, y: 252, w: 125, h: 40 };
 const STYLE_NAME: Box = { x: 470, y: 196, w: 830, h: 40 };
 const TRAIT_NAMES: Box[] = [0, 1, 2, 3].map((k) => ({ x: 478, y: 254 + 83 * k, w: 820, h: 36 }));
-const ABILITY_SLOTS: { name: Box; icon: Box }[] = [
-  [522, 748],
-  [938, 748],
-  [522, 858],
-  [938, 858],
-].map(([cx = 0, cy = 0]) => ({ name: { x: cx + 48, y: cy - 36, w: 300, h: 42 }, icon: { x: cx - 26, y: cy - 26, w: 52, h: 52 } }));
+/**
+ * The abilities panel's slots: four regular ones in two columns, then the crash slot. The style panel above grows
+ * with the style's traits, so the abilities panel's height varies and its three rows of slots stretch to fill it,
+ * icons growing with them. Measured from captures with three and four traits.
+ */
+const ABILITY_GRID = { left: 482, column: 416, header: 76, footer: 21, gap: 10, iconInset: 18 };
+const ABILITY_SPOTS: readonly (readonly [row: number, column: number])[] = [[0, 0], [0, 1], [1, 0], [1, 1], [2, 0]];
+/** The crash slot's index among the ability readings. */
+export const CRASH_SLOT = 4;
+
+function abilitySlots(layout: Layout): { name: Box; icon: Box }[] {
+  const g = ABILITY_GRID;
+  const origin = REF_PANELS.abilities.y;
+  const height = layout.panels.abilities.h / layout.scale;
+  const rowsTop = origin + g.header;
+  const pitch = (origin + height - g.footer - rowsTop + g.gap) / 3;
+  const rowHeight = pitch - g.gap;
+  const icon = rowHeight - g.iconInset;
+  return ABILITY_SPOTS.map(([row, column]) => {
+    const left = g.left + g.column * column;
+    const cy = rowsTop + row * pitch + rowHeight / 2;
+    return {
+      name: { x: left + icon + 6, y: cy - 36, w: 300, h: 42 },
+      icon: { x: left + icon / 2 - 26, y: cy - 26, w: 52, h: 52 },
+    };
+  });
+}
 const PART_COUNT: Box = { x: 1835, y: 165, w: 80, h: 40 };
 /** Part cards: the title sits higher when the description takes two lines, so its line is found per card. */
 const PART_ROW = { first: 220, pitch: 121, height: 100, bottom: 1038 };
@@ -80,6 +101,11 @@ const PIP_BACKGROUND_X = 160;
  * font at one size and reads it perfectly at another, so an empty read is retried at the next size.
  */
 const TEXT_HEIGHTS = [26, 22, 32];
+/**
+ * Numbers are short, and a size can drop a digit ("322" read as "22" at 22 px), so they're read at several sizes and
+ * the most common reading wins.
+ */
+const NUMBER_HEIGHTS = [18, 20, 22, 24, 26];
 
 const RARITY_DOTS: Record<Part['rarity'], number | null> = { Common: 1, Rare: 2, Epic: 3, Legendary: 4, Faulty: null };
 
@@ -87,6 +113,15 @@ const RARITY_DOTS: Record<Part['rarity'], number | null> = { Common: 1, Rare: 2,
 async function readText(image: Raster, layout: Layout, panel: PanelName, ref: Box, ocr: Ocr, mode: OcrMode = 'line'): Promise<string> {
   const line = textLine(image, place(layout, panel, ref), 12 * layout.scale);
   if (!line) return '';
+  if (mode === 'number') {
+    const votes = new Map<string, number>();
+    for (const height of NUMBER_HEIGHTS) {
+      const text = (await ocr(textCrop(image, line, height), mode)).replace(/\s+/g, '');
+      if (/\d/.test(text)) votes.set(text, (votes.get(text) ?? 0) + 1);
+    }
+    // most votes first; a tie goes to the longer reading, since dropped digits are the usual misread
+    return [...votes].sort((a, b) => b[1] - a[1] || b[0].length - a[0].length)[0]?.[0] ?? '';
+  }
   for (const height of TEXT_HEIGHTS) {
     const text = (await ocr(textCrop(image, line, height), mode)).replace(/\s+/g, ' ').trim();
     if (text.replace(/[^A-Za-z0-9]/g, '').length >= 2) return text;
@@ -245,13 +280,15 @@ export async function readScreenshot(image: Raster, ocr: Ocr, data: PlannerData 
 
   const abilities: AbilityReading[] = [];
   const allowedAbilities = data.abilities.filter((a) => abilityAllowed(a, mode));
-  for (const [index, slot] of ABILITY_SLOTS.entries()) {
+  for (const [index, slot] of abilitySlots(layout).entries()) {
     if (!hasIcon(image, place(layout, 'abilities', slot.icon))) {
       abilities.push({ kind: 'ability', index, text: '', id: null, confidence: 1, alternatives: [] });
       continue;
     }
     const text = await readText(image, layout, 'abilities', slot.name, ocr);
-    abilities.push(itemReading('ability', index, text, rank(text, allowedAbilities, (a) => a.name)));
+    // the crash slot only takes crash abilities (the Blasts), the others only regular ones
+    const fits = allowedAbilities.filter((a) => isCrashAbility(a) === (index === CRASH_SLOT));
+    abilities.push(itemReading('ability', index, text, rank(text, fits, (a) => a.name)));
   }
 
   // The panel header says how many parts are installed ("4/4"); without it, every card with an icon counts.

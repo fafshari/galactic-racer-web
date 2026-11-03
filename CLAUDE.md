@@ -282,6 +282,7 @@ Showcased at `/components` under `npm run dev`. Every new component, and every n
   - Recognition is `src/lib/import/` (OCR text matched to game names, pips counted, part rarity from the dots under the icon). The OCR engine is injected.
   - Browser glue is `BuildPlanner/screenshot.ts`, loaded only when an image arrives. tesseract.js and its English data are self-hosted; the `ocr-data` integration serves the data at `/ocr/4.0.0_best_int/`.
   - Fixtures are real captures in `src/lib/import/fixtures/`. After a game UI change, add a capture and update the reference coordinates.
+  - The abilities panel moves with the style panel's trait count, so it's located on its own (`detectLayout`) and its slots, crash slot included, are laid out from its height.
 - **Testing:** `tests/e2e/planner.spec.ts` covers these against the production build, including a real legacy link and the live planner's numbers. The stat rows' `<output>` levels are ARIA status regions too, so the toolbar message is addressed by its class in tests.
 
 ## Tour simulator

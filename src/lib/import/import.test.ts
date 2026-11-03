@@ -11,6 +11,9 @@ import type { Raster } from './raster.ts';
 
 const fixture = (name: string): string => fileURLToPath(new URL(`./fixtures/${name}`, import.meta.url));
 const SKIMMER = fixture('campaign-skimmer-redliner-2000x1125.webp');
+// A style with three traits: its panel is shorter, so the abilities panel starts higher and its slots are taller.
+// This capture's panels are also darker and less saturated than the other's.
+const THREE_TRAITS = fixture('skimmer-ramjet-rider-3-traits-2000x1125.webp');
 
 async function load(input: Sharp): Promise<Raster> {
   const { data, info } = await input.ensureAlpha().raw().toBuffer({ resolveWithObject: true });
@@ -57,6 +60,7 @@ const EXPECTED = [
   '-',
   '-',
   '-',
+  '-',
   'Ramjet Power II',
   'Ramjet Accelerator I',
   'Heat Reduction I',
@@ -93,6 +97,31 @@ describe('readScreenshot', () => {
     expect(Math.abs(topSpeedKmh(build) - 403)).toBeLessThanOrEqual(1);
   }, 60_000);
 
+  it('finds the abilities wherever the style panel above pushes them, and reads the speed', async () => {
+    const result = await readScreenshot(await load(sharp(THREE_TRAITS)), ocr);
+    expect(result.readings.map(name)).toEqual([
+      'Skim Speeder',
+      'Pvp_Style_Cooling',
+      'Vent II',
+      '-',
+      '-',
+      '-',
+      '-',
+      'Cornering 0',
+      'Acceleration 3',
+      'Resilience 0',
+      'Boost 0',
+      'AbilityUsage 0',
+      'Advanced 1',
+    ]);
+    // Multiplayer's Ramjet Rider and Campaign's rank 2 share their name and traits, so the style is left to check
+    expect(doubtful(result.readings).map((r) => r.kind)).toEqual(['style']);
+    expect(result.shownSpeed).toBe(322);
+    const build = assembleBuild(result.readings);
+    expect(build.abilities).toEqual(['BP_Ability_VentV2']);
+    expect(topSpeedKmh(build)).toBe(322);
+  }, 60_000);
+
   // The same screen at other sizes and framings: the panels are found wherever they are.
   it.each([
     ['1280×720', (s: Sharp) => s.resize(1280, 720)],
@@ -116,6 +145,14 @@ describe('layout', () => {
     const layout = detectLayout(await load(sharp(SKIMMER).resize(1000, 563)));
     expect(layout?.scale).toBeCloseTo(0.5, 1);
     expect(layout?.panels.parts.x).toBeCloseTo(670, -1);
+  });
+
+  it('finds the abilities panel below a style panel of any height', async () => {
+    const four = detectLayout(await load(sharp(SKIMMER)));
+    const three = detectLayout(await load(sharp(THREE_TRAITS)));
+    expect(four?.panels.abilities.y).toBeCloseTo(623, -1);
+    expect(three?.panels.abilities.y).toBeCloseTo(540, -1);
+    expect(three?.panels.abilities.h).toBeGreaterThan(four?.panels.abilities.h ?? Infinity);
   });
 });
 
