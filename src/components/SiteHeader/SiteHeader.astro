@@ -11,6 +11,7 @@ const path = Astro.url.pathname;
 const links = [
   { href: '/', label: 'Build planner', current: path === '/' || path.endsWith('/index.html') },
   { href: '/tour.html', label: 'Tour simulator', current: path.endsWith('/tour.html') || path.endsWith('/tour') },
+  { href: '/arcade.html', label: 'Arcade', current: path.endsWith('/arcade.html') || path.endsWith('/arcade') },
   { href: '/changelog.html', label: "What's new", current: path.endsWith('/changelog.html') || path.endsWith('/changelog') },
 ];
 ---

@@ -55,26 +55,30 @@ export function partFamilies(data: PlannerData, mode: GameMode, query: string): 
 }
 
 // ---- build changes -----------------------------------------------------------------------------------
-const byId = <T extends { id: string }>(list: readonly T[], id: string): T | undefined => list.find((x) => x.id === id);
+const byId = <T extends { id: string }>(list: readonly T[], id: string | null): T | undefined => list.find((x) => x.id === id);
 
-/** Switches mode, keeping what still applies: the same-named style, allowed vehicle, abilities and parts. */
+/**
+ * Switches mode, keeping what still applies: the same-named style, allowed vehicle, abilities and parts. A build with
+ * no racer style keeps having none.
+ */
 export function setMode(data: PlannerData, b: Build, mode: GameMode): Build {
   if (b.mode === mode) return b;
   const old = byId(data.styles, b.style);
   const styles = stylesFor(mode, data);
-  const style = styles.find((s) => s.name === old?.name && (s.rank ?? 1) === 1) ?? styles[0];
-  if (!style) return b;
+  const style = b.style === null ? null : (styles.find((s) => s.name === old?.name && (s.rank ?? 1) === 1) ?? styles[0]);
+  if (style === undefined) return b;
+  const starting = style?.abilities ?? [];
   const vehicles = data.meta.modes[mode].vehicles;
   const keepAbilities = b.abilities.filter((id) => {
     const a = byId(data.abilities, id);
-    return !style.abilities.includes(id) && a !== undefined && abilityAllowed(a, mode);
+    return !starting.includes(id) && a !== undefined && abilityAllowed(a, mode);
   });
   return {
     ...b,
     mode,
     vehicle: vehicles.includes(b.vehicle) ? b.vehicle : (vehicles[0] ?? b.vehicle),
-    style: style.id,
-    abilities: fitAbilities(data, [...style.abilities, ...keepAbilities]),
+    style: style?.id ?? null,
+    abilities: fitAbilities(data, [...starting, ...keepAbilities]),
     parts: b.parts.filter((id) => {
       const p = byId(data.affixes, id);
       return p !== undefined && partAllowed(p, mode);
@@ -86,9 +90,13 @@ export function setMode(data: PlannerData, b: Build, mode: GameMode): Build {
 
 export const setVehicle = (b: Build, vehicle: VehicleId): Build => ({ ...b, vehicle, active: {} });
 
-/** Picks a style group; Campaign keeps the current rank. The old style's starting abilities make way for the new one's. */
-export function setStyle(data: PlannerData, b: Build, picked: StyleId): Build {
+/**
+ * Picks a style group; Campaign keeps the current rank. The old style's starting abilities make way for the new one's.
+ * `null` clears the style: its starting abilities go, and everything else stays.
+ */
+export function setStyle(data: PlannerData, b: Build, picked: StyleId | null): Build {
   const old = byId(data.styles, b.style);
+  if (picked === null) return { ...b, style: null, abilities: b.abilities.filter((a) => !(old?.abilities.includes(a) ?? false)), active: {} };
   const p = byId(data.styles, picked);
   if (!p) return b;
   const style = (old?.rank != null ? data.styles.find((s) => s.group === p.group && s.rank === old.rank) : undefined) ?? p;

@@ -8,7 +8,8 @@ export type ActiveCount = true | number;
 export interface Build {
   mode: GameMode;
   vehicle: VehicleId;
-  style: StyleId;
+  /** Null for no racer style, as some pre-made Arcade vehicles have. */
+  style: StyleId | null;
   /** Upgrade level per slot, 0-10. Missing slots are level 0. */
   levels: Partial<Record<SlotId, number>>;
   parts: PartId[];

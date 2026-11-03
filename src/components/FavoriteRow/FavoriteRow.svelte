@@ -61,7 +61,11 @@
 
   <span class="icons">
     <span class="badge" title={summary.vehicle.name}><GameIcon name={summary.vehicle.icon} size="md" label={summary.vehicle.name} /></span>
-    <span class="badge" title={summary.style.name}><GameIcon name={summary.style.icon} size="md" label={summary.style.name} /></span>
+    {#if summary.style}
+      <span class="badge" title={summary.style.name}><GameIcon name={summary.style.icon} size="md" label={summary.style.name} /></span>
+    {:else}
+      <span class="badge -empty" role="img" title="No racer style" aria-label="No racer style"></span>
+    {/if}
     <span class="diamond" role="img" aria-label={summary.abilities.length ? `Abilities: ${summary.abilities.map((a) => a.name).join(', ')}` : 'No abilities'}>
       {#each SPOTS as spot, i (spot)}
         {@const a = summary.abilities[i]}

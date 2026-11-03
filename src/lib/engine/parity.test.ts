@@ -3,7 +3,7 @@
 import { createRequire } from 'node:module';
 import { describe, expect, it } from 'vitest';
 import { planner } from '../data/index.ts';
-import type { SlotId, StyleId, VehicleId } from '../data/types.ts';
+import type { SlotId, VehicleId } from '../data/types.ts';
 import { createSynergy, type OfferKind, type SynergyBuild } from '../synergy/synergy.ts';
 import { freshBuild, type Build } from './build.ts';
 import { evaluate, type Evaluation } from './evaluate.ts';
@@ -46,7 +46,7 @@ function expectSame(build: Build, times: true | number): void {
 }
 
 const vehicles = planner.vehicles.map((v) => v.id);
-const bare = (vehicle: VehicleId, patch: Partial<Build> = {}): Build => ({ ...freshBuild('mp'), vehicle, style: 'none' as StyleId, abilities: [], ...patch });
+const bare = (vehicle: VehicleId, patch: Partial<Build> = {}): Build => ({ ...freshBuild('mp'), vehicle, style: null, abilities: [], ...patch });
 
 describe('engine matches the legacy planner', () => {
   it.each(vehicles)('every part on its own, %s', (vehicle) => {

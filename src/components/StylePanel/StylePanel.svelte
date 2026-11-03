@@ -5,7 +5,8 @@
 
   interface Props {
     name: string;
-    icon: IconName;
+    /** Null for no racer style: an empty badge in the icon's place. */
+    icon: IconName | null;
     /** Campaign styles have ranks; shown after the name. */
     rank?: number | null;
     traits: readonly { name: string; desc: string }[];
@@ -16,19 +17,21 @@
   const { name, icon, rank = null, traits, onchange }: Props = $props();
 </script>
 
-<section class="style-panel" aria-label="Racer style">
+<section class={['style-panel', icon === null && '-none']} aria-label="Racer style">
   <header class="head">
-    <GameIcon name={icon} size="xl" />
+    {#if icon === null}<span class="blank" aria-hidden="true"></span>{:else}<GameIcon name={icon} size="xl" />{/if}
     <div class="titles">
       <h3 class="name">{name}{#if rank !== null}<span class="rank">&nbsp;· rank {rank}</span>{/if}</h3>
     </div>
     {#if onchange}<Button size="sm" onclick={onchange}>Change</Button>{/if}
   </header>
-  <ul class="traits">
-    {#each traits as t (t.name)}
-      <li class="trait"><span class="name">{t.name}</span><span class="desc">{t.desc}</span></li>
-    {/each}
-  </ul>
+  {#if traits.length}
+    <ul class="traits">
+      {#each traits as t (t.name)}
+        <li class="trait"><span class="name">{t.name}</span><span class="desc">{t.desc}</span></li>
+      {/each}
+    </ul>
+  {/if}
 </section>
 
 <style lang="scss">
@@ -43,6 +46,19 @@
     gap: var(--space-3);
     align-items: center;
     color: var(--color-fg);
+  }
+
+  // no racer style: a dashed ring the size of the style icon
+  .head > .blank {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    border: 2px dashed var(--color-line);
+    border-radius: 50%;
+  }
+
+  .style-panel.-none > .head {
+    color: var(--color-muted);
   }
 
   .head > .titles {

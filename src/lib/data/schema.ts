@@ -13,6 +13,7 @@ export const PartId = z.string().min(1).brand<'PartId'>();
 export const FavourId = z.string().min(1).brand<'FavourId'>();
 export const TunesetId = z.string().min(1).brand<'TunesetId'>();
 export const IconName = z.string().min(1).brand<'IconName'>();
+export const ArcadeEventId = z.string().min(1).brand<'ArcadeEventId'>();
 
 /**
  * A reference that may be missing. The datamine writes "" for "none"; the import normalizes that to null and
@@ -252,6 +253,36 @@ export const Tour = z.strictObject({
   }),
 });
 
+// ---- Arcade events: the game's pre-made vehicles ------------------------------------------------
+export const ArcadeEventType = z.enum(['TimeTrial', 'Precision', 'TeamRace']);
+export const ArcadeEvent = z.strictObject({
+  id: ArcadeEventId,
+  name: z.string().min(1),
+  desc: z.string(),
+  /** The Arcade tab it sits under (EArcadeEventCategories). */
+  category: z.string().min(1),
+  type: ArcadeEventType,
+  vehicle: VehicleId,
+  planet: z.string().min(1),
+  track: z.string().min(1),
+  laps: z.int().positive().nullable(),
+  /** The card's background colour, RRGGBB. */
+  colour: z.string().regex(/^[0-9A-F]{6}$/i),
+  /** What unlocks it, as the game says it; null when it starts unlocked. */
+  lock: z.string().min(1).nullable(),
+  /** The event whose medal unlocks this one, when that's another Arcade event. */
+  lockedBy: ArcadeEventId.nullable(),
+  /** Gold, silver and bronze times in seconds, fastest first. */
+  medals: z.array(z.number().positive()).length(3),
+  levels: z.record(SlotId, z.int().min(0).max(10)),
+  parts: z.array(PartId),
+  abilities: z.array(AbilityId),
+  /** False when the vehicle races without a Ramjet. */
+  ramjet: z.boolean(),
+  /** True when the event sets the vehicle's stats itself, so levels and parts don't tell the whole story. */
+  authoredStats: z.boolean(),
+});
+
 // ---- the whole export --------------------------------------------------------------------------
 export const PlannerData = z.strictObject({
   meta: z.strictObject({
@@ -275,6 +306,8 @@ export const PlannerData = z.strictObject({
   favours: z.array(Favour),
   tunesets: z.record(TunesetId, Tuneset),
   tour: Tour,
+  /** Arcade events in the game's order. */
+  arcade: z.array(ArcadeEvent),
 });
 
 // ---- files that ship alongside the data --------------------------------------------------------

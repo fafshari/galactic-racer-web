@@ -23,7 +23,8 @@ export interface Favorite {
 /** What a favourite's row shows. */
 export interface FavoriteSummary {
   vehicle: { name: string; icon: IconName };
-  style: { name: string; icon: IconName };
+  /** Null for a build with no racer style. */
+  style: { name: string; icon: IconName } | null;
   /** The regular abilities, up to four, in slot order (the crash ability isn't shown). */
   abilities: { name: string; icon: IconName }[];
   /** The faster boost and the top speed it reaches (km/h, rounded), with every on/off situational effect triggered. */
@@ -60,7 +61,7 @@ const cleanName = (name: string, fallback: string): string => name.trim().slice(
 
 /** A name to start from: "Firebug · Skim Speeder". */
 export function defaultName(data: PlannerData, b: Build): string {
-  const style = data.styles.find((s) => s.id === b.style)?.name ?? 'Build';
+  const style = b.style === null ? 'No racer style' : (data.styles.find((s) => s.id === b.style)?.name ?? 'Build');
   const vehicle = data.vehicles.find((v) => v.id === b.vehicle)?.name ?? '';
   return vehicle ? `${style} · ${vehicle}` : style;
 }
@@ -103,7 +104,7 @@ export function summarize(data: PlannerData, f: Favorite): FavoriteSummary {
   const ramjet = toKmh(s.top + s.ramjet);
   return {
     vehicle: { name: vehicle?.name ?? '', icon: vehicle?.icon ?? ('' as IconName) },
-    style: { name: style?.name ?? '', icon: style?.icon ?? ('' as IconName) },
+    style: style ? { name: style.name, icon: style.icon } : null,
     abilities: regularAbilities(data, b).flatMap((id) => {
       const a = data.abilities.find((x) => x.id === id);
       return a ? [{ name: a.name, icon: a.icon }] : [];

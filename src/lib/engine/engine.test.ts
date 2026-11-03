@@ -1,14 +1,14 @@
 // The legacy test-engine.js cases: effects whose in-game result is known from tooltips and base configs.
 import { describe, expect, it } from 'vitest';
 import { planner } from '../data/index.ts';
-import type { PartId, SlotId, StyleId, VehicleId } from '../data/types.ts';
+import type { PartId, SlotId, VehicleId } from '../data/types.ts';
 import { freshBuild, type Build } from './build.ts';
 import { evaluate, type Evaluation, type Row } from './evaluate.ts';
 import { isModifier, type CellValue } from './ops.ts';
 import { speeds } from './speeds.ts';
 
 // Like the legacy tests: no racer style, so no trait effects mix in.
-const build = (patch: Partial<Build>): Build => ({ ...freshBuild('mp'), style: 'none' as StyleId, abilities: [], ...patch });
+const build = (patch: Partial<Build>): Build => ({ ...freshBuild('mp'), style: null, abilities: [], ...patch });
 const row = (r: Evaluation, key: string): Row => {
   const found = r.rows.find((x) => `${x.cfg}.${x.field}` === key);
   if (!found) throw new Error(`no row ${key}`);

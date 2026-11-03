@@ -9,7 +9,7 @@ export const STORAGE_KEY = 'swgr-build';
 const Saved = z.object({
   mode: z.enum(['mp', 'campaign']).optional(),
   vehicle: z.string(),
-  style: z.string(),
+  style: z.string().nullable(),
   levels: z.record(z.string(), z.number()).optional(),
   parts: z.array(z.string()).optional(),
   abilities: z.array(z.string()).optional(),
@@ -22,10 +22,10 @@ export function restoreBuild(data: PlannerData, raw: unknown): Build | null {
   const r = Saved.safeParse(raw);
   if (!r.success) return null;
   const s = r.data;
-  const style = data.styles.find((x) => x.id === s.style);
+  const style = s.style === null ? null : data.styles.find((x) => x.id === s.style);
   const vehicle = data.vehicles.find((x) => x.id === s.vehicle);
-  if (!style || !vehicle) return null;
-  const mode = s.mode ?? style.mode;
+  if (style === undefined || !vehicle) return null;
+  const mode = s.mode ?? style?.mode ?? 'mp';
   const pick = <T extends string>(ids: readonly string[] | undefined, known: readonly { id: T }[]): T[] =>
     (ids ?? []).map((id) => known.find((k) => k.id === id)?.id).filter((id) => id !== undefined);
   const levels = Object.fromEntries(
@@ -34,7 +34,7 @@ export function restoreBuild(data: PlannerData, raw: unknown): Build | null {
   return {
     ...freshBuild(mode, data),
     vehicle: vehicle.id,
-    style: style.id,
+    style: style?.id ?? null,
     levels,
     parts: pick<PartId>(s.parts, data.affixes).slice(0, data.meta.partSlots.max),
     abilities: fitAbilities(data, pick<AbilityId>(s.abilities, data.abilities)),

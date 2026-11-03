@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { buildOrder, planner } from '../data/index.ts';
-import type { BuildOrder } from '../data/order.ts';
+import { ORDER_CAPACITY, type BuildOrder } from '../data/order.ts';
 import type { VehicleId } from '../data/types.ts';
 import { fitAbilities, freshBuild, type Build } from './build.ts';
-import { BuildCodeError, decodeBuild, encodeBuild } from './codes.ts';
+import { BuildCodeError, decodeBuild, encodeBuild, NO_STYLE } from './codes.ts';
 import { evaluate } from './evaluate.ts';
 import { speeds, toKmh } from './speeds.ts';
 
@@ -19,7 +19,7 @@ function legacyEncode(b: Build): string {
   const pt = b.parts.map((id) => b36(idx(planner.affixes, id), 2)).join('');
   const ab = b.abilities.map((id) => b36(idx(planner.abilities, id), 2)).join('');
   const fv = b.favours.map((id) => b36(idx(planner.favours, id), 2)).join('');
-  return `gr2-${b.mode === 'campaign' ? 'c' : 'm'}${idx(planner.vehicles, b.vehicle)}${b36(idx(planner.styles, b.style), 2)}${lv}.${pt}.${ab}.${fv}`.replace(/\.+$/, '');
+  return `gr2-${b.mode === 'campaign' ? 'c' : 'm'}${idx(planner.vehicles, b.vehicle)}${b36(idx(planner.styles, b.style ?? ''), 2)}${lv}.${pt}.${ab}.${fv}`.replace(/\.+$/, '');
 }
 
 const sampleBuilds = (): Build[] => {
@@ -89,6 +89,26 @@ describe('build codes', () => {
     const b = decodeBuild(code);
     expect(b.style).toBe(freshBuild('mp').style);
     expect(b.favours).toEqual([]);
+  });
+
+  it('round-trips a build with no racer style, keeping its abilities, parts and levels', () => {
+    for (const mode of ['mp', 'campaign'] as const) {
+      const sample = sampleBuilds().find((b) => b.mode === mode);
+      if (!sample) throw new Error('no sample');
+      const b: Build = { ...sample, style: null };
+      const code = encodeBuild(b);
+      expect(code.slice(5, 8)).toBe(`${String(buildOrder.vehicles.indexOf(b.vehicle))}${NO_STYLE}`);
+      expect(decodeBuild(code)).toEqual({ ...b, active: {} });
+    }
+    // a bare no-style link, as a chat app leaves it with the dots stripped
+    const bare = decodeBuild('gr2-m0zz000000');
+    expect([bare.style, bare.abilities, bare.parts]).toEqual([null, [], []]);
+  });
+
+  it('never gives a real style the no-style position, so old links keep decoding the same', () => {
+    expect(parseInt(NO_STYLE, 36)).toBe(36 * 36 - 1);
+    expect(ORDER_CAPACITY.styles).toBe(36 * 36 - 1);
+    expect(buildOrder.styles.length).toBeLessThanOrEqual(ORDER_CAPACITY.styles);
   });
 
   it('rejects anything that is not a gr2 code', () => {
