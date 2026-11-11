@@ -7,6 +7,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - **minor** for new features and new game content
 - **patch** for fixes and corrections
 
+## [1.1.3] - 2026-11-11
+
+### Fixed
+
+- Tour simulator: a bought Upgrade Pack raises a stat by 1. It used to add the race-reward upgrade size you set under "Assumptions". ([#28](https://github.com/fafshari/galactic-racer-web/pull/28))
+
 ## [1.1.2] - 2026-11-11
 
 ### Fixed
@@ -77,6 +83,7 @@ First versioned release: the site rebuilt on Astro and Svelte and moved to Verce
 - Game data and icons datamined from the game files, with the fan-made, not-affiliated notice on every page.
 - Open source under the MIT license.
 
+[1.1.3]: https://github.com/fafshari/galactic-racer-web/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/fafshari/galactic-racer-web/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/fafshari/galactic-racer-web/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/fafshari/galactic-racer-web/compare/v1.0.1...v1.1.0

@@ -6,7 +6,7 @@
   import type { Synergy } from '~/lib/synergy/synergy.ts';
   import { rateOffers, type Fit, type FitKind } from '~/lib/tour/fit.ts';
   import {
-    abilityParent, backerLocked, buildOf, contractOf, credits, formRank, isAbilityUpgrade, isUnderdog, ownedSlotOf, packPrice, partPrice, planetOf,
+    abilityParent, backerLocked, buildOf, PACK_UPGRADE, contractOf, credits, formRank, isAbilityUpgrade, isUnderdog, ownedSlotOf, packPrice, partPrice, planetOf,
     replaces, rerollPrice, singular, unitLabel, type TourAction, type TourState,
   } from '~/lib/tour/tour.ts';
   import Button from '../Button/Button.svelte';
@@ -59,11 +59,11 @@
   {/if}
 {/snippet}
 
-{#snippet upgradeOffer(id: SlotId, fit: Fit | undefined, onpick: () => void)}
+{#snippet upgradeOffer(id: SlotId, size: number, fit: Fit | undefined, onpick: () => void)}
   {@const s = slot(id)}
   {#if s}
     {@const lv = tour.levels[id] ?? 0}
-    <ChoiceCard icon={s.icon} title={s.name} note={`${String(lv)} → ${String(Math.min(10, lv + tour.upgradeSize))}${fit?.label ? ` · ${fit.label}` : ''}`} subtitle={fit?.label ? fit.reason : s.part} pressed={false} onclick={onpick} />
+    <ChoiceCard icon={s.icon} title={s.name} note={`${String(lv)} → ${String(Math.min(10, lv + size))}${fit?.label ? ` · ${fit.label}` : ''}`} subtitle={fit?.label ? fit.reason : s.part} pressed={false} onclick={onpick} />
   {/if}
 {/snippet}
 
@@ -103,8 +103,8 @@
     <div class="assumptions">
       <span class="label">Options per reward or pack</span>
       <ModeSwitch label="Options per reward or pack" options={[2, 3, 4, 5].map((n) => ({ value: String(n), label: String(n) }))} value={String(tour.options)} onchange={(v: string) => { act({ type: 'setOptions', n: Number(v) }); }} />
-      <span class="label">Each upgrade adds</span>
-      <ModeSwitch label="Each upgrade adds" options={[1, 2, 3].map((n) => ({ value: String(n), label: `+${String(n)}` }))} value={String(tour.upgradeSize)} onchange={(v: string) => { act({ type: 'setUpgradeSize', n: Number(v) }); }} />
+      <span class="label">Each race reward upgrade adds</span>
+      <ModeSwitch label="Each race reward upgrade adds" options={[1, 2, 3].map((n) => ({ value: String(n), label: `+${String(n)}` }))} value={String(tour.upgradeSize)} onchange={(v: string) => { act({ type: 'setUpgradeSize', n: Number(v) }); }} />
     </div>
     <div class="actions"><Button variant="primary" onclick={() => { act({ type: 'start' }); }}>Start tour</Button><span class="hint">Run seed {tour.seed}</span></div>
   {:else if tour.phase === 'backer' && planet}
@@ -199,7 +199,7 @@
     {#if offer.kind === 'part' && partsFull}<p class="lead">All part slots are full. Remove a part to make room, or skip. Upgrades of parts you own still fit.</p>{/if}
     <div class={offer.kind === 'part' ? 'cards' : 'choices'}>
       {#if offer.kind === 'upgrade'}
-        {#each offer.ids as id (id)}{@render upgradeOffer(id, rated.get(id), () => { act({ type: 'takeReward', id }); })}{/each}
+        {#each offer.ids as id (id)}{@render upgradeOffer(id, tour.upgradeSize, rated.get(id), () => { act({ type: 'takeReward', id }); })}{/each}
       {:else}
         {#each offer.ids as id (id)}{@render partOffer(id, rated.get(id), 'Take', partsFull && !replaces(planner, tour, id), () => { act({ type: 'takeReward', id }); })}{/each}
       {/if}
@@ -224,7 +224,7 @@
       <div class="choices">
         {#if pack.kind === 'stat'}
           {@const packFits = fits('upgrade', pack.ids)}
-          {#each pack.ids as id (id)}{@render upgradeOffer(id, packFits.get(id), () => { act({ type: 'takePack', id }); })}{/each}
+          {#each pack.ids as id (id)}{@render upgradeOffer(id, PACK_UPGRADE, packFits.get(id), () => { act({ type: 'takePack', id }); })}{/each}
         {:else}
           {@const packFits = fits('ability', pack.ids)}
           {#each pack.ids as id (id)}{@render abilityOffer(id, packFits.get(id), () => { act({ type: 'takePack', id }); })}{/each}
@@ -243,7 +243,7 @@
     </div>
     <h3 class="subhead">Packs</h3>
     <div class="choices">
-      <ChoiceCard icon={null} title="Upgrade Pack" note={credits(packPrice(planner, shop, 'stat'))} subtitle={`Choose one of ${String(tour.options)} stat upgrades`} pressed={false} disabled={shop.pack !== null} onclick={() => { act({ type: 'openPack', kind: 'stat' }); }} />
+      <ChoiceCard icon={null} title="Upgrade Pack" note={credits(packPrice(planner, shop, 'stat'))} subtitle={`Choose one of ${String(tour.options)} stats to raise by ${String(PACK_UPGRADE)}`} pressed={false} disabled={shop.pack !== null} onclick={() => { act({ type: 'openPack', kind: 'stat' }); }} />
       <ChoiceCard icon={null} title="Ability Pack" note={credits(packPrice(planner, shop, 'ability'))} subtitle={`Choose one of ${String(tour.options)} abilities`} pressed={false} disabled={shop.pack !== null} onclick={() => { act({ type: 'openPack', kind: 'ability' }); }} />
     </div>
     <div class="actions">
