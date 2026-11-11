@@ -6,7 +6,7 @@
   import { encodeBuild, evaluate, speeds, toKmh } from '~/lib/engine/index.ts';
   import { createSynergy } from '~/lib/synergy/synergy.ts';
   import { restoreTour, saveTour, TOUR_STORAGE_KEY } from '~/lib/tour/storage.ts';
-  import { buildOf, credits, formRank, isUnderdog, newTour, partTier, standings, tourAction, type TourAction, type TourState } from '~/lib/tour/tour.ts';
+  import { buildOf, credits, formRank, isFinalRace, isUnderdog, newTour, partTier, standings, totalXp, tourAction, type TourAction, type TourState } from '~/lib/tour/tour.ts';
   import Button from '../Button/Button.svelte';
   import GameIcon from '../GameIcon/GameIcon.svelte';
   import Panel from '../Panel/Panel.svelte';
@@ -75,7 +75,7 @@
   <div class="layout">
     <div class="main">
       <Panel title="Tour" {...running ? { count: `Seed ${String(tour.seed)}` } : {}}>
-        <TourTrack planets={planner.tour.planets} current={tour.planet} phase={tour.phase} />
+        <TourTrack planets={planner.tour.planets} current={tour.planet} phase={tour.phase} final={isFinalRace(planner, tour)} />
       </Panel>
       <Panel>
         <div aria-live="polite"><TourStage {tour} {synergy} {act} /></div>
@@ -99,8 +99,9 @@
           {#if running}
             <div class="tile">
               <span class="n">{rank.score}</span>
-              <span class="l">Form · {ordinal(rank.place)} of 12{tour.planet > 0 && isUnderdog(planner, tour) && tour.phase !== 'done' ? ' · Underdog' : ''}</span>
+              <span class="l">Form · {ordinal(rank.place)} of 12{tour.planet > 0 && !isFinalRace(planner, tour) && isUnderdog(planner, tour) && tour.phase !== 'done' ? ' · Underdog' : ''}</span>
             </div>
+            <div class="tile"><span class="n">{totalXp(tour.xp).toLocaleString('en-US')}</span><span class="l">Tour EXP</span></div>
           {/if}
         </div>
         <div class="focus">

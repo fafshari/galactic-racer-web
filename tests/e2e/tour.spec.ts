@@ -94,3 +94,35 @@ test('no sideways scrolling during a run', async ({ page }) => {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(0);
 });
+
+test('the final race has a bet on who wins, no contract or shop, and its winner takes the tour', async ({ page }) => {
+  await page.getByRole('button', { name: 'Start tour' }).click();
+  for (let guard = 0; guard < 60 && !(await stageTitle(page).textContent())?.endsWith('final race bet'); guard++) {
+    const title = (await stageTitle(page).textContent()) ?? '';
+    if (/choose a (backer|contract)$/.test(title)) {
+      await page.locator('.tour-stage .choice-card').first().click();
+      await page.getByRole('button', { name: 'Next: place your bet' }).click();
+    } else if (title.endsWith('place your bet')) {
+      await page.locator('.tour-stage .choice-card').filter({ hasText: 'Low Risk' }).click();
+      await page.getByRole('button', { name: 'Go to the race' }).click();
+    } else if (title.endsWith(': race')) {
+      await page.getByRole('button', { name: /^Position 4,?/ }).click();
+      await page.getByRole('button', { name: 'Finish race' }).click();
+    } else if (title.endsWith('shop')) {
+      await page.getByRole('button', { name: /^Leave for/ }).click();
+    } else {
+      await page.getByRole('button', { name: /^Skip/ }).or(page.locator('.tour-stage .choice-card').first()).first().click();
+    }
+  }
+  await expect(stageTitle(page)).toHaveText(/final race bet$/);
+  await expect(page.locator('.tour-track .step')).toHaveText(['Bet', 'Race']);
+  await page.getByLabel('Players backing your pick, you included').fill('2');
+  await page.locator('.tour-stage .choice-card').filter({ hasText: 'You' }).click();
+  await page.getByRole('button', { name: 'Go to the final race' }).click();
+  await page.getByRole('button', { name: 'Position 1', exact: true }).click();
+  await page.getByRole('button', { name: 'Finish the tour' }).click();
+  await expect(stageTitle(page)).toHaveText('You won the tour!');
+  await expect(page.locator('.tour-stage .xp .row.-total')).toContainText('EXP');
+  // two backers of the winner share the bet: the table's second-highest pay
+  await expect(page.locator('.tour-stage .xp .row').filter({ hasText: 'Final race bet' })).toContainText('1,750 EXP');
+});

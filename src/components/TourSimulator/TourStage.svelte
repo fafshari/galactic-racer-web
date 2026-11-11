@@ -6,8 +6,9 @@
   import type { Synergy } from '~/lib/synergy/synergy.ts';
   import { rateOffers, type Fit, type FitKind } from '~/lib/tour/fit.ts';
   import {
-    abilityParent, backerLocked, buildOf, PACK_UPGRADE, contractOf, credits, formRank, isAbilityUpgrade, isUnderdog, ownedSlotOf, packPrice, partPrice, planetOf,
-    replaces, rerollPrice, singular, unitLabel, type TourAction, type TourState,
+    abilityParent, backerLocked, buildOf, PACK_UPGRADE, contractOf, credits, finalBetXp, finalPickName, finalPickPlace, formRank, isAbilityUpgrade,
+    isFinalRace, isUnderdog, ordinalOf, ownedSlotOf, packPrice, partPrice, planetOf, racerTier, replaces, rerollPrice, singular, totalXp, tourWinner,
+    unitLabel, type FinalPick, type TourAction, type TourState,
   } from '~/lib/tour/tour.ts';
   import Button from '../Button/Button.svelte';
   import ChoiceCard from '../ChoiceCard/ChoiceCard.svelte';
@@ -27,9 +28,28 @@
   const planet = $derived(planetOf(planner, tour));
   const bet = $derived(T.risk.find((r) => r.id === tour.bet));
   const locked = $derived(backerLocked(tour));
+  const final = $derived(isFinalRace(planner, tour));
   const partsFull = $derived(tour.parts.length >= planner.meta.partSlots.max);
   const abilitiesFull = $derived(tour.abilities.length >= planner.meta.abilitySlots);
-  const ordinal = (n: number): string => `${String(n)}${['st', 'nd', 'rd'][n - 1] ?? 'th'}`;
+  const ordinal = ordinalOf;
+  const players = T.xp.finalBet.byBackers.length;
+  /** Everyone you can back in the final bet, by form: you, then the rivals. */
+  interface Contender {
+    key: string;
+    pick: FinalPick;
+    name: string;
+    tier: string;
+    form: number;
+  }
+  const contenders = $derived(
+    [
+      { key: 'you', pick: { you: true }, name: 'You', tier: '', form: tour.form.you } satisfies Contender,
+      ...tour.racers.map((r, i): Contender => ({ key: `racer-${String(i)}`, pick: { racer: i }, name: r.name, tier: racerTier(r.strength), form: tour.form.field[i] ?? 0 })),
+    ].sort((a, b) => b.form - a.form),
+  );
+  const samePick = (a: FinalPick | null, b: FinalPick): boolean =>
+    a !== null && ('you' in a ? 'you' in b : 'racer' in b && a.racer === b.racer);
+  const xpFor = (place: number): string => `${finalBetXp(planner, tour.finalBackers, place).toLocaleString('en-US')} EXP`;
 
   const part = (id: string) => planner.affixes.find((p) => p.id === id);
   const ability = (id: string) => planner.abilities.find((a) => a.id === id);
@@ -132,6 +152,44 @@
       {/each}
     </div>
     <div class="actions"><Button variant="primary" disabled={tour.backer === null} onclick={() => { act({ type: 'goTo', phase: 'bet' }); }}>Next: place your bet</Button></div>
+  {:else if tour.phase === 'bet' && planet && final}
+    <h2 class="title">{planet.name}: final race bet</h2>
+    <p class="lead">
+      The final race decides the tour: whoever wins it wins the tour. There's no contract before it and no rewards or shop after it. Bet on who
+      wins for Multiplayer Tour EXP. Every player who backs the same racer shares it: the fewer, the more each gets. A 2nd place pays half and a
+      3rd a quarter.
+    </p>
+    <div class="contract">
+      <label class="label" for="final-backers">Players backing your pick, you included</label>
+      <input id="final-backers" class="units" type="number" min="1" max={players} step="1" inputmode="numeric" value={tour.finalBackers} oninput={(e) => { act({ type: 'setFinalBackers', n: Number(e.currentTarget.value) }); }} />
+      <span class="pay">{xpFor(1)} if they win</span>
+    </div>
+    <div class="choices">
+      {#each contenders as c (c.key)}
+        <ChoiceCard
+          icon={null}
+          title={c.name}
+          note={`Form ${String(c.form)}`}
+          subtitle={c.tier || 'Your own racer'}
+          pressed={samePick(tour.finalPick, c.pick)}
+          onclick={() => { act({ type: 'pickFinal', pick: c.pick }); }}
+        />
+      {/each}
+    </div>
+    <div class="actions">
+      <Button variant="primary" disabled={tour.finalPick === null} onclick={() => { act({ type: 'goTo', phase: 'race' }); }}>Go to the final race</Button>
+    </div>
+  {:else if tour.phase === 'race' && planet && final}
+    <h2 class="title">{planet.name}: final race</h2>
+    <p class="lead">
+      Where did you finish? The winner takes the tour.{#if tour.finalPick} Your bet on {finalPickName(tour, tour.finalPick)} pays {xpFor(1)} if they win, {xpFor(2)} for 2nd and {xpFor(3)} for 3rd.{/if}
+    </p>
+    <FinishPicker value={tour.finish} winsUpTo={0} onchange={(n: number) => { act({ type: 'setFinish', position: n }); }} />
+    <div class="actions">
+      <Button onclick={() => { act({ type: 'setFinish', position: 1 + Math.floor(Math.random() * 12) }); }}>Roll a random finish</Button>
+      <Button variant="primary" disabled={tour.finish === null} onclick={() => { act({ type: 'finishRace' }); }}>Finish the tour</Button>
+      <Button onclick={() => { act({ type: 'goTo', phase: 'bet' }); }}>Change bet</Button>
+    </div>
   {:else if tour.phase === 'bet' && planet}
     <h2 class="title">{planet.name}: place your bet</h2>
     {#if tour.planet > 0}
@@ -252,7 +310,25 @@
     </div>
   {:else if tour.phase === 'done'}
     {@const power = evaluate(planner, buildOf(tour)).power}
-    <h2 class="title">Tour complete</h2>
+    {@const winner = tourWinner(tour)}
+    {@const pickPlace = finalPickPlace(tour)}
+    <h2 class="title">{winner === 'You' ? 'You won the tour!' : 'Tour complete'}</h2>
+    {#if winner && tour.finish !== null}
+      <p class="lead">
+        {winner === 'You' ? 'You won' : `${winner} won`} the final race on {planet?.name}{winner === 'You' ? '' : `; you finished ${ordinal(tour.finish)}`}.
+        {#if tour.finalPick && pickPlace !== null}
+          Your bet on {finalPickName(tour, tour.finalPick)}, who finished {ordinal(pickPlace)}, {tour.xp.finalBet ? `paid ${tour.xp.finalBet.toLocaleString('en-US')} EXP` : 'paid nothing'}.
+        {/if}
+      </p>
+    {/if}
+    <dl class="xp">
+      <div class="row"><dt>Race finishes</dt><dd>{tour.xp.races.toLocaleString('en-US')} EXP</dd></div>
+      <div class="row"><dt>Risk bets won</dt><dd>{tour.xp.bets.toLocaleString('en-US')} EXP</dd></div>
+      <div class="row"><dt>Final race bet</dt><dd>{tour.xp.finalBet.toLocaleString('en-US')} EXP</dd></div>
+      <div class="row"><dt>Tour placing</dt><dd>{tour.xp.league.toLocaleString('en-US')} EXP</dd></div>
+      <div class="row -total"><dt>Tour EXP</dt><dd>{totalXp(tour.xp).toLocaleString('en-US')} EXP</dd></div>
+    </dl>
+    <p class="lead">Win and participation streaks add more EXP across tours; they aren't counted here.</p>
     <p class="lead">You earned {credits(tour.earned)} and spent {credits(tour.spent)} over {T.planets.length} planets, finishing with power rating {power}, {tour.parts.length} parts and {tour.abilities.length} abilities.</p>
     <div class="actions">
       <Button variant="primary" onclick={() => { act({ type: 'newRun', seed: Math.floor(Math.random() * 1e9) }); }}>Race another tour</Button>
@@ -359,6 +435,33 @@
 
     .pay {
       color: var(--color-up);
+      font: 600 15px var(--font-mono);
+    }
+  }
+
+  // The tour's EXP, by source, with the total underneath.
+  .tour-stage > .xp {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    background: var(--color-sunk);
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .row.-total {
+      padding-top: 6px;
+      border-top: 1px solid var(--color-line);
+      font-weight: 700;
+    }
+
+    dd {
+      margin: 0;
       font: 600 15px var(--font-mono);
     }
   }
