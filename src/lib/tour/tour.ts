@@ -49,6 +49,21 @@ export interface Racer {
   finishes: number[];
 }
 
+/** Who you back in the final race's bet: yourself, or one of the rivals by index. */
+export type FinalPick = { you: true } | { racer: number };
+
+/** Multiplayer Tour EXP earned so far, by source. */
+export interface TourXp {
+  /** Finishing positions, every race. */
+  races: number;
+  /** Won risk bets, every race but the last. */
+  bets: number;
+  /** The final race's bet on who wins. */
+  finalBet: number;
+  /** Finishing the tour in the top three. */
+  league: number;
+}
+
 export interface TourState {
   phase: Phase;
   vehicle: VehicleId;
@@ -80,6 +95,11 @@ export interface TourState {
   /** The player's own reading of the game's Underdog label, when it differs from the simulation's. */
   underdogOverride: boolean | null;
   racers: Racer[];
+  /** The final race's bet: who you back to win it. */
+  finalPick: FinalPick | null;
+  /** How many players (you included) backed the same racer; the bet's EXP is shared among them. */
+  finalBackers: number;
+  xp: TourXp;
 }
 
 export type TourAction =
@@ -94,6 +114,8 @@ export type TourAction =
   | { type: 'setFinish'; position: number }
   | { type: 'setUnits'; n: number }
   | { type: 'setUnderdog'; value: boolean }
+  | { type: 'pickFinal'; pick: FinalPick }
+  | { type: 'setFinalBackers'; n: number }
   | { type: 'finishRace' }
   | { type: 'takeReward'; id: string }
   | { type: 'skipReward' }
@@ -156,11 +178,48 @@ export function newTour(data: PlannerData, seed: number, keep: Partial<Pick<Tour
     form: { you: 0, field: Array<number>(RACERS).fill(0) },
     underdogOverride: null,
     racers: [],
+    finalPick: null,
+    finalBackers: 1,
+    xp: { races: 0, bets: 0, finalBet: 0, league: 0 },
   };
 }
 
 // ---- read-only helpers the page uses -------------------------------------------------------------------
 export const planetOf = (data: PlannerData, s: TourState) => data.tour.planets[s.planet];
+/** The last planet's race decides the tour: no contract before it, and no rewards or shop after it. */
+export const isFinalRace = (data: PlannerData, s: Pick<TourState, 'planet'>): boolean => s.planet >= data.tour.planets.length - 1;
+export const ordinalOf = (n: number): string => {
+  const teen = n % 100 >= 11 && n % 100 <= 13;
+  return `${String(n)}${teen ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th')}`;
+};
+export const totalXp =(xp: TourXp): number => xp.races + xp.bets + xp.finalBet + xp.league;
+/** Who the final bet backs, as it reads after "bet on": "yourself" or a rival's name. */
+export const finalPickName = (s: Pick<TourState, 'racers'>, pick: FinalPick): string =>
+  'you' in pick ? 'yourself' :(s.racers[pick.racer]?.name ?? `Racer ${String(pick.racer + 1)}`);
+
+/** The final bet's EXP: shared among the players who backed the same racer, scaled by where that racer finished. */
+export function finalBetXp(data: PlannerData, backers: number, place: number): number {
+  const { byBackers, placeModifier, rounding } = data.tour.xp.finalBet;
+  const players = byBackers.length;
+  const n = Math.max(1, Math.min(players, Math.round(backers)));
+  const base = byBackers[players - n] ?? 0;
+  const mod = placeModifier[place - 1] ?? 0;
+  return Math.round((base * mod) / rounding) * rounding;
+}
+
+/** Where the racer you backed finished the final race, once it's run. */
+export function finalPickPlace(s: Pick<TourState, 'racers' | 'finish' | 'finalPick'>): number | null {
+  const pick = s.finalPick;
+  if (!pick) return null;
+  if ('you' in pick) return s.finish;
+  return s.racers[pick.racer]?.finishes.at(-1) ?? null;
+}
+
+/** Who won the final race, and so the tour. */
+export function tourWinner(s: Pick<TourState, 'racers' | 'finish'>): string {
+  if (s.finish === 1) return 'You';
+  return s.racers.find((r) => r.finishes.at(-1) === 1)?.name ?? '';
+}
 export const contractOf = (data: PlannerData, o: BackerOffer) => data.tour.backers[o.backer]?.contracts[o.contract];
 /** True from the second race on: you stay with the backer you picked first, which offers several of its contracts. */
 export const backerLocked = (s: Pick<TourState, 'backers'>): boolean => {
@@ -467,20 +526,65 @@ export function tourAction(data: PlannerData, state: TourState, action: TourActi
       log: [],
       form: { you: 0, field: Array<number>(RACERS).fill(0) },
       underdogOverride: null,
+      finalPick: null,
+      finalBackers: 1,
+      xp: { races: 0, bets: 0, finalBet: 0, league: 0 },
     });
     setRand();
     s.racers = makeRacers();
     log(`Tour starts with ${style?.name ?? s.style} in a ${data.vehicles.find((v) => v.id === s.vehicle)?.name ?? s.vehicle}`);
     rollBackers();
   };
+  /** The other 11 racers fill the positions you didn't take, by strength plus a swing; returns where each finished. */
+  const placeRivals = (pos: number): number[] => {
+    const open = Array.from({ length: POSITIONS }, (_, i) => i + 1).filter((n) => n !== pos);
+    const order = s.racers.map((r, i) => ({ i, perf: r.strength + gauss(rand) * SWING })).sort((a, b) => b.perf - a.perf);
+    const at = Array<number>(s.racers.length).fill(POSITIONS);
+    order.forEach((o, k) => {
+      const place = open[k] ?? POSITIONS;
+      at[o.i] = place;
+      s.racers[o.i]?.finishes.push(place);
+    });
+    return at;
+  };
+  const gainXp = (source: keyof TourXp, n: number, why: string): void => {
+    if (!n) return;
+    s.xp[source] += n;
+    log(`${why}: +${n.toLocaleString('en-US')} EXP`);
+  };
+  // The final race: no contract, rewards or shop. Its winner wins the tour, and the bet on who wins pays EXP.
+  const finishFinalRace = (pos: number): void => {
+    const pick = s.finalPick;
+    setRand();
+    log(`Finished P${String(pos)}`);
+    gainXp('races', T.xp.racePlacement[pos - 1] ?? 0, `P${String(pos)} finish`);
+    placeRivals(pos);
+    log(`${tourWinner(s)} won ${planet().name} and the tour`);
+    gainXp('league', T.xp.leaguePlacement[pos - 1] ?? 0, `Tour finished ${ordinalOf(pos)}`);
+    if (pick) {
+      const name = finalPickName(s, pick);
+      const at = finalPickPlace(s) ?? POSITIONS;
+      const won = finalBetXp(data, s.finalBackers, at);
+      if (won) gainXp('finalBet', won, `Final bet on ${name} (P${String(at)}, backed by ${String(s.finalBackers)})`);
+      else log(`Final bet on ${name} lost (P${String(at)})`);
+    }
+    s.phase = 'done';
+    log('Tour complete');
+  };
   const finishRace = (): void => {
-    const bet = T.risk.find((r) => r.id === s.bet);
     const pos = s.finish;
-    if (!bet || pos === null) return;
+    if (pos === null) return;
+    if (isFinalRace(data, s)) {
+      finishFinalRace(pos);
+      return;
+    }
+    const bet = T.risk.find((r) => r.id === s.bet);
+    if (!bet) return;
     setRand();
     const p = planet();
     const place = p.placeCredits[pos - 1] ?? 0;
     credit(p.baseCredits + place, `Finished P${String(pos)}: base ${credits(p.baseCredits)}${place ? ` + placing ${credits(place)}` : ''}`);
+    gainXp('races', T.xp.racePlacement[pos - 1] ?? 0, `P${String(pos)} finish`);
     if (s.backer !== null) {
       const o = s.backers[s.backer];
       const c = o ? contractOf(data, o) : undefined;
@@ -498,13 +602,10 @@ export function tourAction(data: PlannerData, state: TourState, action: TourActi
     }
     // form: your finish and won bet; the other 11 racers fill the remaining positions by strength + swing
     s.form.you += (T.form.positionScore[pos - 1] ?? 0) + (won ? (T.form.betScore[bet.id] ?? 0) : 0);
-    const open = Array.from({ length: POSITIONS }, (_, i) => i + 1).filter((n) => n !== pos);
-    const order = s.racers.map((r, i) => ({ i, perf: r.strength + gauss(rand) * SWING })).sort((a, b) => b.perf - a.perf);
-    order.forEach((o, k) => {
-      const at = open[k] ?? POSITIONS;
-      s.racers[o.i]?.finishes.push(at);
-      s.form.field[o.i] = (s.form.field[o.i] ?? 0) + (T.form.positionScore[at - 1] ?? 0);
+    placeRivals(pos).forEach((at, i) => {
+      s.form.field[i] = (s.form.field[i] ?? 0) + (T.form.positionScore[at - 1] ?? 0);
     });
+    if (won) gainXp('bets', T.xp.riskBet[bet.id] ?? 0, `${bet.name} bet won`);
     if (won) s.queue.push({ kind: 'betPart', title: `${bet.name} bet won`, note: `Parts, one guaranteed ${bet.minRarity}+, or skip for ${credits(bet.skipCredits)}`, bet: bet.id });
     else log(`${bet.name} bet lost (needed P${String(bet.minFinish)} or better)`);
     s.phase = 'rewards';
@@ -544,6 +645,12 @@ export function tourAction(data: PlannerData, state: TourState, action: TourActi
       break;
     case 'setUnderdog':
       s.underdogOverride = action.value;
+      break;
+    case 'pickFinal':
+      if (s.phase === 'bet' && isFinalRace(data, s)) s.finalPick = action.pick;
+      break;
+    case 'setFinalBackers':
+      s.finalBackers = Math.max(1, Math.min(T.xp.finalBet.byBackers.length, Math.round(action.n || 1)));
       break;
     case 'finishRace':
       if (s.phase === 'race') finishRace();
@@ -638,7 +745,16 @@ export function tourAction(data: PlannerData, state: TourState, action: TourActi
       s.planet += 1;
       s.bet = null;
       s.finish = null;
-      rollBackers();
+      if (isFinalRace(data, s)) {
+        // no contract for the final race: straight to the bet on who wins it
+        s.backers = [];
+        s.backer = null;
+        s.contractUnits = 0;
+        s.underdogOverride = null;
+        s.finalPick = null;
+        s.finalBackers = 1;
+        s.phase = 'bet';
+      } else rollBackers();
       break;
     case 'removeAbility': {
       const [id] = s.abilities.splice(action.index, 1);

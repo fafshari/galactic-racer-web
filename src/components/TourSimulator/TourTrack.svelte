@@ -5,6 +5,8 @@
     planets: readonly { id: string; name: string }[];
     current: number;
     phase: Phase;
+    /** The final race has only a bet and the race itself. */
+    final?: boolean;
   }
 
   const STEPS = [
@@ -15,7 +17,8 @@
     { phase: 'shop', label: 'Shop' },
   ] as const;
 
-  const { planets, current, phase }: Props = $props();
+  const { planets, current, phase, final = false }: Props = $props();
+  const steps = $derived(final ? STEPS.filter((s) => s.phase === 'bet' || s.phase === 'race') : STEPS);
   const running = $derived(phase !== 'setup' && phase !== 'done');
 </script>
 
@@ -32,7 +35,7 @@
   </ol>
   {#if running}
     <ol class="steps" aria-label="This planet">
-      {#each STEPS as s (s.phase)}
+      {#each steps as s (s.phase)}
         <li class={['step', phase === s.phase && '-now']} aria-current={phase === s.phase ? 'step' : undefined}>{s.label}</li>
       {/each}
     </ol>

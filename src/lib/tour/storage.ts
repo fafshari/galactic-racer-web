@@ -32,6 +32,9 @@ export function restoreTour(data: PlannerData, raw: unknown): TourState | null {
     s.planet < data.tour.planets.length &&
     s.parts.every((id) => data.affixes.some((p) => p.id === id)) &&
     s.abilities.every((id) => data.abilities.some((a) => a.id === id));
-  // The shape was checked above and every id resolves, so this is the state saveTour wrote.
-  return ok ? (s as unknown as TourState) : null;
+  if (!ok) return null;
+  // The shape was checked above and every id resolves, so this is the state saveTour wrote. Runs saved before the
+  // final race bet and EXP existed get their starting values.
+  const fresh: Pick<TourState, 'finalPick' | 'finalBackers' | 'xp'> = { finalPick: null, finalBackers: 1, xp: { races: 0, bets: 0, finalBet: 0, league: 0 } };
+  return { ...fresh, ...(s as unknown as TourState) };
 }

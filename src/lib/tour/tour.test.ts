@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { planner } from '../data/index.ts';
 import type { OfferRarity, Part, PartId } from '../data/types.ts';
 import { createRng } from './random.ts';
-import { abilityParent, formRank, isUnderdog, newTour, packPrice, partTier, rerollPrice, tourAction, type TourAction, type TourState } from './tour.ts';
+import { restoreTour, saveTour } from './storage.ts';
+import { abilityParent, finalBetXp, formRank, isUnderdog, newTour, packPrice, partTier, rerollPrice, totalXp, tourAction, tourWinner, type TourAction, type TourState } from './tour.ts';
 
 const T = planner.tour;
 const RANK: OfferRarity[] = ['Common', 'Rare', 'Epic', 'Legendary'];
@@ -115,11 +116,11 @@ describe('backers', () => {
     }
   });
 
-  it('keeps that backer for the whole tour', () => {
+  it('keeps that backer for every race but the final one', () => {
     const states = playTour(42);
     const first = started(42).backers[0]?.backer;
     const later = states.filter((s) => s.phase === 'backer' && s.planet > 0);
-    expect(new Set(later.map((s) => s.planet)).size).toBe(T.planets.length - 1);
+    expect(new Set(later.map((s) => s.planet)).size).toBe(T.planets.length - 2);
     for (const s of later) expect(s.backers.every((o) => o.backer === first)).toBe(true);
   });
 });
@@ -165,6 +166,78 @@ describe('races', () => {
     expect(isUnderdog(planner, s)).toBe(false);
     expect(isUnderdog(planner, { ...s, underdogOverride: true })).toBe(true);
     expect(formRank({ ...s, form: { you: 5, field: [1, 2, 9, 9, 9, 9, 9, 9, 9, 9, 9] } })).toEqual({ place: 10, below: 2, score: 5 });
+  });
+});
+
+describe('the final race', () => {
+  const last = T.planets.length - 1;
+  /** Plays to the final race's bet with simple choices. */
+  const toFinal = (seed = 8): TourState => {
+    let s = started(seed);
+    for (let guard = 0; !(s.planet === last && s.phase === 'bet') && guard < 400; guard++) {
+      if (s.phase === 'backer') s = run(s, { type: 'pickBacker', index: 0 }, { type: 'goTo', phase: 'bet' });
+      else if (s.phase === 'bet') s = run(s, { type: 'pickBet', id: T.risk[0]?.id ?? '' }, { type: 'goTo', phase: 'race' });
+      else if (s.phase === 'race') s = run(s, { type: 'setFinish', position: 5 }, { type: 'finishRace' });
+      else if (s.phase === 'rewards') s = run(s, { type: 'skipReward' });
+      else if (s.phase === 'shop') s = run(s, { type: 'leaveShop' });
+    }
+    return s;
+  };
+  const finish = (s: TourState, position: number): TourState => run(s, { type: 'goTo', phase: 'race' }, { type: 'setFinish', position }, { type: 'finishRace' });
+
+  it('has no contract: the last shop leads straight to the bet on who wins', () => {
+    const s = toFinal();
+    expect([s.planet, s.phase]).toEqual([last, 'bet']);
+    expect(s.backers).toEqual([]);
+    expect(s.backer).toBeNull();
+  });
+
+  it('ends the tour when it finishes: no rewards, no shop, no credits', () => {
+    const s0 = toFinal();
+    const s = finish(s0, 4);
+    expect(s.phase).toBe('done');
+    expect([s.queue, s.offer, s.shop]).toEqual([[], null, null]);
+    expect(s.credits).toBe(s0.credits);
+  });
+
+  it("is won by the race's winner", () => {
+    expect(tourWinner(finish(toFinal(), 1))).toBe('You');
+    const s = finish(toFinal(), 6);
+    const winner = s.racers.find((r) => r.finishes.at(-1) === 1);
+    expect(winner).toBeDefined();
+    expect(tourWinner(s)).toBe(winner?.name);
+  });
+
+  it('pools the bet EXP among its backers and scales it by where the racer finishes', () => {
+    const { byBackers } = T.xp.finalBet;
+    expect(finalBetXp(planner, 1, 1)).toBe(byBackers.at(-1));
+    expect(finalBetXp(planner, byBackers.length, 1)).toBe(byBackers[0]);
+    expect(finalBetXp(planner, 1, 2)).toBe((byBackers.at(-1) ?? 0) / 2);
+    expect(finalBetXp(planner, 3, 3) % T.xp.finalBet.rounding).toBe(0);
+    expect(finalBetXp(planner, 1, 4)).toBe(0);
+  });
+
+  it('pays the bet when the racer you backed wins', () => {
+    const backYourself = run(toFinal(), { type: 'pickFinal', pick: { you: true } }, { type: 'setFinalBackers', n: 2 });
+    expect(finish(backYourself, 1).xp.finalBet).toBe(finalBetXp(planner, 2, 1));
+    expect(finish(backYourself, 5).xp.finalBet).toBe(0);
+    const rival = finish(toFinal(), 3).racers.findIndex((r) => r.finishes.at(-1) === 1);
+    const backRival = finish(run(toFinal(), { type: 'pickFinal', pick: { racer: rival } }), 3);
+    expect(backRival.xp.finalBet).toBe(finalBetXp(planner, 1, 1));
+  });
+
+  it('only takes the final bet in the final race', () => {
+    expect(run(started(), { type: 'goTo', phase: 'bet' }, { type: 'pickFinal', pick: { you: true } }).finalPick).toBeNull();
+  });
+
+  it('adds up tour EXP: every finish, every won risk bet and the tour placing', () => {
+    const end = playTour(42).at(-1);
+    if (!end) throw new Error('no run');
+    const finishes = T.planets.map((_, planet) => 1 + (planet % 4));
+    expect(end.xp.races).toBe(finishes.reduce((n, pos) => n + (T.xp.racePlacement[pos - 1] ?? 0), 0));
+    expect(end.xp.bets).toBe((T.planets.length - 1) * (T.xp.riskBet[T.risk[0]?.id ?? ''] ?? 0));
+    expect(end.xp.league).toBe(T.xp.leaguePlacement[(finishes.at(-1) ?? 1) - 1]);
+    expect(totalXp(end.xp)).toBe(end.xp.races + end.xp.bets + end.xp.finalBet + end.xp.league);
   });
 });
 
@@ -295,5 +368,23 @@ describe('random', () => {
     const upgrade = planner.abilities.find((a) => a.level === 'Level2');
     if (!upgrade) throw new Error('no Level 2 ability');
     expect(abilityParent(planner, upgrade.id)).toBeDefined();
+  });
+});
+
+describe('saved runs', () => {
+  it('restores a run saved before the final bet and EXP existed, with nothing earned yet', () => {
+    const saved = JSON.parse(saveTour(started())) as { version: 1; state: Record<string, unknown> };
+    delete saved.state.xp;
+    delete saved.state.finalPick;
+    delete saved.state.finalBackers;
+    const s = restoreTour(planner, saved);
+    expect(s?.xp).toEqual({ races: 0, bets: 0, finalBet: 0, league: 0 });
+    expect([s?.finalPick, s?.finalBackers]).toEqual([null, 1]);
+  });
+
+  it('keeps what a run has earned', () => {
+    const end = playTour(42).at(-1);
+    if (!end) throw new Error('no run');
+    expect(restoreTour(planner, JSON.parse(saveTour(end)))?.xp).toEqual(end.xp);
   });
 });

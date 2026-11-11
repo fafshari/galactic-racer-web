@@ -35626,6 +35626,54 @@
         "type": "VehicleUpgrade",
         "skippable": true
       }
+    },
+    "xp": {
+      "racePlacement": [
+        250,
+        245,
+        240,
+        235,
+        230,
+        225,
+        220,
+        215,
+        210,
+        200,
+        200,
+        200
+      ],
+      "riskBet": {
+        "LowRisk": 15,
+        "MediumRisk": 30,
+        "HighRisk": 50
+      },
+      "leaguePlacement": [
+        300,
+        200,
+        100
+      ],
+      "finalBet": {
+        "byBackers": [
+          500,
+          550,
+          625,
+          725,
+          825,
+          925,
+          1050,
+          1200,
+          1400,
+          1550,
+          1750,
+          2000
+        ],
+        "placeModifier": [
+          1,
+          0.5,
+          0.25
+        ],
+        "rounding": 5
+      }
     }
   },
   "arcade": [

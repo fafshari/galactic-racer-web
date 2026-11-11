@@ -251,6 +251,24 @@ export const Tour = z.strictObject({
     includeAi: z.boolean(),
     reward: z.strictObject({ type: z.string(), skippable: z.boolean() }),
   }),
+  /** Multiplayer Tour EXP. */
+  xp: z.strictObject({
+    /** Per race, by your finishing position (P1 first). */
+    racePlacement: z.array(z.number()),
+    /** Per won risk bet, by risk id. */
+    riskBet: z.record(z.string(), z.number()),
+    /** For finishing the tour 1st, 2nd or 3rd. */
+    leaguePlacement: z.array(z.number()),
+    /** The final race's bet on who wins: pooled among the players who back the same racer. */
+    finalBet: z.strictObject({
+      /** Indexed by players - backers: the fewer players back your racer, the more it pays. */
+      byBackers: z.array(z.number()),
+      /** Scales the pay by where your racer finishes: 1st, 2nd, 3rd. Lower pays nothing. */
+      placeModifier: z.array(z.number()),
+      /** The pay is rounded to a multiple of this. */
+      rounding: z.number().positive(),
+    }),
+  }),
 });
 
 // ---- Arcade events: the game's pre-made vehicles ------------------------------------------------
