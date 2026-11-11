@@ -11,7 +11,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Fixed
 
-- Tour simulator: the backer you pick at the first race now stays with you for the whole tour, offering three of its own contracts at every later race, as in the game.
+- Tour simulator: the backer you pick at the first race now stays with you for the whole tour, offering three of its own contracts at every later race, as in the game. ([#27](https://github.com/fafshari/galactic-racer-web/pull/27))
 
 ## [1.1.1] - 2026-11-02
 
