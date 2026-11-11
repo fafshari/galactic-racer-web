@@ -11,7 +11,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Fixed
 
-- Tour simulator: a bought Upgrade Pack raises a stat by 1. It used to add the race-reward upgrade size you set under "Assumptions".
+- Tour simulator: a bought Upgrade Pack raises a stat by 1. It used to add the race-reward upgrade size you set under "Assumptions". ([#28](https://github.com/fafshari/galactic-racer-web/pull/28))
 
 ## [1.1.2] - 2026-11-11
 
