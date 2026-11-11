@@ -160,6 +160,11 @@ export function newTour(data: PlannerData, seed: number, keep: Partial<Pick<Tour
 // ---- read-only helpers the page uses -------------------------------------------------------------------
 export const planetOf = (data: PlannerData, s: TourState) => data.tour.planets[s.planet];
 export const contractOf = (data: PlannerData, o: BackerOffer) => data.tour.backers[o.backer]?.contracts[o.contract];
+/** True from the second race on: you stay with the backer you picked first, which offers several of its contracts. */
+export const backerLocked = (s: Pick<TourState, 'backers'>): boolean => {
+  const first = s.backers[0];
+  return first !== undefined && s.backers.length > 1 && s.backers.every((o) => o.backer === first.backer);
+};
 export const unitLabel = (units: string): string => (units === 's' ? 'seconds' : units || 'actions');
 export const singular = (u: string): string => u.replace(/ies$/, 'y').replace(/([^s])s$/, '$1');
 
@@ -355,10 +360,23 @@ export function tourAction(data: PlannerData, state: TourState, action: TourActi
   };
   const makeRacers = (): Racer[] =>
     Array.from({ length: RACERS }, (_, i) => ({ name: `Racer ${String(i + 1)}`, strength: Math.round(rand() * 100) / 10, finishes: [] }));
-  // Each race, every backer offers one random contract from its pool; you pick one backer.
+  // The first race: every backer offers one random contract from its pool, and you pick one backer.
+  // Every later race: the backer you've been with offers that many different contracts from its pool.
   const rollBackers = (): void => {
+    const kept = s.backer === null ? undefined : s.backers[s.backer]?.backer;
+    const mine = kept ?? (backerLocked(s) ? s.backers[0]?.backer : undefined);
     setRand();
-    s.backers = T.backers.map((b, i) => ({ backer: i, contract: Math.floor(rand() * b.contracts.length) }));
+    const pool = mine === undefined ? undefined : T.backers[mine];
+    if (mine !== undefined && pool) {
+      const left = pool.contracts.map((_, i) => i);
+      s.backers = [];
+      while (s.backers.length < T.backers.length && left.length) {
+        const [contract] = left.splice(Math.floor(rand() * left.length), 1);
+        if (contract !== undefined) s.backers.push({ backer: mine, contract });
+      }
+    } else {
+      s.backers = T.backers.map((b, i) => ({ backer: i, contract: Math.floor(rand() * b.contracts.length) }));
+    }
     s.backer = null;
     s.contractUnits = 0;
     s.phase = 'backer';

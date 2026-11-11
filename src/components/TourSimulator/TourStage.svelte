@@ -6,7 +6,7 @@
   import type { Synergy } from '~/lib/synergy/synergy.ts';
   import { rateOffers, type Fit, type FitKind } from '~/lib/tour/fit.ts';
   import {
-    abilityParent, buildOf, contractOf, credits, formRank, isAbilityUpgrade, isUnderdog, ownedSlotOf, packPrice, partPrice, planetOf,
+    abilityParent, backerLocked, buildOf, contractOf, credits, formRank, isAbilityUpgrade, isUnderdog, ownedSlotOf, packPrice, partPrice, planetOf,
     replaces, rerollPrice, singular, unitLabel, type TourAction, type TourState,
   } from '~/lib/tour/tour.ts';
   import Button from '../Button/Button.svelte';
@@ -26,6 +26,7 @@
   const T = planner.tour;
   const planet = $derived(planetOf(planner, tour));
   const bet = $derived(T.risk.find((r) => r.id === tour.bet));
+  const locked = $derived(backerLocked(tour));
   const partsFull = $derived(tour.parts.length >= planner.meta.partSlots.max);
   const abilitiesFull = $derived(tour.abilities.length >= planner.meta.abilitySlots);
   const ordinal = (n: number): string => `${String(n)}${['st', 'nd', 'rd'][n - 1] ?? 'th'}`;
@@ -107,10 +108,15 @@
     </div>
     <div class="actions"><Button variant="primary" onclick={() => { act({ type: 'start' }); }}>Start tour</Button><span class="hint">Run seed {tour.seed}</span></div>
   {:else if tour.phase === 'backer' && planet}
-    <h2 class="title">{planet.name}: choose a backer</h2>
-    <p class="lead">Three backers each offer a contract for this race. Pick one; you earn its rate for every unit of the objective you achieve.</p>
+    {#if locked}
+      <h2 class="title">{planet.name}: choose a contract</h2>
+      <p class="lead">{T.backers[tour.backers[0]?.backer ?? 0]?.name}, your backer for this tour, offers three contracts for this race. Pick one; you earn its rate for every unit of the objective you achieve.</p>
+    {:else}
+      <h2 class="title">{planet.name}: choose a backer</h2>
+      <p class="lead">Three backers each offer a contract for this race. The one you pick backs you for the rest of the tour, offering a choice of its contracts at every later race. You earn a contract's rate for every unit of the objective you achieve.</p>
+    {/if}
     <div class="choices">
-      {#each tour.backers as o, i (o.backer)}
+      {#each tour.backers as o, i (`${String(o.backer)}-${String(o.contract)}`)}
         {@const b = T.backers[o.backer]}
         {@const c = contractOf(planner, o)}
         {#if b && c}
@@ -155,7 +161,7 @@
     </div>
     <div class="actions">
       <Button variant="primary" disabled={tour.bet === null} onclick={() => { act({ type: 'goTo', phase: 'race' }); }}>Go to the race</Button>
-      <Button onclick={() => { act({ type: 'goTo', phase: 'backer' }); }}>Change backer</Button>
+      <Button onclick={() => { act({ type: 'goTo', phase: 'backer' }); }}>{locked ? 'Change contract' : 'Change backer'}</Button>
     </div>
   {:else if tour.phase === 'race' && planet && bet}
     <h2 class="title">{planet.name}: race</h2>

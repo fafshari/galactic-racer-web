@@ -7,6 +7,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - **minor** for new features and new game content
 - **patch** for fixes and corrections
 
+## [1.1.2] - 2026-11-11
+
+### Fixed
+
+- Tour simulator: the backer you pick at the first race now stays with you for the whole tour, offering three of its own contracts at every later race, as in the game.
+
 ## [1.1.1] - 2026-11-02
 
 ### Fixed
@@ -71,6 +77,7 @@ First versioned release: the site rebuilt on Astro and Svelte and moved to Verce
 - Game data and icons datamined from the game files, with the fan-made, not-affiliated notice on every page.
 - Open source under the MIT license.
 
+[1.1.2]: https://github.com/fafshari/galactic-racer-web/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/fafshari/galactic-racer-web/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/fafshari/galactic-racer-web/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/fafshari/galactic-racer-web/compare/v1.0.0...v1.0.1
