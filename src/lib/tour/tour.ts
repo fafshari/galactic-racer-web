@@ -55,7 +55,7 @@ export interface TourState {
   style: StyleId;
   /** Assumed: how many options each reward or pack shows. */
   options: number;
-  /** Assumed: how many levels one upgrade adds. */
+  /** Assumed: how many levels a race reward upgrade adds. Bought Upgrade Packs always add PACK_UPGRADE. */
   upgradeSize: number;
   seed: number;
   rolls: number;
@@ -113,6 +113,8 @@ export interface TourResult {
   message?: string;
 }
 
+/** A bought Upgrade Pack adds one level, whatever the race rewards' assumed size. */
+export const PACK_UPGRADE = 1;
 export const RACERS = 11;
 export const POSITIONS = 12;
 const RANK: readonly OfferRarity[] = ['Common', 'Rare', 'Epic', 'Legendary'];
@@ -384,9 +386,9 @@ export function tourAction(data: PlannerData, state: TourState, action: TourActi
   };
 
   // -- gains ------------------------------------------------------------------------------------------
-  const applyUpgrade = (slot: SlotId, prefix = ''): void => {
+  const applyUpgrade = (slot: SlotId, size: number, prefix = ''): void => {
     const before = s.levels[slot] ?? 0;
-    s.levels[slot] = Math.min(MAX_LEVEL, before + s.upgradeSize);
+    s.levels[slot] = Math.min(MAX_LEVEL, before + size);
     log(`${prefix}${data.slots.find((x) => x.id === slot)?.name ?? slot} ${String(before)} → ${String(s.levels[slot])}`);
   };
   const addPart = (id: PartId): boolean => {
@@ -549,7 +551,7 @@ export function tourAction(data: PlannerData, state: TourState, action: TourActi
     case 'takeReward': {
       const q = s.queue[0];
       if (s.phase !== 'rewards' || !q || !s.offer) break;
-      if (s.offer.kind === 'upgrade') applyUpgrade(action.id as SlotId, `${q.title}: `);
+      if (s.offer.kind === 'upgrade') applyUpgrade(action.id as SlotId, s.upgradeSize, `${q.title}: `);
       else {
         if (!addPart(action.id as PartId)) break;
         log(`${q.title}: ${partById(data, action.id)?.name ?? action.id}`);
@@ -603,7 +605,7 @@ export function tourAction(data: PlannerData, state: TourState, action: TourActi
     case 'takePack': {
       const pack = s.shop?.pack;
       if (!s.shop || !pack) break;
-      if (pack.kind === 'stat') applyUpgrade(action.id as SlotId, 'Upgrade Pack: ');
+      if (pack.kind === 'stat') applyUpgrade(action.id as SlotId, PACK_UPGRADE, 'Upgrade Pack: ');
       else {
         if (!addAbility(action.id as AbilityId)) break;
         log(`Pack: ${abilityName(action.id as AbilityId)}`);

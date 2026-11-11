@@ -204,6 +204,25 @@ describe('the shop', () => {
     expect(s.shop && packPrice(planner, s.shop, 'stat')).toBe(price + T.prices.partPackIncrease);
   });
 
+  it('a bought Upgrade Pack adds one level, whatever race reward upgrades add', () => {
+    for (const size of [1, 2, 3]) {
+      let s = { ...inShop(), upgradeSize: size };
+      s = run(s, { type: 'openPack', kind: 'stat' });
+      const id = s.shop?.pack?.ids[0] ?? '';
+      const before = s.levels[id] ?? 0;
+      s = run(s, { type: 'takePack', id });
+      expect(s.levels[id]).toBe(before + 1);
+    }
+  });
+
+  it('a race reward upgrade adds the assumed size', () => {
+    const s0 = run(newTour(planner, 3), { type: 'setUpgradeSize', n: 3 }, { type: 'start' }, { type: 'pickBacker', index: 0 }, { type: 'goTo', phase: 'bet' }, { type: 'pickBet', id: T.risk[0]?.id ?? '' }, { type: 'goTo', phase: 'race' }, { type: 'setFinish', position: 6 }, { type: 'finishRace' });
+    const id = s0.offer?.kind === 'upgrade' ? (s0.offer.ids[0] ?? '') : '';
+    expect(id).not.toBe('');
+    const s = run(s0, { type: 'takeReward', id });
+    expect(s.levels[id]).toBe((s0.levels[id] ?? 0) + 3);
+  });
+
   it('ability packs offer new Level 1s or the next step of a line you own, never a line you have', () => {
     for (let seed = 1; seed <= 30; seed++) {
       const s = run(inShop(seed), { type: 'openPack', kind: 'ability' });
