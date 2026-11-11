@@ -90,6 +90,40 @@ describe('the start', () => {
   });
 });
 
+describe('backers', () => {
+  /** Plays the first race picking backer `pick`, then skips to the next planet's backer choice. */
+  const toPlanetTwo = (seed: number, pick: number): TourState => {
+    let s = run(started(seed), { type: 'pickBacker', index: pick }, { type: 'goTo', phase: 'bet' }, { type: 'pickBet', id: T.risk[0]?.id ?? '' }, { type: 'goTo', phase: 'race' }, { type: 'setFinish', position: 6 }, { type: 'finishRace' });
+    for (let guard = 0; s.phase === 'rewards' && guard < 10; guard++) s = run(s, { type: 'skipReward' });
+    return run(s, { type: 'leaveShop' });
+  };
+
+  it('offers every backer at the first race', () => {
+    expect(started().backers.map((o) => o.backer)).toEqual(T.backers.map((_, i) => i));
+  });
+
+  it('from the second race on, offers three different contracts from the backer picked first', () => {
+    for (let seed = 1; seed <= 20; seed++) {
+      for (const [pick] of T.backers.entries()) {
+        const s = toPlanetTwo(seed, pick);
+        expect(s.planet).toBe(1);
+        expect(s.phase).toBe('backer');
+        expect(s.backers).toHaveLength(3);
+        expect(s.backers.every((o) => o.backer === pick)).toBe(true);
+        expect(new Set(s.backers.map((o) => o.contract)).size).toBe(3);
+      }
+    }
+  });
+
+  it('keeps that backer for the whole tour', () => {
+    const states = playTour(42);
+    const first = started(42).backers[0]?.backer;
+    const later = states.filter((s) => s.phase === 'backer' && s.planet > 0);
+    expect(new Set(later.map((s) => s.planet)).size).toBe(T.planets.length - 1);
+    for (const s of later) expect(s.backers.every((o) => o.backer === first)).toBe(true);
+  });
+});
+
 describe('races', () => {
   const toRace = (seed = 1): TourState =>
     run(started(seed), { type: 'pickBacker', index: 0 }, { type: 'goTo', phase: 'bet' }, { type: 'pickBet', id: T.risk[0]?.id ?? '' }, { type: 'goTo', phase: 'race' });

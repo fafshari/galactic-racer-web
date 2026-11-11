@@ -54,8 +54,29 @@ test('the shop sells, rerolls for more each time, and moves on to the next plane
   await reroll.click();
   await expect(reroll).not.toHaveText(first ?? '');
   await page.getByRole('button', { name: /^Leave for/ }).click();
-  await expect(stageTitle(page)).toHaveText('Lantaana: choose a backer');
+  await expect(stageTitle(page)).toHaveText('Lantaana: choose a contract');
   await expect(page.locator('.stops .stop.-done')).toHaveCount(1);
+});
+
+test('the backer picked at the first race offers three of its contracts from then on', async ({ page }) => {
+  await page.getByRole('button', { name: 'Start tour' }).click();
+  const picked = (await page.locator('.tour-stage .choice-card .title').nth(1).textContent()) ?? '';
+  const name = picked.replace(/\d.*$/, '');
+  await page.locator('.tour-stage .choice-card').nth(1).click();
+  await page.getByRole('button', { name: 'Next: place your bet' }).click();
+  await page.locator('.tour-stage .choice-card').filter({ hasText: 'Low Risk' }).click();
+  await page.getByRole('button', { name: 'Go to the race' }).click();
+  await page.getByRole('button', { name: /^Position 1,/ }).click();
+  await page.getByRole('button', { name: 'Finish race' }).click();
+  for (let guard = 0; guard < 4 && !(await stageTitle(page).textContent())?.endsWith('shop'); guard++) {
+    await page.getByRole('button', { name: /^Skip/ }).or(page.locator('.tour-stage .choice-card').first()).first().click();
+  }
+  await page.getByRole('button', { name: /^Leave for/ }).click();
+  await expect(stageTitle(page)).toHaveText('Lantaana: choose a contract');
+  const cards = page.locator('.tour-stage .choice-card');
+  await expect(cards).toHaveCount(3);
+  for (const title of await cards.locator('.title').allTextContents()) expect(title.startsWith(name)).toBe(true);
+  expect(new Set(await cards.locator('.subtitle').allTextContents()).size).toBe(3);
 });
 
 test('a run survives a reload, and the build opens in the planner', async ({ page }) => {
