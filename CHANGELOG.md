@@ -11,12 +11,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Added
 
-- Tour simulator: a bet on who wins the final race, paying Multiplayer Tour EXP shared among everyone who backs the same racer.
-- Tour simulator: Tour EXP, from race finishes, won risk bets, the final race bet and a top-three tour finish, with a breakdown at the end.
+- Tour simulator: a bet on who wins the final race, paying Multiplayer Tour EXP shared among everyone who backs the same racer. ([#29](https://github.com/fafshari/galactic-racer-web/pull/29))
+- Tour simulator: Tour EXP, from race finishes, won risk bets, the final race bet and a top-three tour finish, with a breakdown at the end. ([#29](https://github.com/fafshari/galactic-racer-web/pull/29))
 
 ### Changed
 
-- Tour simulator: the final race decides the tour. It has no contract before it and no rewards or shop after it, and its winner wins the tour.
+- Tour simulator: the final race decides the tour. It has no contract before it and no rewards or shop after it, and its winner wins the tour. ([#29](https://github.com/fafshari/galactic-racer-web/pull/29))
 
 ## [1.1.3] - 2026-11-11
 
