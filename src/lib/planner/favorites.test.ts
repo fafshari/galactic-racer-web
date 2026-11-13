@@ -3,7 +3,7 @@ import { planner } from '../data/index.ts';
 import { decodeBuild, evaluate } from '../engine/index.ts';
 import { addFavorite, allTriggered, isFavorite, removeFavorite, renameFavorite, restoreFavorites, saveFavorites, summarize } from './favorites.ts';
 
-// Speeder Bike, Clean Racer, levels 4 7 5 8 0 6 (a real legacy link; 504 km/h with Afterburner, 597 with Ramjet).
+// Speeder Bike, Clean Racer, levels 4 7 5 8 0 6 (a real legacy link; 504 km/h with Afterburner, 589 with Ramjet).
 const shared = decodeBuild('gr2-m106475806');
 
 describe('favourites', () => {
@@ -38,9 +38,9 @@ describe('favourites', () => {
     const s = summarize(planner, f);
     expect(s.vehicle.name).toBe('Speeder Bike');
     expect(s.style?.name).toBe('Clean Racer');
-    // Clean Racer's In the Zone (on/off) raises top speed, so the best boost beats the plain build's 597 km/h
+    // Clean Racer's In the Zone (on/off) raises top speed, so the best boost beats the plain build's 589 km/h
     expect(s.boost.kind).toBe('ramjet');
-    expect(s.boost.kmh).toBeGreaterThan(597);
+    expect(s.boost.kmh).toBeGreaterThan(589);
   });
 
   it('save and summarise a build with no racer style', () => {

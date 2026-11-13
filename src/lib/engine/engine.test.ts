@@ -112,13 +112,13 @@ describe('engine (speed procs feed Power, ADR 0009)', () => {
     expect(asNumber(row(r, 'VehicleThrustConfig.HighSpeedStep').cells.find((x) => x.cell === '1')?.value ?? NaN)).toBeCloseTo((base[1] ?? 0) + 10);
   });
 
-  it('stops at the 60 steps the power tuneset defines', () => {
+  it('keeps adding steps past power 60 (Power is not capped)', () => {
     const id = part('Calibrating Landings I');
     const c = evaluate(planner, build({ parts: [id] })).conditionals.find((x) => x.key.startsWith(id));
     if (!c) throw new Error('no conditional');
     const r = evaluate(planner, build({ levels: allSlots(9), parts: [id], active: { [c.key]: 20 } }));
     expect(r.power).toBe(54);
-    expect(r.powerBonus).toBe(6);
+    expect(r.powerBonus).toBe(20);
   });
 });
 

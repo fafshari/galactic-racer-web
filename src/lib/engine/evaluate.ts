@@ -153,14 +153,12 @@ export function collect(data: PlannerData, build: Build): Collected {
   }
 
   // "Increase Speed" effects raise the Power stat, and every Power point is a step of the power tuneset (top speed),
-  // so counted situational Power gains feed it too. The tuneset defines 60 steps; whether the game caps there is unknown.
+  // so counted situational Power gains feed it too. Power is not capped at 60: effects like Repulsormod push it higher mid-race.
   let powerBonus = 0;
   for (const { op, cond } of ops) {
     if (cond !== null && op.cfg === 'VehicleGameplayConfig' && op.field === 'Power' && op.op === 'IntAdd') powerBonus += op.i;
   }
-  const powerTs = data.tunesets[data.powerTuneset];
-  const cap = (powerTs?.stacking ? powerTs.steps : 60) - power;
-  powerBonus = Math.max(0, Math.min(powerBonus, cap));
+  powerBonus = Math.max(0, powerBonus);
   if (powerBonus) addTuneset(data.powerTuneset, powerBonus, `Speed gains +${powerBonus} power`, 'power-bonus');
   return { ops, conditionals, power, powerBonus };
 }
