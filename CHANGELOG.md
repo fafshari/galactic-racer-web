@@ -10,8 +10,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 ## [1.2.1] - 2026-11-13
 
 ### Fixed
-- Ramjet's top-speed bonus is 75 mph (121 km/h), not 80, so Ramjet top speeds read about 8 km/h lower.
-- Situational speed gains like Repulsormod now raise Power past 60, as they do in game, instead of stopping there.
+- Ramjet's top-speed bonus is 75 mph (121 km/h), not 80, so Ramjet top speeds read about 8 km/h lower. ([#30](https://github.com/fafshari/galactic-racer-web/pull/30))
+- Situational speed gains like Repulsormod now raise Power past 60, as they do in game, instead of stopping there. ([#30](https://github.com/fafshari/galactic-racer-web/pull/30))
 
 ## [1.2.0] - 2026-11-11
 
