@@ -25,7 +25,7 @@ test('a link shared from the legacy planner opens the same build with the same n
   await expect(topSpeed(page)).toHaveText('418');
   const tiles = page.locator('.speed-panel .boosts .number');
   await expect(tiles.nth(0)).toContainText('504');
-  await expect(tiles.nth(1)).toContainText('597');
+  await expect(tiles.nth(1)).toContainText('589');
   await expect(tiles.nth(2)).toContainText('+24/80'); // Surge: sustained / burst
   await expect(page.getByRole('group', { name: 'Boost level' }).getByRole('button', { name: 'Level 8' })).toHaveAttribute('aria-pressed', 'true');
   expect(errors).toEqual([]);
@@ -256,9 +256,9 @@ test('favourites: save a build, rename it, load it back after a reload, remove i
   const drawer = page.getByRole('dialog', { name: 'Favourites' });
   const row = drawer.locator('.favorite-row');
   await expect(row).toHaveCount(1);
-  // the best boost with every on/off situational effect triggered: above the plain build's 597 km/h
+  // the best boost with every on/off situational effect triggered: above the plain build's 589 km/h
   const best = Number(await row.locator('.speed .number').textContent());
-  expect(best).toBeGreaterThan(597);
+  expect(best).toBeGreaterThan(589);
   await row.getByRole('button', { name: /^Rename/ }).click();
   await drawer.getByRole('textbox', { name: 'Favourite name' }).fill('Bike ramjet');
   await page.keyboard.press('Enter');

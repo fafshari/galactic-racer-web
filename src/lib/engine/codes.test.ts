@@ -125,7 +125,7 @@ describe('speeds', () => {
     expect(kmh(s.top)).toBe(418);
     expect(kmh(s.baseTop)).toBe(298);
     expect(kmh(s.top + s.afterburner)).toBe(504);
-    expect(kmh(s.top + s.ramjet)).toBe(597);
+    expect(kmh(s.top + s.ramjet)).toBe(589);
     expect(s.ramjetKnown).toBe(true);
     expect(kmh(s.surge)).toBe(24);
     expect(kmh(s.top + s.surgeBurst)).toBe(499);

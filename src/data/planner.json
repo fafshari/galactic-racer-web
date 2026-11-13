@@ -940,7 +940,7 @@
             100,
             200
           ],
-          "TopSpeedIncreaseMph": 80
+          "TopSpeedIncreaseMph": 75
         },
         "VehicleResetConfig": {
           "RaceSplineResetZone": "RaceSpline.Extents.Reset"
@@ -2209,7 +2209,7 @@
             100,
             200
           ],
-          "TopSpeedIncreaseMph": 80
+          "TopSpeedIncreaseMph": 75
         },
         "VehicleResetConfig": {
           "RaceSplineResetZone": "RaceSpline.Extents.Reset"
@@ -3781,7 +3781,7 @@
             100,
             200
           ],
-          "TopSpeedIncreaseMph": 80
+          "TopSpeedIncreaseMph": 75
         },
         "VehicleResetConfig": {
           "RaceSplineResetZone": "RaceSpline.Extents.Reset"
@@ -4862,7 +4862,7 @@
           "BoostTimeVsForceScale": {
             "ExternalCurve": "CVF_TimeToBoostForceScale"
           },
-          "TopSpeedIncreaseMph": 80
+          "TopSpeedIncreaseMph": 75
         },
         "VehicleResetConfig": {
           "ResetSpeedScale": 0.875,

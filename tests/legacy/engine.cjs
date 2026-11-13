@@ -149,11 +149,10 @@
       });
     }
     // "Increase Speed" effects raise the Power stat, and every Power point is a step of the power tuneset (top speed),
-    // so situational Power gains feed it too. The tuneset only defines 60 steps, the game's Power rating cap.
+    // so situational Power gains feed it too. Power is not capped: effects like Repulsormod push it past 60 mid-race.
     let powerBonus = 0;
     for (const { op, cond } of ops) if (cond && op.cfg === 'VehicleGameplayConfig' && op.field === 'Power' && op.op === 'IntAdd') powerBonus += op.i;
-    const cap = ((data.tunesets[data.powerTuneset] || {}).steps || 60) - power;
-    powerBonus = Math.max(0, Math.min(powerBonus, cap));
+    powerBonus = Math.max(0, powerBonus);
     if (powerBonus) addTuneset(data.powerTuneset, powerBonus, `Speed gains +${powerBonus} power`, 'power-bonus');
     return { ops, conditionals, power, powerBonus };
   }

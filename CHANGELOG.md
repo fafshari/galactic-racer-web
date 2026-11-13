@@ -7,6 +7,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - **minor** for new features and new game content
 - **patch** for fixes and corrections
 
+## [1.2.1] - 2026-11-13
+
+### Fixed
+- Ramjet's top-speed bonus is 75 mph (121 km/h), not 80, so Ramjet top speeds read about 8 km/h lower. ([#30](https://github.com/fafshari/galactic-racer-web/pull/30))
+- Situational speed gains like Repulsormod now raise Power past 60, as they do in game, instead of stopping there. ([#30](https://github.com/fafshari/galactic-racer-web/pull/30))
+
 ## [1.2.0] - 2026-11-11
 
 ### Added
@@ -94,6 +100,7 @@ First versioned release: the site rebuilt on Astro and Svelte and moved to Verce
 - Game data and icons datamined from the game files, with the fan-made, not-affiliated notice on every page.
 - Open source under the MIT license.
 
+[1.2.1]: https://github.com/fafshari/galactic-racer-web/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/fafshari/galactic-racer-web/compare/v1.1.3...v1.2.0
 [1.1.3]: https://github.com/fafshari/galactic-racer-web/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/fafshari/galactic-racer-web/compare/v1.1.1...v1.1.2

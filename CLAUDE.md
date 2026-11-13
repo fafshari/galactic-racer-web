@@ -80,9 +80,9 @@ The `/components` showcase is **development only**: the route is injected for `a
 From [ADR 0009](docs/adr/0009-game-mechanics-model.md); details and confidence levels are in the ADR.
 - **Combine order (assumed):** a tuned value is `(base + Σadd + base·Σmultiple) · Πmultiply`.
 - **Code defaults:** values missing from the cooked data are code defaults shared by every vehicle. When the base is unknown only the change shows, as "20% more than default" / "73% less than default".
-- **Measured values** override missing defaults and are flagged as measured. Ramjet top-speed bonus = 80 mph (measured and confirmed).
+- **Measured values** override missing defaults and are flagged as measured. Ramjet top-speed bonus = 75 mph (measured and confirmed).
 - **Units:** speeds are stored in mph and shown in km/h (× 1.609344).
-- **Power:** each Power point is one step of the power tuneset (+2.5 mph top speed, more on Podracer). Situational "increase Speed" effects add Power too. The engine caps total Power at 60; whether the game does is **unknown**.
+- **Power:** each Power point is one step of the power tuneset (+2.5 mph top speed, more on Podracer). Situational "increase Speed" effects add Power too. Power is **not capped** at 60: situational effects like Repulsormod push it higher mid-race (confirmed).
 - **Abilities (confirmed):** four regular slots plus one crash-ability slot (the Blasts, marked by `VehicleCrashClass` in their config). `fitAbilities` keeps a build's list valid.
 - **Ability effects:** an ability's activation tuneset (e.g. Surging Autopilot II's +6 Power) and a Blast's Power per opponent hit are situational effects. Reload time is `WarmUpTime` × `AbilityTuneConfig.GlobalCooldownScale`.
 - **Parts (confirmed):** grouped by family, and a build holds one rarity per family.
